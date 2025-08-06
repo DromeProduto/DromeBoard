@@ -11,8 +11,18 @@ class DromeAuth {
 
     init() {
         document.addEventListener('DOMContentLoaded', () => {
-            // Inicializar Design System
-            this.designSystem = new DromeDesignSystem();
+            // Inicializar Design System (com fallback)
+            try {
+                if (typeof DromeDesignSystem !== 'undefined') {
+                    this.designSystem = new DromeDesignSystem();
+                } else {
+                    console.warn('DromeDesignSystem não disponível - usando fallbacks');
+                    this.designSystem = this.createFallbackDesignSystem();
+                }
+            } catch (error) {
+                console.error('Erro ao inicializar Design System:', error);
+                this.designSystem = this.createFallbackDesignSystem();
+            }
             
             // Configurar funcionalidades
             this.setupLoginForm();
@@ -20,6 +30,27 @@ class DromeAuth {
             this.setupThemeToggle();
             this.setupFormValidation();
         });
+    }
+
+    createFallbackDesignSystem() {
+        return {
+            notifications: {
+                show: (options) => {
+                    console.log('Notification:', options.type, '-', options.message);
+                    // Fallback simples com alert
+                    if (options.type === 'error') {
+                        alert('Erro: ' + options.message);
+                    }
+                }
+            },
+            toggleTheme: () => {
+                const html = document.documentElement;
+                html.classList.toggle('dark');
+                const isDark = html.classList.contains('dark');
+                html.setAttribute('data-theme', isDark ? 'dark' : 'light');
+                localStorage.setItem('drome-theme', isDark ? 'dark' : 'light');
+            }
+        };
     }
 
     setupLoginForm() {
@@ -57,14 +88,29 @@ class DromeAuth {
         if (!themeToggle) return;
 
         themeToggle.addEventListener('click', () => {
-            this.designSystem.theme.toggle();
-            
-            // Atualizar ícone do botão
-            const icon = themeToggle.querySelector('i');
-            if (document.documentElement.classList.contains('dark')) {
-                icon.className = 'fas fa-sun';
-            } else {
-                icon.className = 'fas fa-moon';
+            try {
+                if (this.designSystem && typeof this.designSystem.toggleTheme === 'function') {
+                    this.designSystem.toggleTheme();
+                } else {
+                    // Fallback manual para toggle de tema
+                    const html = document.documentElement;
+                    html.classList.toggle('dark');
+                    const isDark = html.classList.contains('dark');
+                    html.setAttribute('data-theme', isDark ? 'dark' : 'light');
+                    localStorage.setItem('drome-theme', isDark ? 'dark' : 'light');
+                }
+                
+                // Atualizar ícone do botão
+                const icon = themeToggle.querySelector('i');
+                if (icon) {
+                    if (document.documentElement.classList.contains('dark')) {
+                        icon.className = 'fas fa-sun';
+                    } else {
+                        icon.className = 'fas fa-moon';
+                    }
+                }
+            } catch (error) {
+                console.error('Erro ao alternar tema:', error);
             }
         });
     }
@@ -195,12 +241,22 @@ class DromeAuth {
         localStorage.setItem('isLoggedIn', 'true');
         
         // Mostrar notificação de sucesso
-        this.designSystem.notifications.show({
-            type: 'success',
-            title: 'Login realizado!',
-            message: result.message || 'Redirecionando para o dashboard...',
-            duration: 2000
-        });
+        try {
+            if (typeof DromeDesignSystem !== 'undefined' && DromeDesignSystem.notifications) {
+                DromeDesignSystem.notifications.show({
+                    type: 'success',
+                    title: 'Login realizado!',
+                    message: result.message || 'Redirecionando para o dashboard...',
+                    duration: 2000
+                });
+            } else {
+                // Fallback: mostrar mensagem no container
+                this.showMessage(messageContainer, 'Login realizado! Redirecionando...', 'success');
+            }
+        } catch (error) {
+            console.error('Erro ao mostrar notificação:', error);
+            this.showMessage(messageContainer, 'Login realizado! Redirecionando...', 'success');
+        }
         
         // Redirecionar após um breve delay
         setTimeout(() => {
@@ -212,13 +268,19 @@ class DromeAuth {
         const message = result.message || 'Erro ao realizar login. Verifique suas credenciais.';
         this.showMessage(messageContainer, message, 'error');
         
-        // Também mostrar notificação
-        this.designSystem.notifications.show({
-            type: 'error',
-            title: 'Erro no login',
-            message: message,
-            duration: 4000
-        });
+        // Também mostrar notificação se disponível
+        try {
+            if (typeof DromeDesignSystem !== 'undefined' && DromeDesignSystem.notifications) {
+                DromeDesignSystem.notifications.show({
+                    type: 'error',
+                    title: 'Erro no login',
+                    message: message,
+                    duration: 4000
+                });
+            }
+        } catch (error) {
+            console.error('Erro ao mostrar notificação de erro:', error);
+        }
     }
 
     clearMessages(container) {

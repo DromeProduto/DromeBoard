@@ -13,22 +13,33 @@ class ModuleLoader {
         this.currentModule = null;
         
         // Registro de módulos disponíveis
-        this.availableModules = {
-            'dashboard-home': {
-                name: 'dashboard-home',
-                title: 'Dashboard',
-                path: 'dashboard/modules/dashboard-home.js',
-                cssPath: 'dashboard/modules/dashboard-home.css',
-                icon: 'fas fa-chart-line',
-                description: 'Visão geral do dashboard com métricas principais'
-            },
+        this.moduleConfig = {
             'resultados': {
                 name: 'resultados',
                 title: 'Resultados',
-                path: 'dashboard/modules/resultados.js',
-                cssPath: 'dashboard/modules/resultados.css',
+                path: 'modules/resultados/resultados.js',
+                cssPath: 'modules/resultados/resultados.css',
+                className: 'ResultadosModule',
                 icon: 'fas fa-chart-bar',
                 description: 'Analytics e resultados com upload de planilhas'
+            },
+            'gestao-usuarios': {
+                name: 'gestao-usuarios',
+                title: 'Gestão de Usuários',
+                path: 'modules/gestao-usuarios/gestao-usuarios.js',
+                cssPath: 'modules/gestao-usuarios/gestao-usuarios.css',
+                className: 'GestaoUsuariosModule',
+                icon: 'fas fa-users',
+                description: 'Gerenciar usuários do sistema'
+            },
+            'gestao-unidades': {
+                name: 'gestao-unidades',
+                title: 'Gestão de Unidades',
+                path: 'modules/gestao-unidades/gestao-unidades.js',
+                cssPath: 'modules/gestao-unidades/gestao-unidades.css',
+                className: 'GestaoUnidadesModule',
+                icon: 'fas fa-building',
+                description: 'Gerenciar unidades organizacionais'
             }
         };
         

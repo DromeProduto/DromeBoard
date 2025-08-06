@@ -1,12 +1,13 @@
 <?php
 session_start();
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 
 // Responder a preflight requests
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
     exit(0);
 }
 
@@ -64,27 +65,39 @@ try {
     // Verificar senha (assumindo password_hash/password_verify)
     if (password_verify($password, $user['password'])) {
         // Senha correta - buscar unidades do usuário
-        $unitsQuery = "SELECT un.* FROM units un 
-                       JOIN user_units uu ON un.id = uu.unit_id 
-                       WHERE uu.user_id = :user_id AND uu.is_active = true AND un.is_active = true";
+        // Super_admin tem acesso a todas as unidades ativas
+        if ($user['role_name'] === 'super_admin') {
+            $unitsQuery = "SELECT * FROM units WHERE is_active = true ORDER BY name";
+            $unitsStmt = $db->prepare($unitsQuery);
+        } else {
+            $unitsQuery = "SELECT un.* FROM units un 
+                           JOIN user_units uu ON un.id = uu.unit_id 
+                           WHERE uu.user_id = :user_id AND uu.is_active = true AND un.is_active = true";
+            $unitsStmt = $db->prepare($unitsQuery);
+            $unitsStmt->bindParam(':user_id', $user['id']);
+        }
         
-        $unitsStmt = $db->prepare($unitsQuery);
-        $unitsStmt->bindParam(':user_id', $user['id']);
         $unitsStmt->execute();
         $units = $unitsStmt->fetchAll();
 
         // Buscar módulos disponíveis
-        $modulesQuery = "SELECT DISTINCT m.* FROM modules m
-                        JOIN unit_modules um ON m.id = um.module_id
-                        JOIN user_units uu ON um.unit_id = uu.unit_id
-                        WHERE uu.user_id = :user_id 
-                          AND m.is_active = true 
-                          AND um.is_active = true 
-                          AND uu.is_active = true
-                        ORDER BY m.order_index";
+        // Super_admin tem acesso a todos os módulos ativos
+        if ($user['role_name'] === 'super_admin') {
+            $modulesQuery = "SELECT * FROM modules WHERE is_active = true ORDER BY order_index";
+            $modulesStmt = $db->prepare($modulesQuery);
+        } else {
+            $modulesQuery = "SELECT DISTINCT m.* FROM modules m
+                            JOIN unit_modules um ON m.id = um.module_id
+                            JOIN user_units uu ON um.unit_id = uu.unit_id
+                            WHERE uu.user_id = :user_id 
+                              AND m.is_active = true 
+                              AND um.is_active = true 
+                              AND uu.is_active = true
+                            ORDER BY m.order_index";
+            $modulesStmt = $db->prepare($modulesQuery);
+            $modulesStmt->bindParam(':user_id', $user['id']);
+        }
         
-        $modulesStmt = $db->prepare($modulesQuery);
-        $modulesStmt->bindParam(':user_id', $user['id']);
         $modulesStmt->execute();
         $modules = $modulesStmt->fetchAll();
 

@@ -16,6 +16,11 @@ database_config.php
 .env.local
 .env.production
 
+# MCP e GitHub Tokens
+.mcp-env
+github-token.txt
+personal-access-token.txt
+
 # Logs
 *.log
 logs/

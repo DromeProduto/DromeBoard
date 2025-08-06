@@ -18,16 +18,13 @@
     <!-- Chart.js para gráficos -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
-    <!-- Dashboard Components CSS -->
-    <link rel="stylesheet" href="dashboard/styles/dashboard-components.css">
-    <link rel="stylesheet" href="dashboard/styles/dashboard-charts.css">
-    <link rel="stylesheet" href="dashboard/styles/dashboard-responsive.css">
+    <!-- CONFIGURAÇÕES GLOBAIS DO SISTEMA -->
+    <link rel="stylesheet" href="../shared/drome-design-system.css">
+    <link rel="stylesheet" href="../shared/global-styles.css">
+    <script src="../shared/drome-design-system.js"></script>
     
-    <!-- Dashboard Components JS -->
-    <script src="dashboard/components/metrics-cards.js" onload="console.log('✅ metrics-cards.js carregado')" onerror="console.error('❌ Erro ao carregar metrics-cards.js')"></script>
-    <script src="dashboard/components/charts.js" onload="console.log('✅ charts.js carregado')" onerror="console.error('❌ Erro ao carregar charts.js')"></script>
-    <script src="dashboard/components/recent-activities.js" onload="console.log('✅ recent-activities.js carregado')" onerror="console.error('❌ Erro ao carregar recent-activities.js')"></script>
-    <script src="dashboard/components/alerts-panel.js" onload="console.log('✅ alerts-panel.js carregado')" onerror="console.error('❌ Erro ao carregar alerts-panel.js')"></script>
+    <!-- ModuleLoader System -->
+    <script src="module-loader.js" onload="console.log('✅ module-loader.js carregado')" onerror="console.error('❌ Erro ao carregar module-loader.js')"></script>
     
     <style>
         /* --- Variáveis de Tema --- */
@@ -1180,7 +1177,10 @@
         <main class="main-content">
             <!-- Área de Conteúdo -->
             <div class="content-area" id="contentArea">
-                <!-- Conteúdo será carregado dinamicamente aqui -->
+                <!-- Container para módulos do ModuleLoader -->
+                <div id="module-container">
+                    <!-- Conteúdo dos módulos será carregado dinamicamente aqui -->
+                </div>
             </div>
         </main>
     </div>
@@ -1272,7 +1272,11 @@
         // Os event listeners agora são criados dinamicamente em reassignEventListeners()
         const pageTitle = document.getElementById('pageTitle');
 
+        // *** FUNÇÃO OBSOLETA - USAR ModuleLoader *** 
+        // Esta função será removida em versões futuras
+        // Use window.moduleLoader.loadModule(module) em seu lugar
         function loadModuleContent(module) {
+            console.warn('⚠️ loadModuleContent está obsoleta. Use window.moduleLoader.loadModule() em seu lugar');
             console.log('📁 loadModuleContent chamada para módulo:', module);
             
             const contentArea = document.getElementById('contentArea');
@@ -1977,8 +1981,13 @@ function renderDynamicSidebar(modules) {
                     
                     pageTitle.textContent = moduleNames[module] || module.charAt(0).toUpperCase() + module.slice(1);
                     
-                    // Carregar conteúdo do módulo
-                    loadModuleContent(module);
+                    // Carregar conteúdo do módulo usando ModuleLoader
+                    if (window.moduleLoader) {
+                        window.moduleLoader.loadModule(module);
+                    } else {
+                        console.warn('⚠️ ModuleLoader não encontrado, usando fallback');
+                        loadModuleContent(module);
+                    }
                 });
             });
         }
@@ -2120,13 +2129,8 @@ function renderDynamicSidebar(modules) {
                     error: e.error
                 });
                 
-                // Tentar recarregar o script após erro
-                setTimeout(() => {
-                    const script = document.createElement('script');
-                    script.src = 'dashboard/components/metrics-cards.js';
-                    script.onload = () => console.log('✅ metrics-cards.js recarregado após erro');
-                    document.head.appendChild(script);
-                }, 1000);
+                // Script removido - componente não existe mais
+                console.log('ℹ️ Componente metrics-cards removido - usando configuração global');
             }
         });
 
@@ -4720,10 +4724,10 @@ function renderDynamicSidebar(modules) {
                 
                 // Lista de arquivos core em ordem de dependência
                 const coreFiles = [
-                    'dashboard/core/cache-manager.js',
-                    'dashboard/core/api-config.js', 
-                    'dashboard/core/module-loader.js',
-                    'dashboard/core/dashboard-core.js'
+                    'cache-manager.js',
+                    'api-config.js', 
+                    'module-loader.js',
+                    'dashboard-core.js'
                 ];
                 
                 window.DASHFLOW_DEBUG.log(`Carregando ${coreFiles.length} arquivos core...`);
@@ -4907,7 +4911,13 @@ function renderDynamicSidebar(modules) {
                             }
                         }
                     } else {
-                        window.DASHFLOW_DEBUG.log(`⚠️ Módulo ${module} requer sistema modular completo`);
+                        // Tentar usar ModuleLoader primeiro
+                        if (window.moduleLoader) {
+                            window.DASHFLOW_DEBUG.log(`🔄 Usando ModuleLoader para: ${module}`);
+                            window.moduleLoader.loadModule(module);
+                        } else {
+                            window.DASHFLOW_DEBUG.log(`⚠️ Módulo ${module} requer sistema modular completo`);
+                        }
                     }
                 });
             });
@@ -4929,11 +4939,26 @@ function renderDynamicSidebar(modules) {
             }
         }, 10000);
 
+        // Inicializar ModuleLoader globalmente
+        function initializeModuleLoader() {
+            if (typeof ModuleLoader !== 'undefined') {
+                window.moduleLoader = new ModuleLoader();
+                console.log('✅ ModuleLoader inicializado globalmente');
+            } else {
+                console.warn('⚠️ ModuleLoader não encontrado, tentando novamente em 1s...');
+                setTimeout(initializeModuleLoader, 1000);
+            }
+        }
+
         // Inicializar sistema modular quando DOM estiver pronto
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', loadModularSystem);
+            document.addEventListener('DOMContentLoaded', () => {
+                loadModularSystem();
+                initializeModuleLoader();
+            });
         } else {
             loadModularSystem();
+            initializeModuleLoader();
         }
     </script>
 </body>
