@@ -113,11 +113,15 @@ ON CONFLICT (code) DO NOTHING;
 -- 3. Criar usuário super admin
 INSERT INTO users (email, password, name, role_id, is_active) VALUES
 ('admin@dromeflow.com', 
- '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', -- senha: password
+ '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', -- senha: password (use password_hash() em PHP)
  'Super Admin Sistema',
  (SELECT id FROM roles WHERE name = 'super_admin'),
  true)
 ON CONFLICT (email) DO NOTHING;
+
+-- IMPORTANTE: Para criar senhas em PHP use:
+-- $hashedPassword = password_hash('suasenha', PASSWORD_DEFAULT);
+-- No banco sempre armazene o hash, nunca a senha em texto plano
 
 -- 4. Criar módulos básicos
 INSERT INTO modules (name, display_name, description, icon, route, required_role, order_index, is_active) VALUES
@@ -166,7 +170,7 @@ class Database {
     private $port = "6543";
     private $db_name = "postgres";
     private $username = "postgres.etztlxlfgoqbgwyaozwf";
-    private $password = "SUA_SENHA_AQUI"; // ALTERE AQUI
+    private $password = "DRom@29011725"; // ALTERE AQUI
     private $conn;
     
     public function getConnection() {
@@ -349,20 +353,52 @@ DromeBoard/
 
 ## 🔐 Sistema de Autenticação
 
-### Fluxo de Login
+O DromeBoard utiliza um sistema de autenticação **direto com a tabela `users`**, sem dependências de sistemas externos de auth. É simples, eficiente e totalmente controlado.
+
+### Fluxo de Login Implementado
 
 ```mermaid
 graph TD
     A[Usuário acessa login.html] --> B[Insere email/senha]
     B --> C[auth.js valida campos]
-    C --> D[Envia POST para login.php]
-    D --> E[login.php consulta banco]
-    E --> F{Usuário válido?}
-    F -->|Sim| G[Retorna dados do usuário]
-    F -->|Não| H[Retorna erro 401]
-    G --> I[Salva dados no localStorage]
-    I --> J[Redireciona para dashboard.html]
-    H --> K[Exibe mensagem de erro]
+    C --> D[Envia POST para api/login.php]
+    D --> E[login.php consulta tabela users]
+    E --> F{Usuário válido e ativo?}
+    F -->|Sim| G[Verifica senha com password_verify]
+    G --> H{Senha correta?}
+    H -->|Sim| I[Busca unidades e módulos do usuário]
+    I --> J[Cria sessão PHP]
+    J --> K[Retorna dados completos do usuário]
+    K --> L[Frontend salva no localStorage]
+    L --> M[Redireciona para dashboard.html]
+    H -->|Não| N[Retorna erro 401]
+    F -->|Não| N
+    N --> O[Exibe mensagem de erro]
+```
+
+### Query de Autenticação
+
+```sql
+-- Busca usuário com role
+SELECT u.*, r.name as role_name, r.display_name as role_display_name, r.level as role_level 
+FROM users u 
+LEFT JOIN roles r ON u.role_id = r.id 
+WHERE u.email = :email AND u.is_active = true;
+
+-- Busca unidades do usuário
+SELECT un.* FROM units un 
+JOIN user_units uu ON un.id = uu.unit_id 
+WHERE uu.user_id = :user_id AND uu.is_active = true AND un.is_active = true;
+
+-- Busca módulos disponíveis
+SELECT DISTINCT m.* FROM modules m
+JOIN unit_modules um ON m.id = um.module_id
+JOIN user_units uu ON um.unit_id = uu.unit_id
+WHERE uu.user_id = :user_id 
+  AND m.is_active = true 
+  AND um.is_active = true 
+  AND uu.is_active = true
+ORDER BY m.order_index;
 ```
 
 ### Estrutura de Dados do Usuário
