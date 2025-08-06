@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DromeFlow - UI Kit Elements V2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            light: '#6366f1',
+                            dark: '#818cf8'
+                        },
+                        secondary: {
+                            light: '#f43f5e',
+                            dark: '#fb7185'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        .section-title {
+            position: relative;
+            padding-bottom: 10px;
+        }
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(to right, #6366f1, #f43f5e);
+            border-radius: 3px;
+        }
+        .calendar-day:hover:not(.calendar-day-disabled):not(.calendar-day-selected) {
+            background-color: rgba(99, 102, 241, 0.1);
+        }
+        .calendar-day-selected {
+            background-color: #6366f1;
+            color: white;
+        }
+        .calendar-day-disabled {
+            color: #9ca3af;
+            cursor: default;
+        }
+        .calendar-day-today {
+            border: 2px solid #6366f1;
+        }
+        .calendar-day-has-event:after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background-color: #6366f1;
+        }
+        .dark .calendar-day-has-event:after {
+            background-color: #818cf8;
+        }
+        .profile-stat-item:not(:last-child):after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 60%;
+            width: 1px;
+            background-color: #e5e7eb;
+        }
+        .dark .profile-stat-item:not(:last-child):after {
+            background-color: #374151;
+        }
+        .supertrump-card {
+            perspective: 1000px;
+        }
+        .supertrump-card-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .supertrump-card:hover .supertrump-card-inner {
+            transform: rotateY(180deg);
+        }
+        .supertrump-card-front, .supertrump-card-back {
+            backface-visibility: hidden;
+        }
+        .supertrump-card-back {
+            transform: rotateY(180deg);
+        }
+        .course-progress-bar {
+            height: 6px;
+            border-radius: 3px;
+            background-color: #e5e7eb;
+        }
+        .dark .course-progress-bar {
+            background-color: #374151;
+        }
+        .course-progress-value {
+            height: 6px;
+            border-radius: 3px;
+            background: linear-gradient(to right, #6366f1, #f43f5e);
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+    <header class="bg-white dark:bg-gray-800 shadow-sm transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="h-10 w-10 rounded-lg bg-gradient-to-br from-primary-light to-secondary-light dark:from-primary-dark dark:to-secondary-dark flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                </div>
+                <h1 class="text-xl font-bold">DromeFlow UI Kit V2</h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none">
+                    <!-- Sun icon for dark mode -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    <!-- Moon icon for light mode -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-8">
+        <div class="mb-12">
+            <h1 class="text-3xl font-bold mb-2">DromeFlow UI Kit Elements V2</h1>
+            <p class="text-gray-600 dark:text-gray-400">Component collection focusing on Calendar, Profile Cards, Supertrump Profile Cards, and Course Panels.</p>
+        </div>
+
+        <!-- Calendar Components -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-semibold mb-6 section-title">Calendar Components</h2>
+            
+            <!-- Basic Calendar -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-8 transition-colors duration-300">
+                <h3 class="text-lg font-medium mb-4">Basic Calendar</h3>
+                <div class="max-w-md mx-auto">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+                        <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                            <button class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                </svg>
+                            </button>
+                            <h4 class="font-medium">June 2023</h4>
+                            <button class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="p-4">
+                            <div class="grid grid-cols-7 gap-1 mb-2">
+                                <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400">Su</div>
+                                <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400">Mo</div>
+                                <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400">Tu</div>
+                                <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400">We</div>
+                                <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400">Th</div>
+                                <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400">Fr</div>
+                                <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400">Sa</div>
+                            </div>
+                            <div class="grid grid-cols-7 gap-1">
+                                <div class="calendar-day calendar-day-disabled h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">28</div>
+                                <div class="calendar-day calendar-day-disabled h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">29</div>
+                                <div class="calendar-day calendar-day-disabled h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">30</div>
+                                <div class="calendar-day calendar-day-disabled h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">31</div>
+                                <div class="calendar-day h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">1</div>
+                                <div class="calendar-day h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">2</div>
+                                <div class="calendar-day h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">3</div>
+                                <div class="calendar-day h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">4</div>
+                                <div class="calendar-day h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">5</div>
+                                <div class="calendar-day h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">6</div>
+                                <div class="calendar-day h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">7</div>
+                                <div class="calendar-day h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">8</div>
+                                <div class="calendar-day h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">9</div>
+                                <div class="calendar-day h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">10</div>
+                                <div class="calendar-day h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">11</div>
+                                <div class="calendar-day h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">12</div>
+                                <div class="calendar-day h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">13</div>
+                                <div class="calendar-day h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">14</div>
+                                <div class="calendar-day calendar-day-today h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">15</div>
+                                <div class="calendar-day calendar-day-selected h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">16</div>
+                                <div class="calendar-day h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">17</div>
+                                <div class="calendar-day h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">18</div>
+                                <div class="calendar-day h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">19</div>
+                                <div class="calendar-day h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">20</div>
+                                <div class="calendar-day h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">21</div>
+                                <div class="calendar-day h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">22</div>
+                                <div class="calendar-day h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">23</div>
+                                <div class="calendar-day h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">24</div>
+                                <div class="calendar-day h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">25</div>
+                                <div class="calendar-day h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">26</div>
+                                <div class="calendar-day h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">27</div>
+                                <div class="calendar-day h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">28</div>
+                                <div class="calendar-day h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">29</div>
+                                <div class="calendar-day h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">30</div>
+                                <div class="calendar-day calendar-day-disabled h-10 flex items-center justify-center text-sm rounded-md cursor-pointer">1</div>
+                            </div>
+                        </div>
+                        <div class="p-4 border-t border-gray-200 dark:border-gray-700 flex justify-between">
+                            <button class="px-3 py-1 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200">Today</button>
+                            <button class="px-3 py-1 text-sm bg-primary-light dark:bg-primary-dark text-white rounded-md">Select</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Calendar -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-8 transition-colors duration-300">
+                <h3 class="text-lg font-medium mb-4">Event Calendar</h3>
+                <div class="max-w-3xl mx-auto">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+                        <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                            <div class="flex items-center space-x-4">
+                                <button class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                    </svg>
+                                </button>
+                                <h4 class="font-medium">June 2023</h4>
+                                <button class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button class="px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 rounded-md">Day</button>
+                                <button class="px-3 py-1 text-sm bg-primary-light dark:bg-primary-dark text-white rounded-md">Week</button>
+                                <button class="px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 rounded-md">Month</button>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="grid grid-cols-7 gap-1 mb-2">
+                                <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400">Sun</div>
+                                <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400">Mon</div>
+                                <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400">Tue</div>
+                                <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400">Wed</div>
+                                <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400">Thu</div>
+                                <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400">Fri</div>
+                                <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400">Sat</div>
+                            </div>
+                            <div class="grid grid-cols-7 gap-1">
+                                <div class="calendar-day calendar-day-disabled h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">28</div>
+                                </div>
+                                <div class="calendar-day calendar-day-disabled h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">29</div>
+                                </div>
+                                <div class="calendar-day calendar-day-disabled h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">30</div>
+                                </div>
+                                <div class="calendar-day calendar-day-disabled h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">31</div>
+                                </div>
+                                <div class="calendar-day h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">1</div>
+                                </div>
+                                <div class="calendar-day h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">2</div>
+                                </div>
+                                <div class="calendar-day h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">3</div>
+                                </div>
+                                <div class="calendar-day h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">4</div>
+                                </div>
+                                <div class="calendar-day h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">5</div>
+                                    <div class="text-xs p-1 mb-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded truncate">9:00 AM Meeting</div>
+                                </div>
+                                <div class="calendar-day h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">6</div>
+                                </div>
+                                <div class="calendar-day h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">7</div>
+                                </div>
+                                <div class="calendar-day h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">8</div>
+                                </div>
+                                <div class="calendar-day h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">9</div>
+                                </div>
+                                <div class="calendar-day h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">10</div>
+                                    <div class="text-xs p-1 mb-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded truncate">2:30 PM Call</div>
+                                </div>
+                                <div class="calendar-day h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">11</div>
+                                </div>
+                                <div class="calendar-day h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">12</div>
+                                </div>
+                                <div class="calendar-day h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">13</div>
+                                </div>
+                                <div class="calendar-day h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">14</div>
+                                    <div class="text-xs p-1 mb-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded truncate">All day event</div>
+                                </div>
+                                <div class="calendar-day calendar-day-today h-24 p-1 rounded-md cursor-pointer border-2 border-primary-light dark:border-primary-dark">
+                                    <div class="text-xs font-medium mb-1">15</div>
+                                </div>
+                                <div class="calendar-day calendar-day-selected h-24 p-1 rounded-md cursor-pointer bg-primary-light/10 dark:bg-primary-dark/10 border border-primary-light dark:border-primary-dark">
+                                    <div class="text-xs font-medium mb-1">16</div>
+                                    <div class="text-xs p-1 mb-1 bg-primary-light/20 dark:bg-primary-dark/20 text-primary-light dark:text-primary-dark rounded truncate">10:00 AM Interview</div>
+                                    <div class="text-xs p-1 bg-primary-light/20 dark:bg-primary-dark/20 text-primary-light dark:text-primary-dark rounded truncate">3:00 PM Review</div>
+                                </div>
+                                <div class="calendar-day h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">17</div>
+                                </div>
+                                <div class="calendar-day h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">18</div>
+                                </div>
+                                <div class="calendar-day h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">19</div>
+                                </div>
+                                <div class="calendar-day h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">20</div>
+                                    <div class="text-xs p-1 mb-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 rounded truncate">Deadline</div>
+                                </div>
+                                <div class="calendar-day h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">21</div>
+                                </div>
+                                <div class="calendar-day h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">22</div>
+                                </div>
+                                <div class="calendar-day h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">23</div>
+                                </div>
+                                <div class="calendar-day h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">24</div>
+                                </div>
+                                <div class="calendar-day h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">25</div>
+                                </div>
+                                <div class="calendar-day h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">26</div>
+                                </div>
+                                <div class="calendar-day h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">27</div>
+                                </div>
+                                <div class="calendar-day h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">28</div>
+                                    <div class="text-xs p-1 mb-1 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 rounded truncate">Birthday</div>
+                                </div>
+                                <div class="calendar-day h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">29</div>
+                                </div>
+                                <div class="calendar-day h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">30</div>
+                                </div>
+                                <div class="calendar-day calendar-day-disabled h-24 p-1 rounded-md cursor-pointer border border-gray-100 dark:border-gray-700">
+                                    <div class="text-xs font-medium mb-1">1</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4 border-t border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                            <button class="px-3 py-1 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200">Today</button>
+                            <button class="px-3 py-1 text-sm flex items-center space-x-1 bg-primary-light dark:bg-primary-dark text-white rounded-md">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                </svg>
+                                <span>Add Event</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Date Range Picker -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-8 transition-colors duration-300">
+                <h3 class="text-lg font-medium mb-4">Date Range Picker</h3>
+                <div class="max-w-3xl mx-auto">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+                        <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                            <h4 class="font-medium mb-2">Select Date Range</h4>
+                            <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
+                                <div class="flex-1">
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Start Date</label>
+                                    <div class="relative">
+                                        <input type="text" class="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark" placeholder="MM/DD/YYYY" value="06/15/2023">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex-1">
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">End Date</label>
+                                    <div class="relative">
+                                        <input type="text" class="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark" placeholder="MM/DD/YYYY" value="06/22/2023">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <h5 class="text-sm font-medium">June 2023</h5>
+                                    <div class="flex space-x-1">
+                                        <button class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                            </svg>
+                                        </button>
+                                        <button class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-7 gap-1 mb-1">
+                                    <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400">Su</div>
+                                    <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400">Mo</div>
+                                    <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400">Tu</div>
+                                    <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400">We</div>
+                                    <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400">Th</div>
+                                    <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400">Fr</div>
+                                    <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400">Sa</div>
+                                </div>
+                                <div class="grid grid-cols-7 gap-1">
+                                    <div class="calendar-day calendar-day-disabled h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">28</div>
+                                    <div class="calendar-day calendar-day-disabled h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">29</div>
+                                    <div class="calendar-day calendar-day-disabled h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">30</div>
+                                    <div class="calendar-day calendar-day-disabled h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">31</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">1</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">2</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">3</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">4</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">5</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">6</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">7</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">8</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">9</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">10</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">11</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">12</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">13</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">14</div>
+                                    <div class="calendar-day calendar-day-today calendar-day-selected h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">15</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer bg-primary-light/10 dark:bg-primary-dark/10">16</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer bg-primary-light/10 dark:bg-primary-dark/10">17</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer bg-primary-light/10 dark:bg-primary-dark/10">18</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer bg-primary-light/10 dark:bg-primary-dark/10">19</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer bg-primary-light/10 dark:bg-primary-dark/10">20</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer bg-primary-light/10 dark:bg-primary-dark/10">21</div>
+                                    <div class="calendar-day calendar-day-selected h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">22</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">23</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">24</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">25</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">26</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">27</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">28</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">29</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">30</div>
+                                    <div class="calendar-day calendar-day-disabled h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">1</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <h5 class="text-sm font-medium">July 2023</h5>
+                                    <div class="flex space-x-1">
+                                        <button class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                            </svg>
+                                        </button>
+                                        <button class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-7 gap-1 mb-1">
+                                    <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400">Su</div>
+                                    <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400">Mo</div>
+                                    <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400">Tu</div>
+                                    <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400">We</div>
+                                    <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400">Th</div>
+                                    <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400">Fr</div>
+                                    <div class="text-center text-xs font-medium text-gray-500 dark:text-gray-400">Sa</div>
+                                </div>
+                                <div class="grid grid-cols-7 gap-1">
+                                    <div class="calendar-day calendar-day-disabled h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">25</div>
+                                    <div class="calendar-day calendar-day-disabled h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">26</div>
+                                    <div class="calendar-day calendar-day-disabled h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">27</div>
+                                    <div class="calendar-day calendar-day-disabled h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">28</div>
+                                    <div class="calendar-day calendar-day-disabled h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">29</div>
+                                    <div class="calendar-day calendar-day-disabled h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">30</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">1</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">2</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">3</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">4</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">5</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">6</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">7</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">8</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">9</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">10</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">11</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">12</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">13</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">14</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">15</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">16</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">17</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">18</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">19</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">20</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">21</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">22</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">23</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">24</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">25</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">26</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">27</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">28</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">29</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">30</div>
+                                    <div class="calendar-day h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">31</div>
+                                    <div class="calendar-day calendar-day-disabled h-8 flex items-center justify-center text-xs rounded-md cursor-pointer">1</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4 border-t border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                            <div class="text-sm">
+                                <span class="font-medium">Selected:</span> 
+                                <span class="text-gray-600 dark:text-gray-400">Jun 15 - Jun 22, 2023 (8 days)</span>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button class="px-3 py-1 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200">Cancel</button>
+                                <button class="px-3 py-1 text-sm bg-primary-light dark:bg-primary-dark text-white rounded-md">Apply</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Card Components -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-semibold mb-6 section-title">Profile Card Components</h2>
+            
+            <!-- Basic Profile Card -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-8 transition-colors duration-300">
+                <h3 class="text-lg font-medium mb-4">Basic Profile Card</h3>
+                <div class="max-w-sm mx-auto">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md border border-gray-200 dark:border-gray-700">
+                        <div class="h-32 bg-gradient-to-r from-primary-light to-secondary-light dark:from-primary-dark dark:to-secondary-dark"></div>
+                        <div class="px-6 pb-6">
+                            <div class="flex justify-center -mt-12 mb-3">
+                                <div class="h-24 w-24 rounded-full border-4 border-white dark:border-gray-800 bg-gray-200 dark:bg-gray-700 overflow-hidden">
+                                    <svg class="h-full w-full text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <h4 class="text-xl font-semibold">Alex Johnson</h4>
+                                <p class="text-gray-600 dark:text-gray-400">Senior Product Designer</p>
+                                <div class="flex justify-center mt-3 space-x-2">
+                                    <button class="px-4 py-1 bg-primary-light dark:bg-primary-dark text-white text-sm rounded-md hover:bg-primary-light/90 dark:hover:bg-primary-dark/90">Follow</button>
+                                    <button class="px-4 py-1 border border-gray-300 dark:border-gray-600 text-sm rounded-md hover:bg-gray-50 dark:hover:bg-gray-700">Message</button>
+                                </div>
+                            </div>
+                            <div class="mt-6 flex border-t border-gray-200 dark:border-gray-700">
+                                <div class="flex-1 py-4 text-center profile-stat-item relative">
+                                    <div class="text-lg font-semibold">142</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">Posts</div>
+                                </div>
+                                <div class="flex-1 py-4 text-center profile-stat-item relative">
+                                    <div class="text-lg font-semibold">2.8k</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">Followers</div>
+                                </div>
+                                <div class="flex-1 py-4 text-center profile-stat-item relative">
+                                    <div class="text-lg font-semibold">268</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">Following</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Profile Card -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-8 transition-colors duration-300">
+                <h3 class="text-lg font-medium mb-4">Detailed Profile Card</h3>
+                <div class="max-w-md mx-auto">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md border border-gray-200 dark:border-gray-700">
+                        <div class="flex p-6">
+                            <div class="mr-4 flex-shrink-0">
+                                <div class="h-20 w-20 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
+                                    <svg class="h-full w-full text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex items-center justify-between">
+                                    <h4 class="text-xl font-semibold">Sarah Miller</h4>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                                        <span class="h-2 w-2 rounded-full bg-green-500 mr-1"></span>
+                                        Online
+                                    </span>
+                                </div>
+                                <p class="text-gray-600 dark:text-gray-400">UX Researcher • New York</p>
+                                <div class="mt-2 flex items-center text-sm text-gray-500 dark:text-gray-400">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                    </svg>
+                                    <span>Design Team • 4 years</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-4">
+                            <div class="flex justify-between mb-4">
+                                <div>
+                                    <h5 class="text-sm font-medium mb-1">Skills</h5>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">User Research</span>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400">Prototyping</span>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400">Usability Testing</span>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <h5 class="text-sm font-medium mb-1">Availability</h5>
+                                    <div class="text-sm text-green-600 dark:text-green-400">Available for projects</div>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                                Passionate about creating user-centered designs through thoughtful research and iterative testing. Specializing in complex product simplification.
+                            </p>
+                            <div class="flex justify-between">
+                                <div class="flex space-x-2">
+                                    <button class="p-2 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                        </svg>
+                                    </button>
+                                    <button class="p-2 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                        </svg>
+                                    </button>
+                                    <button class="p-2 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                                <button class="px-4 py-2 bg-primary-light dark:bg-primary-dark text-white text-sm rounded-md hover:bg-primary-light/90 dark:hover:bg-primary-dark/90">View Profile</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Profile Card -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-8 transition-colors duration-300">
+                <h3 class="text-lg font-medium mb-4">Team Profile Card</h3>
+                <div class="max-w-lg mx-auto">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md border border-gray-200 dark:border-gray-700">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h4 class="text-xl font-semibold">Design Team</h4>
+                                    <p class="text-gray-600 dark:text-gray-400">Product Experience • 8 members</p>
+                                </div>
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
+                                    Core Team
+                                </span>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">
+                                Responsible for creating and maintaining the design system, user experience, and visual design across all product platforms.
+                            </p>
+                            <div class="mb-6">
+                                <h5 class="text-sm font-medium mb-2">Team Members</h5>
+                                <div class="flex -space-x-2 overflow-hidden">
+                                    <div class="h-10 w-10 rounded-full border-2 border-white dark:border-gray-800 bg-gray-200 dark:bg-gray-700 overflow-hidden z-10">
+                                        <svg class="h-full w-full text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                                        </svg>
+                                    </div>
+                                    <div class="h-10 w-10 rounded-full border-2 border-white dark:border-gray-800 bg-gray-200 dark:bg-gray-700 overflow-hidden z-20">
+                                        <svg class="h-full w-full text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                                        </svg>
+                                    </div>
+                                    <div class="h-10 w-10 rounded-full border-2 border-white dark:border-gray-800 bg-gray-200 dark:bg-gray-700 overflow-hidden z-30">
+                                        <svg class="h-full w-full text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                                        </svg>
+                                    </div>
+                                    <div class="h-10 w-10 rounded-full border-2 border-white dark:border-gray-800 bg-gray-200 dark:bg-gray-700 overflow-hidden z-40">
+                                        <svg class="h-full w-full text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                                        </svg>
+                                    </div>
+                                    <div class="h-10 w-10 rounded-full border-2 border-white dark:border-gray-800 bg-primary-light dark:bg-primary-dark flex items-center justify-center text-white text-xs font-medium z-50">
+                                        +4
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-6">
+                                <h5 class="text-sm font-medium mb-2">Current Projects</h5>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between items-center">
+                                        <div class="flex items-center">
+                                            <div class="h-3 w-3 rounded-full bg-green-500 mr-2"></div>
+                                            <span class="text-sm">Mobile App Redesign</span>
+                                        </div>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">75% complete</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <div class="flex items-center">
+                                            <div class="h-3 w-3 rounded-full bg-yellow-500 mr-2"></div>
+                                            <span class="text-sm">Design System Update</span>
+                                        </div>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">40% complete</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <div class="flex items-center">
+                                            <div class="h-3 w-3 rounded-full bg-blue-500 mr-2"></div>
+                                            <span class="text-sm">Website Refresh</span>
+                                        </div>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">20% complete</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between">
+                                <button class="px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm rounded-md hover:bg-gray-50 dark:hover:bg-gray-700">Team Calendar</button>
+                                <button class="px-4 py-2 bg-primary-light dark:bg-primary-dark text-white text-sm rounded-md hover:bg-primary-light/90 dark:hover:bg-primary-dark/90">Contact Team</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Supertrump Profile Cards -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-semibold mb-6 section-title">Supertrump Profile Cards</h2>
+            
+            <!-- Basic Supertrump Card -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-8 transition-colors duration-300">
+                <h3 class="text-lg font-medium mb-4">Basic Supertrump Card</h3>
+                <div class="max-w-xs mx-auto">
+                    <div class="supertrump-card h-96 w-64 mx-auto">
+                        <div class="supertrump-card-inner relative w-full h-full">
+                            <!-- Front -->
+                            <div class="supertrump-card-front absolute w-full h-full rounded-xl overflow-hidden shadow-lg border-4 border-primary-light dark:border-primary-dark bg-white dark:bg-gray-800">
+                                <div class="h-1/2 bg-gradient-to-br from-primary-light to-secondary-light dark:from-primary-dark dark:to-secondary-dark flex items-center justify-center">
+                                    <div class="h-24 w-24 rounded-full bg-white dark:bg-gray-800 p-1">
+                                        <div class="h-full w-full rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
+                                            <svg class="h-full w-full text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="h-1/2 p-4">
+                                    <div class="text-center mb-4">
+                                        <h4 class="text-xl font-bold">Michael Chen</h4>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">Frontend Developer</p>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-sm font-medium">Coding</span>
+                                            <span class="text-sm font-bold">95</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                            <div class="bg-primary-light dark:bg-primary-dark h-2 rounded-full" style="width: 95%"></div>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-sm font-medium">Design</span>
+                                            <span class="text-sm font-bold">80</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                            <div class="bg-primary-light dark:bg-primary-dark h-2 rounded-full" style="width: 80%"></div>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-sm font-medium">Speed</span>
+                                            <span class="text-sm font-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'939285b946f1f25e',t:'MTc0NjEzNjUxOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>

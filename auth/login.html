@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - DromeBoard</title>
+    
+    <!-- Design System -->
+    <link rel="stylesheet" href="../shared/drome-design-system.css">
+    <link rel="stylesheet" href="auth.css">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="drome-bg-gray-50 dark:drome-bg-gray-900">
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="drome-fixed drome-inset-0 drome-bg-white drome-z-50 drome-flex drome-items-center drome-justify-center" style="display: none;">
+        <div class="drome-text-center">
+            <div class="drome-animate-spin drome-w-12 drome-h-12 drome-border-4 drome-border-primary drome-border-t-transparent drome-rounded-full drome-mx-auto drome-mb-4"></div>
+            <p class="drome-text-gray-600">Autenticando...</p>
+        </div>
+    </div>
+
+    <div class="drome-min-h-screen drome-flex drome-items-center drome-justify-center drome-py-12 drome-px-4">
+        <div class="drome-w-full drome-max-w-md">
+            <!-- Logo e Header -->
+            <div class="drome-text-center drome-mb-8">
+                <img src="https://iili.io/3IVuaEb.png" alt="DromeBoard" class="drome-mx-auto drome-h-16 drome-w-auto drome-mb-4">
+                <h2 class="drome-h2 drome-text-center drome-text-gray-900 dark:drome-text-white drome-mb-2">
+                    Acesse sua conta
+                </h2>
+                <p class="drome-text-sm drome-text-gray-600 dark:drome-text-gray-400">
+                    Entre com suas credenciais para continuar
+                </p>
+            </div>
+
+            <!-- Card de Login -->
+            <div class="drome-card drome-shadow-lg">
+                <form id="loginForm" class="drome-space-y-6">
+                    <!-- Campo Email -->
+                    <div class="drome-form-group">
+                        <label for="email" class="drome-label">
+                            <i class="fas fa-envelope drome-mr-2"></i>
+                            E-mail
+                        </label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            class="drome-input" 
+                            placeholder="Digite seu e-mail" 
+                            required
+                            autocomplete="email"
+                        >
+                    </div>
+
+                    <!-- Campo Senha -->
+                    <div class="drome-form-group">
+                        <label for="password" class="drome-label">
+                            <i class="fas fa-lock drome-mr-2"></i>
+                            Senha
+                        </label>
+                        <div class="drome-relative">
+                            <input 
+                                type="password" 
+                                id="password" 
+                                name="password" 
+                                class="drome-input drome-pr-12" 
+                                placeholder="Digite sua senha" 
+                                required
+                                autocomplete="current-password"
+                            >
+                            <button 
+                                type="button" 
+                                id="toggle-password"
+                                class="drome-absolute drome-right-3 drome-top-1/2 drome-transform drome--translate-y-1/2 drome-text-gray-400 hover:drome-text-gray-600"
+                            >
+                                <i class="fas fa-eye" id="password-icon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Opções adicionais -->
+                    <div class="drome-flex drome-items-center drome-justify-between">
+                        <div class="drome-flex drome-items-center">
+                            <input 
+                                id="remember-me" 
+                                name="remember-me" 
+                                type="checkbox" 
+                                class="drome-checkbox"
+                            >
+                            <label for="remember-me" class="drome-ml-2 drome-text-sm drome-text-gray-600 dark:drome-text-gray-400">
+                                Lembrar de mim
+                            </label>
+                        </div>
+                        <a href="#" class="drome-text-sm drome-text-primary hover:drome-text-secondary drome-transition-colors">
+                            Esqueceu a senha?
+                        </a>
+                    </div>
+
+                    <!-- Botão de Login -->
+                    <button 
+                        type="submit" 
+                        class="drome-btn drome-btn-primary drome-w-full drome-py-3"
+                        id="login-button"
+                    >
+                        <span class="drome-btn-text">
+                            <i class="fas fa-sign-in-alt drome-mr-2"></i>
+                            Entrar
+                        </span>
+                        <span class="drome-loading-icon drome-hidden">
+                            <div class="drome-animate-spin drome-w-4 drome-h-4 drome-border-2 drome-border-white drome-border-t-transparent drome-rounded-full"></div>
+                        </span>
+                    </button>
+
+                    <!-- Mensagens de Erro/Sucesso -->
+                    <div id="message-container" class="drome-space-y-3">
+                        <!-- Mensagens serão inseridas aqui dinamicamente -->
+                    </div>
+                </form>
+            </div>
+
+            <!-- Footer -->
+            <div class="drome-text-center drome-mt-8 drome-text-sm drome-text-gray-500">
+                <p>&copy; 2025 DromeBoard. Todos os direitos reservados.</p>
+                <p class="drome-mt-1">Versão 2.0</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toggle Theme Button -->
+    <button 
+        id="theme-toggle" 
+        class="drome-fixed drome-top-4 drome-right-4 drome-btn-icon drome-bg-white dark:drome-bg-gray-800 drome-shadow-lg"
+        title="Alternar tema"
+    >
+        <i class="fas fa-moon dark:fa-sun"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="../shared/drome-design-system.js"></script>
+    <script src="auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{pageTitle}} - DromeBoard</title>
+    
+    <!-- Design System - OBRIGATÓRIO -->
+    <link rel="stylesheet" href="../shared/drome-design-system.css">
+    <link rel="stylesheet" href="../shared/global-styles-new.css">
+    
+    <!-- Ícones Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Estilos específicos do módulo (opcional) -->
+    <link rel="stylesheet" href="{{moduleStyles}}" id="module-styles">
+    
+    <!-- Meta tags -->
+    <meta name="description" content="{{pageDescription}}">
+    <meta name="robots" content="noindex, nofollow">
+</head>
+<body class="drome-bg-gray-50 dark:drome-bg-gray-900">
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="drome-fixed drome-inset-0 drome-bg-white drome-z-50 drome-flex drome-items-center drome-justify-center" style="display: none;">
+        <div class="drome-text-center">
+            <div class="drome-animate-spin drome-w-12 drome-h-12 drome-border-4 drome-border-primary drome-border-t-transparent drome-rounded-full drome-mx-auto drome-mb-4"></div>
+            <p class="drome-text-gray-600">Carregando...</p>
+        </div>
+    </div>
+
+    <!-- Main Layout Container -->
+    <div class="drome-min-h-screen drome-flex">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="drome-sidebar drome-bg-white drome-shadow-lg dark:drome-bg-gray-800" data-sidebar>
+            <!-- Sidebar Header -->
+            <div class="drome-sidebar-header drome-flex drome-items-center drome-justify-between">
+                <div class="drome-flex drome-items-center drome-gap-3">
+                    <img src="../assets/images/logo.png" alt="DromeBoard" class="drome-w-8 drome-h-8" onerror="this.style.display='none'">
+                    <div class="sidebar-title">
+                        <h1 class="drome-text-xl drome-font-bold drome-text-primary">DromeBoard</h1>
+                        <p class="drome-text-xs drome-text-gray-500" id="unit-name">Carregando...</p>
+                    </div>
+                </div>
+                <button id="sidebar-toggle" class="drome-btn-ghost drome-p-2 drome-rounded-lg lg:drome-hidden">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="drome-sidebar-nav" id="main-navigation">
+                <!-- Navegação será carregada dinamicamente -->
+                <div class="drome-p-4 drome-text-center drome-text-gray-500">
+                    <div class="drome-animate-pulse">Carregando menu...</div>
+                </div>
+            </nav>
+
+            <!-- Sidebar Footer -->
+            <div class="drome-sidebar-footer">
+                <div class="drome-flex drome-items-center drome-justify-between drome-mb-3">
+                    <span class="drome-text-sm drome-text-gray-600" id="user-name">Usuário</span>
+                    <button id="theme-toggle" class="drome-btn-ghost drome-p-2 drome-rounded-lg" title="Alternar tema">
+                        <i class="fas fa-moon dark:fa-sun"></i>
+                    </button>
+                </div>
+                <button id="logout-btn" class="drome-btn drome-btn-outline drome-w-full drome-btn-sm">
+                    <i class="fas fa-sign-out-alt drome-mr-2"></i>
+                    Sair
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="drome-flex-1 drome-flex drome-flex-col drome-min-h-screen">
+            <!-- Header -->
+            <header class="drome-bg-white drome-shadow-sm drome-border-b drome-border-gray-200 dark:drome-bg-gray-800 dark:drome-border-gray-700">
+                <div class="drome-container drome-py-4">
+                    <div class="drome-flex drome-items-center drome-justify-between">
+                        <!-- Breadcrumbs -->
+                        <nav id="breadcrumbs" class="drome-breadcrumb">
+                            <!-- Breadcrumbs serão carregados dinamicamente -->
+                        </nav>
+
+                        <!-- Header Actions -->
+                        <div class="drome-flex drome-items-center drome-gap-3">
+                            <!-- Notificações -->
+                            <button class="drome-btn-ghost drome-p-2 drome-rounded-lg drome-relative" id="notifications-btn">
+                                <i class="fas fa-bell"></i>
+                                <span id="notification-badge" class="drome-absolute drome-top-0 drome-right-0 drome-w-2 drome-h-2 drome-bg-red-500 drome-rounded-full" style="display: none;"></span>
+                            </button>
+
+                            <!-- Perfil do usuário (mobile) -->
+                            <div class="drome-dropdown lg:drome-hidden">
+                                <button class="drome-dropdown-trigger drome-btn-ghost drome-p-2 drome-rounded-lg">
+                                    <i class="fas fa-user-circle drome-text-xl"></i>
+                                </button>
+                                <div class="drome-dropdown-menu drome-dropdown-bottom-start">
+                                    <a href="#" class="drome-dropdown-item" id="profile-link">
+                                        <i class="fas fa-user"></i>
+                                        Perfil
+                                    </a>
+                                    <a href="#" class="drome-dropdown-item" id="settings-link">
+                                        <i class="fas fa-cog"></i>
+                                        Configurações
+                                    </a>
+                                    <div class="drome-dropdown-divider"></div>
+                                    <a href="#" class="drome-dropdown-item" id="mobile-logout">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                        Sair
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <main class="drome-flex-1 drome-overflow-auto">
+                <!-- Page Header -->
+                <div class="drome-bg-white drome-border-b drome-border-gray-200 dark:drome-bg-gray-800 dark:drome-border-gray-700" id="page-header">
+                    <div class="drome-container drome-py-6">
+                        <div class="drome-flex drome-items-center drome-justify-between drome-mb-6">
+                            <div>
+                                <h1 class="drome-h1 drome-text-gray-900 dark:drome-text-white drome-mb-2" id="page-title">{{pageTitle}}</h1>
+                                <p class="drome-text-gray-600 dark:drome-text-gray-400" id="page-description">{{pageDescription}}</p>
+                            </div>
+                            <div id="page-actions" class="drome-flex drome-gap-3">
+                                <!-- Ações da página serão inseridas aqui -->
+                            </div>
+                        </div>
+
+                        <!-- Page Stats/Metrics (opcional) -->
+                        <div id="page-stats" class="drome-grid drome-grid-cols-1 drome-sm-grid-cols-2 drome-lg-grid-cols-4 drome-gap-6" style="display: none;">
+                            <!-- Stats cards serão inseridos aqui -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content Area -->
+                <div class="drome-container drome-py-6">
+                    <!-- Content será inserido aqui -->
+                    <div id="main-content" class="drome-space-y-6">
+                        <!-- Conteúdo específico do módulo -->
+                        <div class="drome-card">
+                            <div class="drome-card-body drome-text-center drome-py-12">
+                                <div class="drome-animate-pulse">
+                                    <div class="drome-w-16 drome-h-16 drome-bg-gray-200 drome-rounded-full drome-mx-auto drome-mb-4"></div>
+                                    <div class="drome-h-4 drome-bg-gray-200 drome-rounded drome-w-1-2 drome-mx-auto drome-mb-2"></div>
+                                    <div class="drome-h-3 drome-bg-gray-200 drome-rounded drome-w-1-3 drome-mx-auto"></div>
+                                </div>
+                                <p class="drome-text-gray-500 drome-mt-4">Carregando conteúdo...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Footer -->
+            <footer class="drome-bg-white drome-border-t drome-border-gray-200 dark:drome-bg-gray-800 dark:drome-border-gray-700">
+                <div class="drome-container drome-py-4">
+                    <div class="drome-flex drome-items-center drome-justify-between drome-text-sm drome-text-gray-600">
+                        <div>
+                            <span>&copy; 2025 DromeBoard. Todos os direitos reservados.</span>
+                        </div>
+                        <div class="drome-flex drome-items-center drome-gap-4">
+                            <span id="app-version">v2.0</span>
+                            <span id="connection-status" class="drome-flex drome-items-center drome-gap-1">
+                                <div class="drome-w-2 drome-h-2 drome-bg-green-500 drome-rounded-full"></div>
+                                Online
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Área para modals dinâmicos -->
+    <div id="modal-container"></div>
+
+    <!-- Scripts principais -->
+    <script src="../shared/drome-design-system.js"></script>
+    <script src="../core/api-config.js"></script>
+    <script src="../core/cache-manager.js"></script>
+    
+    <!-- Template base script -->
+    <script>
+        /**
+         * Template Base - Funcionalidades padrão
+         */
+        class BaseTemplate {
+            constructor() {
+                this.currentUser = null;
+                this.currentModule = '';
+                this.init();
+            }
+
+            /**
+             * Inicializa o template
+             */
+            init() {
+                this.checkAuthentication();
+                this.setupEventListeners();
+                this.setupTheme();
+                this.loadUserData();
+                this.loadNavigation();
+                this.updateBreadcrumbs();
+                this.hideLoadingOverlay();
+            }
+
+            /**
+             * Verifica autenticação
+             */
+            checkAuthentication() {
+                const userData = localStorage.getItem('userData');
+                if (!userData) {
+                    window.location.href = '../auth/login.html';
+                    return;
+                }
+                this.currentUser = JSON.parse(userData);
+            }
+
+            /**
+             * Configura event listeners
+             */
+            setupEventListeners() {
+                // Toggle sidebar
+                document.getElementById('sidebar-toggle')?.addEventListener('click', () => {
+                    this.toggleSidebar();
+                });
+
+                // Toggle tema
+                document.getElementById('theme-toggle')?.addEventListener('click', () => {
+                    window.dromeDesignSystem.toggleTheme();
+                });
+
+                // Logout
+                document.getElementById('logout-btn')?.addEventListener('click', () => {
+                    this.logout();
+                });
+
+                document.getElementById('mobile-logout')?.addEventListener('click', () => {
+                    this.logout();
+                });
+
+                // Notificações
+                document.getElementById('notifications-btn')?.addEventListener('click', () => {
+                    this.showNotifications();
+                });
+
+                // Responsividade
+                window.addEventListener('resize', () => {
+                    this.handleResize();
+                });
+            }
+
+            /**
+             * Configura tema inicial
+             */
+            setupTheme() {
+                const themeToggle = document.getElementById('theme-toggle');
+                if (themeToggle) {
+                    const updateThemeIcon = () => {
+                        const isDark = document.documentElement.classList.contains('dark');
+                        const icon = themeToggle.querySelector('i');
+                        icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+                    };
+
+                    updateThemeIcon();
+                    document.addEventListener('dromeThemeChange', updateThemeIcon);
+                }
+            }
+
+            /**
+             * Carrega dados do usuário
+             */
+            loadUserData() {
+                if (this.currentUser) {
+                    document.getElementById('user-name').textContent = this.currentUser.name;
+                    document.getElementById('unit-name').textContent = 
+                        this.currentUser.units?.[0]?.name || 'Unidade não definida';
+                }
+            }
+
+            /**
+             * Carrega navegação
+             */
+            loadNavigation() {
+                const navigation = document.getElementById('main-navigation');
+                if (!navigation || !this.currentUser.permissions) return;
+
+                const navItems = [
+                    { name: 'dashboard', label: 'Dashboard', icon: 'fas fa-tachometer-alt', href: '../core/dashboard.html' },
+                    { name: 'resultados', label: 'Resultados', icon: 'fas fa-chart-line', href: '../modules/resultados/resultados.html' },
+                    { name: 'usuarios', label: 'Usuários', icon: 'fas fa-users', href: '../modules/gestao-usuarios/gestao-usuarios.html' },
+                    { name: 'unidades', label: 'Unidades', icon: 'fas fa-building', href: '../modules/gestao-unidades/gestao-unidades.html' }
+                ];
+
+                const allowedItems = navItems.filter(item => 
+                    this.currentUser.permissions[item.name]
+                );
+
+                const currentPath = window.location.pathname;
+                
+                const navHtml = allowedItems.map(item => {
+                    const isActive = currentPath.includes(item.name) || 
+                                   (item.name === 'dashboard' && currentPath.includes('dashboard'));
+                    
+                    return `
+                        <a href="${item.href}" class="drome-nav-item ${isActive ? 'drome-nav-active' : ''}">
+                            <div class="drome-nav-item-content">
+                                <i class="${item.icon} drome-nav-icon"></i>
+                                <span class="drome-nav-label">${item.label}</span>
+                            </div>
+                        </a>
+                    `;
+                }).join('');
+
+                navigation.innerHTML = navHtml;
+            }
+
+            /**
+             * Atualiza breadcrumbs
+             */
+            updateBreadcrumbs() {
+                const breadcrumbs = document.getElementById('breadcrumbs');
+                if (!breadcrumbs) return;
+
+                const path = window.location.pathname;
+                const items = [{ label: 'Home', href: '../core/dashboard.html' }];
+
+                if (path.includes('dashboard')) {
+                    items.push({ label: 'Dashboard' });
+                } else if (path.includes('resultados')) {
+                    items.push({ label: 'Resultados' });
+                } else if (path.includes('usuarios')) {
+                    items.push({ label: 'Gestão de Usuários' });
+                } else if (path.includes('unidades')) {
+                    items.push({ label: 'Gestão de Unidades' });
+                }
+
+                const breadcrumbEl = window.dromeDesignSystem.navigation.createBreadcrumbs(items);
+                breadcrumbs.replaceWith(breadcrumbEl);
+                breadcrumbEl.id = 'breadcrumbs';
+            }
+
+            /**
+             * Toggle sidebar
+             */
+            toggleSidebar() {
+                const sidebar = document.getElementById('sidebar');
+                window.dromeDesignSystem.navigation.toggleSidebar(sidebar);
+            }
+
+            /**
+             * Handle resize
+             */
+            handleResize() {
+                const sidebar = document.getElementById('sidebar');
+                const width = window.innerWidth;
+                
+                if (width < 1024) {
+                    sidebar.classList.add('drome-sidebar-collapsed');
+                } else {
+                    sidebar.classList.remove('drome-sidebar-collapsed');
+                }
+            }
+
+            /**
+             * Logout
+             */
+            logout() {
+                const modal = window.dromeDesignSystem.modal.create({
+                    title: 'Confirmar Logout',
+                    content: 'Tem certeza que deseja sair do sistema?',
+                    buttons: [
+                        {
+                            text: 'Cancelar',
+                            class: 'secondary',
+                            action: (modal) => window.dromeDesignSystem.modal.close(modal)
+                        },
+                        {
+                            text: 'Sair',
+                            class: 'primary',
+                            action: () => {
+                                localStorage.removeItem('userData');
+                                window.location.href = '../auth/login.html';
+                            }
+                        }
+                    ]
+                });
+            }
+
+            /**
+             * Mostra notificações
+             */
+            showNotifications() {
+                window.dromeDesignSystem.notifications.info('Nenhuma notificação nova', 'Notificações');
+            }
+
+            /**
+             * Remove loading overlay
+             */
+            hideLoadingOverlay() {
+                setTimeout(() => {
+                    const overlay = document.getElementById('loading-overlay');
+                    if (overlay) {
+                        overlay.style.opacity = '0';
+                        setTimeout(() => {
+                            overlay.style.display = 'none';
+                        }, 300);
+                    }
+                }, 500);
+            }
+
+            /**
+             * Atualiza título da página
+             * @param {string} title - Novo título
+             * @param {string} description - Nova descrição
+             */
+            updatePageHeader(title, description = '') {
+                document.getElementById('page-title').textContent = title;
+                document.getElementById('page-description').textContent = description;
+                document.title = `${title} - DromeBoard`;
+            }
+
+            /**
+             * Adiciona ação na página
+             * @param {string} html - HTML da ação
+             */
+            addPageAction(html) {
+                document.getElementById('page-actions').innerHTML += html;
+            }
+
+            /**
+             * Atualiza conteúdo principal
+             * @param {string} html - HTML do conteúdo
+             */
+            updateMainContent(html) {
+                document.getElementById('main-content').innerHTML = html;
+            }
+
+            /**
+             * Mostra estatísticas da página
+             * @param {Array} stats - Array de estatísticas
+             */
+            showPageStats(stats) {
+                const container = document.getElementById('page-stats');
+                container.style.display = 'grid';
+                
+                const statsHtml = stats.map(stat => `
+                    <div class="drome-card">
+                        <div class="drome-card-body drome-text-center">
+                            <div class="drome-text-3xl drome-font-bold drome-text-${stat.color || 'primary'} drome-mb-2">
+                                ${stat.value}
+                            </div>
+                            <div class="drome-text-sm drome-text-gray-600">
+                                ${stat.label}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                container.innerHTML = statsHtml;
+            }
+        }
+
+        // Inicializa o template base
+        window.baseTemplate = new BaseTemplate();
+    </script>
+
+    <!-- Script específico do módulo -->
+    <script src="{{moduleScript}}" id="module-script"></script>
+</body>
+</html>

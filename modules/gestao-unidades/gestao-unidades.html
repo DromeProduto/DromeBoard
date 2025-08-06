@@ -1,0 +1,1660 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Unidades - DromeBoard</title>
+    
+    <!-- Estilos Globais do Sistema -->
+    <link rel="stylesheet" href="../../shared/global-styles.css">
+    
+    <!-- Google Fonts: Inter (já incluída no global-styles) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    
+    <!-- Estilos específicos do módulo -->
+    <link rel="stylesheet" href="gestao-unidades.css">
+            --danger-color: #ef476f;
+            --info-color: #00d5ff;
+            
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f1f5f9;
+            
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-accent: var(--accent-primary);
+            --text-on-accent: #ffffff;
+            
+            --border-primary: #e2e8f0;
+            --border-secondary: #cbd5e1;
+            --border-accent: var(--accent-primary);
+            
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            
+            --border-radius: 8px;
+            --transition-fast: 0.15s ease;
+        }
+
+        /* Dark theme variables */
+        [data-theme="dark"] {
+            --bg-primary: #010d32;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-accent: var(--accent-primary);
+            --text-on-accent: #ffffff;
+            
+            --border-primary: #334155;
+            --border-secondary: #475569;
+            --border-accent: var(--accent-primary);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 1400px; /* Aumentado de 1200px para 1400px */
+            margin: 0 auto;
+            padding: var(--spacing-md) var(--spacing-sm); /* Reduzido ainda mais sem header */
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-xl);
+            padding-bottom: var(--spacing-lg);
+            border-bottom: 1px solid var(--border-primary);
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--accent-primary);
+            color: var(--text-on-accent);
+        }
+
+        .btn-primary:hover {
+            background: #9a0088;
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-secondary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .btn-danger {
+            background: var(--danger-color);
+            color: var(--text-on-accent);
+        }
+
+        .btn-danger:hover {
+            background: #d63958;
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-primary);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .units-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Aumentado de 280px para 300px */
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .unit-card {
+            background: var(--bg-secondary);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-primary);
+            padding: var(--spacing-lg);
+            transition: all var(--transition-fast);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 120px;
+            justify-content: center;
+        }
+
+        .unit-card:hover {
+            box-shadow: 0 4px 12px rgba(172, 0, 158, 0.1);
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+
+        .unit-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .unit-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .unit-status {
+            padding: var(--spacing-xs) var(--spacing-md);
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: 2px solid transparent;
+        }
+
+        .status-active {
+            background: rgba(112, 224, 0, 0.1);
+            color: var(--success-color);
+            border-color: var(--success-color);
+        }
+
+        .status-inactive {
+            background: rgba(239, 71, 111, 0.1);
+            color: var(--danger-color);
+            border-color: var(--danger-color);
+        }
+
+        .unit-info {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .unit-info p {
+            margin-bottom: var(--spacing-xs);
+            color: var(--text-secondary);
+        }
+
+        .unit-info strong {
+            color: var(--text-primary);
+        }
+
+        .unit-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+
+        .edit-icon {
+            position: absolute;
+            top: var(--spacing-sm);
+            right: var(--spacing-sm);
+            color: var(--text-secondary);
+            font-size: 1rem;
+            opacity: 0;
+            transition: all var(--transition-fast);
+        }
+
+        .unit-card:hover .edit-icon {
+            opacity: 1;
+            color: var(--accent-primary);
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-primary);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .tab {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: none;
+            background: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all var(--transition-fast);
+            font-weight: 500;
+        }
+
+        .tab.active {
+            color: var(--accent-primary);
+            border-bottom-color: var(--accent-primary);
+        }
+
+        .tab:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 0; /* Removido padding padrão dos tab-contents */
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .users-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .user-item {
+            display: flex;
+            align-items: center;
+            padding: var(--spacing-sm);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--border-radius);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            margin-right: var(--spacing-md);
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .user-name {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .user-email {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .user-role {
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            border-radius: var(--border-radius);
+            padding: var(--spacing-lg); /* Reduzido de xl para lg */
+            width: 95%; /* Aumentado de 90% para 95% */
+            max-width: 900px; /* Aumentado de 600px para 900px */
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: var(--spacing-xs);
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: var(--spacing-sm);
+            border: 1px solid var(--border-secondary);
+            border-radius: var(--border-radius);
+            font-size: 0.875rem;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(172, 0, 158, 0.1);
+        }
+
+        .form-input:read-only {
+            background: var(--bg-tertiary);
+            border-color: var(--border-primary);
+            color: var(--text-primary);
+            cursor: default;
+        }
+
+        .form-input:read-only:focus {
+            border-color: var(--border-primary);
+            box-shadow: none;
+        }
+
+        .info-display {
+            padding: var(--spacing-sm);
+            background: var(--bg-tertiary);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-primary);
+            color: var(--text-primary);
+            min-height: 38px;
+            display: flex;
+            align-items: center;
+        }
+
+        .info-display.textarea {
+            min-height: 80px;
+            align-items: flex-start;
+            padding-top: var(--spacing-sm);
+        }
+
+        .status-display {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status-display.active {
+            background: rgba(112, 224, 0, 0.1);
+            color: var(--success-color);
+        }
+
+        .status-display.inactive {
+            background: rgba(239, 71, 111, 0.1);
+            color: var(--danger-color);
+        }
+
+        .modules-section {
+            margin-top: var(--spacing-lg);
+            padding-top: var(--spacing-lg);
+            border-top: 1px solid var(--border-primary);
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Aumentado de 250px para 280px */
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+
+        .module-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-md); /* Aumentado de sm para md */
+            background: var(--bg-tertiary);
+            border-radius: var(--border-radius);
+            min-height: 60px; /* Adicionado altura mínima */
+            transition: all var(--transition-fast);
+            border: 1px solid transparent;
+        }
+
+        .module-item:hover {
+            background: var(--bg-secondary);
+            border-color: var(--border-secondary);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .module-info {
+            flex: 1;
+            margin-right: var(--spacing-md);
+        }
+
+        .module-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-xs);
+            font-size: 1rem;
+        }
+
+        .module-description {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            background: var(--border-secondary);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .toggle-switch.active {
+            background: var(--accent-primary);
+        }
+
+        .toggle-switch:hover {
+            box-shadow: 0 2px 8px rgba(172, 0, 158, 0.2);
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform var(--transition-fast);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-switch.active::after {
+            transform: translateX(20px);
+        }
+
+        .loading {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--border-secondary);
+            border-top: 2px solid var(--accent-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: var(--spacing-xl);
+            color: var(--text-secondary);
+        }
+
+        /* Responsividade melhorada */
+        @media (max-width: 768px) {
+            .container {
+                padding: var(--spacing-sm) var(--spacing-xs);
+            }
+
+            .modal-content {
+                width: 98%;
+                margin: var(--spacing-sm);
+                padding: var(--spacing-md);
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr; /* Uma coluna em mobile */
+                gap: var(--spacing-sm);
+            }
+
+            .units-grid {
+                grid-template-columns: 1fr; /* Uma coluna em mobile */
+                gap: var(--spacing-md);
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .modules-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+        }
+
+        @media (min-width: 1025px) {
+            .modules-grid {
+                grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Mais espaço em desktop */
+            }
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-md);
+            color: var(--border-secondary);
+        }
+
+        /* Botão flutuante */
+        .floating-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 56px;
+            height: 56px;
+            background: var(--accent-primary);
+            color: var(--text-on-accent);
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(172, 0, 158, 0.3);
+            transition: all var(--transition-fast);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .floating-btn:hover {
+            background: #9a0088;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(172, 0, 158, 0.4);
+        }
+
+        .floating-btn:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Loading State -->
+        <div id="loading" class="card" style="text-align: center;">
+            <div class="loading">
+                <div class="spinner"></div>
+                Carregando unidades...
+            </div>
+        </div>
+
+        <!-- Units Grid -->
+        <div id="unitsContainer" class="units-grid" style="display: none;">
+            <!-- Units will be populated here -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <i class="fas fa-building"></i>
+            <h3>Nenhuma unidade cadastrada</h3>
+            <p>Clique no botão "+" para adicionar uma nova unidade</p>
+        </div>
+    </div>
+
+    <!-- Botão Flutuante -->
+    <button class="floating-btn" onclick="openModal()" title="Nova Unidade">
+        <i class="fas fa-plus"></i>
+    </button>
+
+    <!-- Modal -->
+    <div id="unitModal" class="modal">
+        <div class="modal-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-lg);">
+                <div style="display: flex; align-items: center; gap: var(--spacing-md);">
+                    <h2 id="modalTitle">Nova Unidade</h2>
+                    <div id="statusToggleContainer" style="display: none; align-items: center; gap: var(--spacing-sm);">
+                        <span style="font-size: 0.875rem; color: var(--text-secondary);">Status:</span>
+                        <div class="toggle-switch" id="unitStatusToggle" onclick="toggleUnitStatus()">
+                        </div>
+                        <span id="statusLabel" style="font-size: 0.875rem; color: var(--text-secondary);">Ativa</span>
+                    </div>
+                </div>
+                <div style="display: flex; gap: var(--spacing-sm); align-items: center;">
+                    <button id="editBtn" class="btn btn-secondary" onclick="enableEdit()" style="display: none; padding: var(--spacing-sm);">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-secondary" onclick="closeModal()" style="padding: var(--spacing-sm);">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('informacoes')">
+                    <i class="fas fa-info-circle"></i>
+                    Informações
+                </button>
+                <button class="tab" onclick="switchTab('modulos')">
+                    <i class="fas fa-th-large"></i>
+                    Módulos
+                </button>
+                <button class="tab" onclick="switchTab('usuarios')">
+                    <i class="fas fa-users"></i>
+                    Usuários
+                </button>
+            </div>
+
+            <!-- Tab Contents -->
+            <div id="tab-informacoes" class="tab-content active">
+                <form id="unitForm">
+                    <input type="hidden" id="unitId" name="id">
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="unitName">Nome da Unidade *</label>
+                        <div id="unitNameDisplay" class="info-display" style="display: none;"></div>
+                        <input type="text" id="unitName" name="name" class="form-input" required style="display: none;">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="unitCode">Código *</label>
+                        <div id="unitCodeDisplay" class="info-display" style="display: none;"></div>
+                        <input type="text" id="unitCode" name="code" class="form-input" required style="display: none;">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="unitAddress">Endereço</label>
+                        <div id="unitAddressDisplay" class="info-display textarea" style="display: none;"></div>
+                        <textarea id="unitAddress" name="address" class="form-input" rows="3" style="display: none;"></textarea>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md);">
+                        <div class="form-group">
+                            <label class="form-label" for="unitPhone">Telefone</label>
+                            <div id="unitPhoneDisplay" class="info-display" style="display: none;"></div>
+                            <input type="tel" id="unitPhone" name="phone" class="form-input" style="display: none;">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="unitEmail">Email</label>
+                            <div id="unitEmailDisplay" class="info-display" style="display: none;"></div>
+                            <input type="email" id="unitEmail" name="email" class="form-input" style="display: none;">
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="unitIsActive" name="is_active" value="true">
+
+                    <div id="formActions" style="display: none; gap: var(--spacing-sm); margin-top: var(--spacing-xl);">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i>
+                            Salvar
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="cancelEdit()">
+                            Cancelar
+                        </button>
+                        <button type="button" class="btn btn-danger" onclick="deleteCurrentUnit()" id="deleteBtn" style="display: none;">
+                            <i class="fas fa-trash"></i>
+                            Excluir
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="tab-modulos" class="tab-content">
+                <div class="modules-section" style="margin-top: 0; padding-top: 0; border-top: none;">
+                    <h3>Módulos Disponíveis</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: var(--spacing-md);">
+                        Selecione quais módulos estarão disponíveis para esta unidade
+                    </p>
+                    <div id="modulesContainer" class="modules-grid">
+                        <!-- Modules will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-usuarios" class="tab-content">
+                <h3>Usuários da Unidade</h3>
+                <p style="color: var(--text-secondary); margin-bottom: var(--spacing-md);">
+                    Usuários que têm acesso a esta unidade
+                </p>
+                <div id="usersContainer" class="users-list">
+                    <!-- Users will be loaded here -->
+                </div>
+            </div>
+        </div>
+    <!--/ Modal -->
+    </div>
+
+    <script>
+        let units = [];
+        let modules = [];
+        let currentUnit = null;
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Detectar tema do parent se estiver em iframe
+            detectParentTheme();
+            checkAuthentication();
+            loadUnits();
+            loadModules();
+        });
+
+        function detectParentTheme() {
+            if (window.parent !== window) {
+                try {
+                    // Tentar detectar o tema do parent
+                    const parentBodyClass = window.parent.document.body.className;
+                    const parentTheme = window.parent.document.documentElement.getAttribute('data-theme');
+                    
+                    if (parentTheme === 'dark' || parentBodyClass.includes('dark')) {
+                        document.documentElement.setAttribute('data-theme', 'dark');
+                    } else {
+                        document.documentElement.setAttribute('data-theme', 'light');
+                    }
+                } catch (e) {
+                    // Se não conseguir acessar o parent, usar postMessage
+                    window.parent.postMessage('request-theme', '*');
+                }
+            }
+        }
+
+        // Listener para receber o tema do parent
+        window.addEventListener('message', function(event) {
+            if (event.data && event.data.type === 'theme-update') {
+                document.documentElement.setAttribute('data-theme', event.data.theme);
+            }
+        });
+
+        function checkAuthentication() {
+            console.log('🔐 Verificando autenticação...');
+            
+            const userSession = localStorage.getItem('userSession');
+            if (!userSession) {
+                console.log('❌ Sessão não encontrada');
+                // **CORREÇÃO:** Não bloquear para debug
+                alert('Sessão não encontrada. Faça login novamente.');
+                if (window.parent !== window) {
+                    window.parent.postMessage('redirect-login', '*');
+                } else {
+                    window.location.href = 'login.html';
+                }
+                return false;
+            }
+
+            try {
+                const user = JSON.parse(userSession);
+                console.log('👤 Usuário da sessão:', { id: user.id, email: user.email, role: user.role_name });
+                
+                if (user.role_name !== 'super_admin') {
+                    alert('Acesso negado. Apenas Super Administradores podem acessar esta página.');
+                    if (window.parent !== window) {
+                        window.parent.postMessage('redirect-dashboard', '*');
+                    } else {
+                        window.history.back();
+                    }
+                    return false;
+                }
+                
+                console.log('✅ Autenticação válida para super_admin');
+                return true;
+            } catch (error) {
+                console.error('❌ Erro ao verificar sessão:', error);
+                alert('Erro na sessão. Faça login novamente.');
+                return false;
+            }
+        }
+
+        async function loadUnits() {
+            try {
+                console.log('🔄 Iniciando carregamento de unidades...');
+                
+                // **CORREÇÃO:** Verificar se há sessão válida primeiro
+                const userSession = localStorage.getItem('userSession');
+                if (!userSession) {
+                    console.error('❌ Nenhuma sessão encontrada');
+                    showEmptyState();
+                    return;
+                }
+                
+                // **CORREÇÃO:** URL com parâmetros para debug
+                const apiUrl = './api/units.php?action=list&debug=1';
+                console.log('📡 Fazendo requisição para:', apiUrl);
+                
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Cache-Control': 'no-cache'
+                    }
+                });
+
+                console.log('📡 Response status:', response.status);
+                console.log('📡 Response headers:', Object.fromEntries(response.headers.entries()));
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('❌ Erro HTTP:', response.status, errorText);
+                    throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+                }
+                
+                const responseText = await response.text();
+                console.log('📄 Response text:', responseText);
+                
+                let result;
+                try {
+                    result = JSON.parse(responseText);
+                } catch (parseError) {
+                    console.error('❌ Erro ao fazer parse do JSON:', parseError);
+                    console.error('📄 Texto da resposta:', responseText);
+                    throw new Error('Resposta inválida do servidor: ' + responseText.substring(0, 200));
+                }
+                
+                console.log('📊 Resultado parseado:', result);
+                
+                if (result.success && result.units) {
+                    units = result.units;
+                    console.log('✅ Unidades carregadas:', units.length, 'unidades');
+                    console.log('📋 Lista de unidades:', units.map(u => ({ id: u.id, name: u.name, active: u.is_active })));
+                    
+                    if (units.length > 0) {
+                        renderUnits();
+                    } else {
+                        console.warn('⚠️ Nenhuma unidade encontrada no banco');
+                        showEmptyState();
+                    }
+                } else {
+                    console.error('❌ Erro no resultado da API:', result.message || 'Estrutura inválida');
+                    console.error('📊 Resultado completo:', result);
+                    showEmptyState();
+                }
+                
+            } catch (error) {
+                console.error('💥 Erro ao carregar unidades:', error);
+                console.error('📊 Stack trace:', error.stack);
+                
+                // **CORREÇÃO:** Mostrar erro detalhado para o usuário
+                alert('Erro ao carregar unidades: ' + error.message + '\n\nVerifique o console para mais detalhes.');
+                showEmptyState();
+                
+            } finally {
+                console.log('🏁 Finalizando loading...');
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        // **NOVA FUNÇÃO:** Debug para testar API diretamente
+        async function debugApiDirectly() {
+            console.log('🔍 DEBUG: Testando API diretamente...');
+            
+            try {
+                // Testar endpoint básico
+                const testResponse = await fetch('./api/units.php?action=test');
+                const testResult = await testResponse.text();
+                console.log('🧪 Teste básico da API:', testResult);
+                
+                // Testar conexão com banco
+                const dbTestResponse = await fetch('./check_php_limits.php');
+                const dbTestResult = await dbTestResponse.text();
+                console.log('🗄️ Teste de banco:', dbTestResult);
+                
+                // Verificar se tabela units existe
+                console.log('📊 Verificando estrutura do banco...');
+                
+                // Testar com fetch direto
+                const directResponse = await fetch('./api/units.php', {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                console.log('📡 Response direto status:', directResponse.status);
+                const directText = await directResponse.text();
+                console.log('📄 Response direto text:', directText);
+                
+            } catch (error) {
+                console.error('❌ Erro no debug direto:', error);
+            }
+        }
+
+        // **FUNÇÃO AUXILIAR:** Verificar se tabela units tem dados
+        async function checkUnitsTable() {
+            try {
+                console.log('🔍 Verificando tabela units...');
+                
+                // Usar check_users.php como modelo para verificar dados
+                const response = await fetch('./check_users.php');
+                const result = await response.text();
+                console.log('👥 Verificação de usuários (referência):', result);
+                
+            } catch (error) {
+                console.error('❌ Erro ao verificar tabela:', error);
+            }
+        }
+
+        async function loadModules() {
+            try {
+                const response = await fetch('./api/modules.php', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    modules = result.modules;
+                }
+            } catch (error) {
+                console.error('Erro ao carregar módulos:', error);
+            }
+        }
+
+        function renderUnits() {
+            const container = document.getElementById('unitsContainer');
+            const emptyState = document.getElementById('emptyState');
+
+            console.log('Renderizando unidades:', units);
+            console.log('Quantidade de unidades:', units ? units.length : 'units é undefined');
+
+            if (!units || units.length === 0) {
+                showEmptyState();
+                return;
+            }
+
+            container.innerHTML = '';
+            container.style.display = 'grid';
+            emptyState.style.display = 'none';
+
+            units.forEach(unit => {
+                console.log('Criando card para unidade:', unit);
+                const unitCard = createUnitCard(unit);
+                container.appendChild(unitCard);
+            });
+        }
+
+        function createUnitCard(unit) {
+            const card = document.createElement('div');
+            card.className = 'unit-card';
+            card.style.cursor = 'pointer';
+            
+            // Garantir que is_active seja tratado como boolean
+            const isActive = unit.is_active === true || unit.is_active === 'true' || unit.is_active === 1;
+            console.log('Unit:', unit.name, 'is_active:', unit.is_active, 'processed:', isActive);
+            
+            const statusClass = isActive ? 'status-active' : 'status-inactive';
+            const statusText = isActive ? 'Ativa' : 'Inativa';
+            const statusIcon = isActive ? 'fas fa-check-circle' : 'fas fa-times-circle';
+            
+            card.innerHTML = `
+                <div class="unit-name">${unit.name}</div>
+                <div class="unit-status ${statusClass}">
+                    <i class="${statusIcon}"></i>
+                    ${statusText}
+                </div>
+            `;
+
+            // Adicionar evento de clique para visualizar
+            card.addEventListener('click', () => viewUnit(unit.id));
+
+            return card;
+        }
+
+        function showEmptyState() {
+            document.getElementById('unitsContainer').style.display = 'none';
+            document.getElementById('emptyState').style.display = 'block';
+        }
+
+        function openModal(unitId = null) {
+            currentUnit = unitId;
+            const modal = document.getElementById('unitModal');
+            const title = document.getElementById('modalTitle');
+            const form = document.getElementById('unitForm');
+            const editBtn = document.getElementById('editBtn');
+            const formActions = document.getElementById('formActions');
+            const statusToggleContainer = document.getElementById('statusToggleContainer');
+
+            // Reset tab to first one
+            switchTab('informacoes');
+
+            if (unitId) {
+                title.textContent = 'Detalhes da Unidade';
+                editBtn.style.display = 'flex';
+                formActions.style.display = 'none';
+                statusToggleContainer.style.display = 'flex';
+                
+                const unit = units.find(u => u.id === unitId);
+                if (unit) {
+                    populateForm(unit);
+                    updateStatusToggle(unit.is_active);
+                    setFormEditMode(false);
+                }
+                
+                loadUnitUsers(unitId);
+            } else {
+                title.textContent = 'Nova Unidade';
+                editBtn.style.display = 'none';
+                formActions.style.display = 'flex';
+                statusToggleContainer.style.display = 'flex';
+                form.reset();
+                
+                // Clear all field values explicitly
+                document.getElementById('unitName').value = '';
+                document.getElementById('unitCode').value = '';
+                document.getElementById('unitAddress').value = '';
+                document.getElementById('unitPhone').value = '';
+                document.getElementById('unitEmail').value = '';
+                document.getElementById('unitId').value = '';
+                
+                updateStatusToggle(true); // Default to active for new units
+                setFormEditMode(true);
+            }
+
+            renderModulesInModal(unitId);
+            modal.classList.add('active');
+        }
+
+        function viewUnit(unitId) {
+            openModal(unitId);
+        }
+
+        function enableEdit() {
+            setFormEditMode(true);
+            document.getElementById('editBtn').style.display = 'none';
+            document.getElementById('formActions').style.display = 'flex';
+            document.getElementById('deleteBtn').style.display = currentUnit ? 'flex' : 'none';
+        }
+
+        function cancelEdit() {
+            if (currentUnit) {
+                const unit = units.find(u => u.id === currentUnit);
+                if (unit) {
+                    populateForm(unit);
+                    updateStatusToggle(unit.is_active);
+                }
+                setFormEditMode(false);
+                document.getElementById('editBtn').style.display = 'flex';
+                document.getElementById('formActions').style.display = 'none';
+            } else {
+                closeModal();
+            }
+        }
+
+        function setFormEditMode(editMode) {
+            const fields = ['unitName', 'unitCode', 'unitAddress', 'unitPhone', 'unitEmail'];
+            const displays = ['unitNameDisplay', 'unitCodeDisplay', 'unitAddressDisplay', 'unitPhoneDisplay', 'unitEmailDisplay'];
+            
+            fields.forEach((fieldId, index) => {
+                const field = document.getElementById(fieldId);
+                const display = document.getElementById(displays[index]);
+                
+                if (editMode) {
+                    // Show field and hide display
+                    field.style.display = fieldId === 'unitAddress' ? 'block' : 'inline-block';
+                    field.readOnly = false;
+                    field.style.width = '100%'; // Ensure full width
+                    display.style.display = 'none';
+                } else {
+                    // Hide field and show display
+                    field.style.display = 'none';
+                    field.readOnly = true;
+                    display.style.display = 'flex';
+                }
+            });
+
+            // Status toggle always editable - no changes needed
+            
+            // Toggle modules switches
+            const toggles = document.querySelectorAll('.toggle-switch:not(#unitStatusToggle)');
+            toggles.forEach(toggle => {
+                if (editMode) {
+                    toggle.style.pointerEvents = 'auto';
+                    toggle.style.opacity = '1';
+                } else {
+                    toggle.style.pointerEvents = 'none';
+                    toggle.style.opacity = '0.7';
+                }
+            });
+            
+            // Ensure status toggle is always editable
+            const statusToggle = document.getElementById('unitStatusToggle');
+            if (statusToggle) {
+                statusToggle.style.pointerEvents = 'auto';
+                statusToggle.style.opacity = '1';
+            }
+        }
+
+        function toggleUnitStatus() {
+            const toggle = document.getElementById('unitStatusToggle');
+            const label = document.getElementById('statusLabel');
+            const hiddenInput = document.getElementById('unitIsActive');
+            
+            console.log('Toggle antes da mudança:', {
+                toggleActive: toggle.classList.contains('active'),
+                hiddenInputValue: hiddenInput.value,
+                currentUnit: currentUnit
+            });
+            
+            toggle.classList.toggle('active');
+            
+            if (toggle.classList.contains('active')) {
+                label.textContent = 'Ativa';
+                label.style.color = 'var(--success-color)';
+                hiddenInput.value = 'true';
+                console.log('Mudou para ATIVA');
+            } else {
+                label.textContent = 'Inativa';
+                label.style.color = 'var(--danger-color)';
+                hiddenInput.value = 'false';
+                console.log('Mudou para INATIVA');
+            }
+            
+            console.log('Toggle após mudança:', {
+                toggleActive: toggle.classList.contains('active'),
+                hiddenInputValue: hiddenInput.value,
+                labelText: label.textContent
+            });
+            
+            // Auto-save the status change for existing units
+            if (currentUnit) {
+                console.log('Chamando autoSaveStatus para currentUnit:', currentUnit);
+                autoSaveStatus();
+            }
+        }
+
+        async function autoSaveStatus() {
+            try {
+                const unit = units.find(u => u.id === currentUnit);
+                if (!unit) {
+                    console.error('Unidade não encontrada:', currentUnit);
+                    return;
+                }
+
+                // Get current form values or fallback to unit data
+                const nameValue = document.getElementById('unitName').value || unit.name || '';
+                const codeValue = document.getElementById('unitCode').value || unit.code || '';
+                const addressValue = document.getElementById('unitAddress').value || unit.address || '';
+                const phoneValue = document.getElementById('unitPhone').value || unit.phone || '';
+                const emailValue = document.getElementById('unitEmail').value || unit.email || '';
+                const statusElement = document.getElementById('unitIsActive');
+                const isActiveValue = statusElement ? statusElement.value === 'true' : unit.is_active;
+
+                console.log('Valores antes de enviar:');
+                console.log('- statusElement.value:', statusElement ? statusElement.value : 'elemento não encontrado');
+                console.log('- isActiveValue:', isActiveValue);
+                console.log('- unit.is_active original:', unit.is_active);
+
+                const data = {
+                    id: currentUnit,
+                    name: nameValue,
+                    code: codeValue,
+                    address: addressValue,
+                    phone: phoneValue,
+                    email: emailValue,
+                    is_active: isActiveValue
+                };
+
+                console.log('Dados finais sendo enviados:', JSON.stringify(data, null, 2));
+
+                const response = await fetch('./api/units.php?action=update', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                console.log('Resposta do servidor:', result);
+
+                if (result.success) {
+                    // Update the units array with new status
+                    const unitIndex = units.findIndex(u => u.id === currentUnit);
+                    if (unitIndex !== -1) {
+                        units[unitIndex].is_active = data.is_active;
+                    }
+                    
+                    // Update the card grid to reflect the change
+                    renderUnits();
+                    console.log('Status atualizado com sucesso');
+                } else {
+                    console.error('Erro ao atualizar status:', result.message);
+                    alert('Erro ao atualizar status: ' + result.message);
+                    // Revert the toggle if save failed
+                    updateStatusToggle(unit.is_active);
+                }
+            } catch (error) {
+                console.error('Erro ao atualizar status:', error);
+                alert('Erro ao atualizar status. Tente novamente.');
+                // Revert the toggle if save failed
+                const unit = units.find(u => u.id === currentUnit);
+                if (unit) {
+                    updateStatusToggle(unit.is_active);
+                }
+            }
+        }
+
+        function updateStatusToggle(isActive) {
+            const toggle = document.getElementById('unitStatusToggle');
+            const label = document.getElementById('statusLabel');
+            const hiddenInput = document.getElementById('unitIsActive');
+            
+            console.log('updateStatusToggle chamado com:', isActive, typeof isActive);
+            
+            // Garantir que seja tratado como boolean
+            const active = isActive === true || isActive === 'true' || isActive === 1;
+            
+            if (active) {
+                toggle.classList.add('active');
+                label.textContent = 'Ativa';
+                label.style.color = 'var(--success-color)';
+                hiddenInput.value = 'true';
+            } else {
+                toggle.classList.remove('active');
+                label.textContent = 'Inativa';
+                label.style.color = 'var(--danger-color)';
+                hiddenInput.value = 'false';
+            }
+            
+            console.log('Toggle atualizado:', {
+                active: active,
+                toggleClasses: toggle.className,
+                hiddenInputValue: hiddenInput.value
+            });
+            
+            // Ensure toggle is always editable
+            toggle.style.pointerEvents = 'auto';
+            toggle.style.opacity = '1';
+        }
+
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        async function loadUnitUsers(unitId) {
+            try {
+                console.log('Carregando usuários para unidade:', unitId);
+                const response = await fetch(`./api/units.php?action=users&unit_id=${unitId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const result = await response.json();
+                console.log('Resposta da API usuarios:', result);
+                
+                if (result.success) {
+                    const users = result.data ? result.data.users : result.users;
+                    console.log('Usuários encontrados:', users.length);
+                    renderUnitUsers(users);
+                } else {
+                    console.error('Erro ao carregar usuários:', result.message);
+                    renderUnitUsers([]);
+                }
+            } catch (error) {
+                console.error('Erro ao carregar usuários:', error);
+                renderUnitUsers([]);
+            }
+        }
+
+        function renderUnitUsers(users) {
+            const container = document.getElementById('usersContainer');
+            
+            if (users.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state" style="padding: var(--spacing-lg);">
+                        <i class="fas fa-users" style="font-size: 2rem; margin-bottom: var(--spacing-sm);"></i>
+                        <p>Nenhum usuário vinculado a esta unidade</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = '';
+            users.forEach(user => {
+                const userItem = document.createElement('div');
+                userItem.className = 'user-item';
+                
+                const initials = user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+                
+                userItem.innerHTML = `
+                    <div class="user-avatar">${initials}</div>
+                    <div class="user-info">
+                        <div class="user-name">${user.name}</div>
+                        <div class="user-email">${user.email}</div>
+                    </div>
+                    <div class="user-role">${user.role_name}</div>
+                `;
+                
+                container.appendChild(userItem);
+            });
+        }
+
+        function deleteCurrentUnit() {
+            if (currentUnit) {
+                const unit = units.find(u => u.id === currentUnit);
+                if (unit) {
+                    deleteUnit(currentUnit, unit.name);
+                }
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('unitModal').classList.remove('active');
+            currentUnit = null;
+            // Reset form to view mode
+            setFormEditMode(false);
+        }
+
+        function populateForm(unit) {
+            document.getElementById('unitId').value = unit.id;
+            
+            // Set input values
+            document.getElementById('unitName').value = unit.name;
+            document.getElementById('unitCode').value = unit.code || '';
+            document.getElementById('unitAddress').value = unit.address || '';
+            document.getElementById('unitPhone').value = unit.phone || '';
+            document.getElementById('unitEmail').value = unit.email || '';
+            
+            // Set display values
+            document.getElementById('unitNameDisplay').textContent = unit.name;
+            document.getElementById('unitCodeDisplay').textContent = unit.code || 'Não informado';
+            document.getElementById('unitAddressDisplay').textContent = unit.address || 'Não informado';
+            document.getElementById('unitPhoneDisplay').textContent = unit.phone || 'Não informado';
+            document.getElementById('unitEmailDisplay').textContent = unit.email || 'Não informado';
+        }
+
+        function renderModulesInModal(unitId) {
+            const container = document.getElementById('modulesContainer');
+            container.innerHTML = '';
+
+            if (modules.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state" style="padding: var(--spacing-lg);">
+                        <i class="fas fa-puzzle-piece" style="font-size: 2rem; margin-bottom: var(--spacing-sm);"></i>
+                        <p>Nenhum módulo disponível</p>
+                    </div>
+                `;
+                return;
+            }
+
+            modules.forEach(module => {
+                const moduleItem = document.createElement('div');
+                moduleItem.className = 'module-item';
+                
+                // Verificar se o módulo está habilitado para esta unidade
+                let isEnabled = false;
+                if (unitId) {
+                    const unit = units.find(u => u.id === unitId);
+                    isEnabled = unit && unit.enabled_modules && unit.enabled_modules.includes(module.id);
+                }
+                
+                moduleItem.innerHTML = `
+                    <div class="module-info">
+                        <div class="module-name">${module.display_name}</div>
+                        <div class="module-description">${module.description || 'Módulo do sistema'}</div>
+                    </div>
+                    <div class="toggle-switch ${isEnabled ? 'active' : ''}" 
+                         onclick="toggleModule('${module.id}', this, '${unitId || ''}')"
+                         data-module-id="${module.id}">
+                    </div>
+                `;
+
+                container.appendChild(moduleItem);
+            });
+        }
+
+        async function toggleModule(moduleId, toggleElement, unitId) {
+            // Se não há unitId, é uma nova unidade - apenas toggle visual
+            if (!unitId) {
+                toggleElement.classList.toggle('active');
+                return;
+            }
+
+            const wasActive = toggleElement.classList.contains('active');
+            const newState = !wasActive;
+            
+            try {
+                // Otimisticamente atualizar a UI
+                toggleElement.classList.toggle('active');
+                
+                // Salvar no servidor
+                const response = await fetch('./api/units.php?action=toggle_module', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        unit_id: unitId,
+                        module_id: moduleId,
+                        is_active: newState
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    console.log(`Módulo ${moduleId} ${newState ? 'ativado' : 'desativado'} para unidade ${unitId}`);
+                    
+                    // Atualizar cache local
+                    const unitIndex = units.findIndex(u => u.id === unitId);
+                    if (unitIndex !== -1) {
+                        if (!units[unitIndex].enabled_modules) {
+                            units[unitIndex].enabled_modules = [];
+                        }
+                        
+                        if (newState) {
+                            // Adicionar módulo se não existir
+                            if (!units[unitIndex].enabled_modules.includes(moduleId)) {
+                                units[unitIndex].enabled_modules.push(moduleId);
+                            }
+                        } else {
+                            // Remover módulo
+                            units[unitIndex].enabled_modules = units[unitIndex].enabled_modules.filter(id => id !== moduleId);
+                        }
+                    }
+                    
+                    // Feedback visual sutil
+                    toggleElement.style.transform = 'scale(1.1)';
+                    setTimeout(() => {
+                        toggleElement.style.transform = 'scale(1)';
+                    }, 150);
+                    
+                } else {
+                    console.error('Erro ao alterar módulo:', result.message);
+                    // Reverter mudança visual
+                    toggleElement.classList.toggle('active');
+                    alert('Erro ao alterar módulo: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Erro ao alterar módulo:', error);
+                // Reverter mudança visual
+                toggleElement.classList.toggle('active');
+                alert('Erro ao alterar módulo. Tente novamente.');
+            }
+        }
+
+        async function saveUnit(formData) {
+            try {
+                const url = currentUnit ? './api/units.php?action=update' : './api/units.php?action=create';
+                const method = 'POST';
+
+                // Para novas unidades, coletar módulos selecionados
+                let enabledModules = [];
+                if (!currentUnit) {
+                    document.querySelectorAll('.toggle-switch.active:not(#unitStatusToggle)').forEach(toggle => {
+                        const moduleId = toggle.dataset.moduleId;
+                        if (moduleId) {
+                            enabledModules.push(moduleId);
+                        }
+                    });
+                }
+
+                // Prepare data with validation
+                const data = {
+                    name: formData.name || '',
+                    code: formData.code || '',
+                    address: formData.address || '',
+                    phone: formData.phone || '',
+                    email: formData.email || '',
+                    is_active: formData.is_active
+                };
+
+                // Apenas adicionar módulos para novas unidades
+                if (!currentUnit) {
+                    data.enabled_modules = enabledModules;
+                }
+
+                // Add ID for updates
+                if (currentUnit) {
+                    data.id = currentUnit;
+                }
+
+                console.log('Dados sendo enviados para a API:', JSON.stringify(data, null, 2));
+
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                console.log('Resposta do servidor:', result);
+
+                if (result.success) {
+                    closeModal();
+                    loadUnits(); // Reload units
+                    alert(currentUnit ? 'Unidade atualizada com sucesso!' : 'Unidade criada com sucesso!');
+                } else {
+                    alert('Erro: ' + (result.message || 'Erro desconhecido'));
+                }
+            } catch (error) {
+                console.error('Erro ao salvar unidade:', error);
+                alert('Erro ao salvar unidade. Verifique o console para mais detalhes.');
+            }
+        }
+
+        async function deleteUnit(unitId, unitName) {
+            if (!confirm(`Tem certeza que deseja excluir a unidade "${unitName}"?`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch('./api/units.php?action=delete', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: unitId })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    loadUnits(); // Reload units
+                    alert('Unidade excluída com sucesso!');
+                } else {
+                    alert('Erro: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Erro ao excluir unidade:', error);
+                alert('Erro ao excluir unidade. Tente novamente.');
+            }
+        }
+
+        function editUnit(unitId) {
+            openModal(unitId);
+        }
+
+        // Form submission
+        document.getElementById('unitForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Manually collect form data to ensure we get all values
+            const data = {
+                name: document.getElementById('unitName').value.trim(),
+                code: document.getElementById('unitCode').value.trim(),
+                address: document.getElementById('unitAddress').value.trim(),
+                phone: document.getElementById('unitPhone').value.trim(),
+                email: document.getElementById('unitEmail').value.trim()
+            };
+            
+            // Validate required fields
+            if (!data.name) {
+                alert('Nome da unidade é obrigatório');
+                document.getElementById('unitName').focus();
+                return;
+            }
+            
+            if (!data.code) {
+                alert('Código da unidade é obrigatório');
+                document.getElementById('unitCode').focus();
+                return;
+            }
+            
+            // Get the status value correctly
+            const statusValue = document.getElementById('unitIsActive').value;
+            data.is_active = statusValue === 'true';
+            
+            if (currentUnit) {
+                data.id = currentUnit;
+            }
+
+            console.log('Form data sendo enviado:', data);
+            saveUnit(data);
+        });
+
+        // Close modal on outside click
+        document.getElementById('unitModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

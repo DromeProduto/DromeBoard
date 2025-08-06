@@ -1,0 +1,84 @@
+# DromeBoard - .gitignore
+
+# Arquivos do Sistema Operacional
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Arquivos de configuração com dados sensíveis
+config.php
+database_config.php
+.env
+.env.local
+.env.production
+
+# Logs
+*.log
+logs/
+error_log
+
+# Arquivos temporários
+*.tmp
+*.temp
+*.cache
+temp/
+tmp/
+
+# Uploads e arquivos de usuário
+uploads/
+user_data/
+*.xlsx
+*.xls
+*.csv
+
+# Backup de banco de dados
+*.sql.backup
+*.dump
+backup/
+
+# Arquivos IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node modules (se usar npm)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# PHP
+vendor/
+composer.phar
+composer.lock
+
+# Cache do sistema
+cache/
+*.cache
+
+# Arquivos de sessão
+sessions/
+*.sess
+
+# Documentação gerada
+docs/build/
+
+# Arquivos de teste
+test_data/
+phpunit.xml
+
+# Certificados e chaves
+*.pem
+*.key
+*.crt
+*.p12
+
+# Arquivos de configuração local específicos
+local_config.js
+local_settings.php
