@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados - DromeBoard</title>
+    
+    <!-- Design System -->
+    <link rel="stylesheet" href="../../shared/drome-design-system.css">
+    <link rel="stylesheet" href="resultados.css">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js for charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    
+    <!-- SheetJS for XLSX parsing -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+</head>
+<body class="drome-bg-gray-50 dark:drome-bg-gray-900">
+    <!-- Navigation -->
+    <nav class="drome-bg-white dark:drome-bg-gray-800 drome-border-b drome-border-gray-200 dark:drome-border-gray-700 drome-fixed drome-w-full drome-z-30 drome-top-0">
+        <div class="drome-max-w-7xl drome-mx-auto drome-px-4 sm:drome-px-6 lg:drome-px-8">
+            <div class="drome-flex drome-justify-between drome-h-16">
+                <!-- Left side - Logo and Navigation -->
+                <div class="drome-flex drome-items-center">
+                    <!-- Logo -->
+                    <div class="drome-flex-shrink-0 drome-flex drome-items-center">
+                        <img src="https://iili.io/3IVuaEb.png" alt="DromeBoard" class="drome-h-8 drome-w-auto">
+                        <h1 class="drome-ml-3 drome-text-xl drome-font-bold drome-text-gray-900 dark:drome-text-white">
+                            DromeBoard
+                        </h1>
+                    </div>
+
+                    <!-- Main Navigation -->
+                    <div class="drome-hidden md:drome-ml-10 md:drome-flex drome-space-x-8">
+                        <a href="../../core/dashboard.html" class="drome-text-gray-500 hover:drome-text-gray-700 dark:drome-text-gray-400 dark:hover:drome-text-gray-200 drome-px-3 drome-py-2 drome-rounded-md drome-text-sm drome-font-medium drome-transition-colors">
+                            <i class="fas fa-chart-line drome-mr-2"></i>Dashboard
+                        </a>
+                        <a href="../gestao-usuarios/gestao-usuarios.html" class="drome-text-gray-500 hover:drome-text-gray-700 dark:drome-text-gray-400 dark:hover:drome-text-gray-200 drome-px-3 drome-py-2 drome-rounded-md drome-text-sm drome-font-medium drome-transition-colors">
+                            <i class="fas fa-users drome-mr-2"></i>Usuários
+                        </a>
+                        <a href="../gestao-unidades/gestao-unidades.html" class="drome-text-gray-500 hover:drome-text-gray-700 dark:drome-text-gray-400 dark:hover:drome-text-gray-200 drome-px-3 drome-py-2 drome-rounded-md drome-text-sm drome-font-medium drome-transition-colors">
+                            <i class="fas fa-building drome-mr-2"></i>Unidades
+                        </a>
+                        <a href="#" class="drome-text-primary hover:drome-text-secondary drome-px-3 drome-py-2 drome-rounded-md drome-text-sm drome-font-medium drome-transition-colors">
+                            <i class="fas fa-chart-bar drome-mr-2"></i>Resultados
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right side - Actions -->
+                <div class="drome-flex drome-items-center drome-space-x-4">
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="drome-btn-icon" title="Alternar tema">
+                        <i class="fas fa-moon dark:fa-sun"></i>
+                    </button>
+
+                    <!-- User Menu -->
+                    <div class="drome-relative">
+                        <button class="drome-flex drome-items-center drome-space-x-2 drome-text-gray-700 dark:drome-text-gray-200 hover:drome-text-gray-900 dark:hover:drome-text-white drome-transition-colors" id="user-menu-btn">
+                            <div class="drome-w-8 drome-h-8 drome-bg-primary drome-rounded-full drome-flex drome-items-center drome-justify-center drome-text-white drome-text-sm drome-font-medium">
+                                A
+                            </div>
+                            <span class="drome-text-sm drome-font-medium" id="user-name">Admin</span>
+                            <i class="fas fa-chevron-down drome-text-xs"></i>
+                        </button>
+                        
+                        <!-- User Dropdown -->
+                        <div class="drome-hidden drome-absolute drome-right-0 drome-mt-2 drome-w-48 drome-bg-white dark:drome-bg-gray-800 drome-rounded-md drome-shadow-lg drome-border drome-border-gray-200 dark:drome-border-gray-700 drome-z-50" id="user-dropdown">
+                            <div class="drome-py-1">
+                                <button id="logout-btn" class="drome-block drome-w-full drome-text-left drome-px-4 drome-py-2 drome-text-sm drome-text-red-600 hover:drome-bg-red-50 dark:hover:drome-bg-red-900/10">
+                                    <i class="fas fa-sign-out-alt drome-mr-2"></i>Sair
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="drome-pt-16">
+        <div class="drome-max-w-7xl drome-mx-auto drome-px-4 sm:drome-px-6 lg:drome-px-8 drome-py-8">
+            <!-- Page Header -->
+            <div class="drome-flex drome-flex-col sm:drome-flex-row sm:drome-items-center sm:drome-justify-between drome-mb-8">
+                <div>
+                    <h1 class="drome-h1 drome-text-gray-900 dark:drome-text-white drome-mb-2">
+                        Resultados e Analytics
+                    </h1>
+                    <p class="drome-text-gray-600 dark:drome-text-gray-400">
+                        Análise de dados, métricas e relatórios do sistema
+                    </p>
+                </div>
+                <div class="drome-mt-4 sm:drome-mt-0 drome-flex drome-space-x-3">
+                    <button id="import-data-btn" class="drome-btn drome-btn-secondary">
+                        <i class="fas fa-upload drome-mr-2"></i>
+                        Importar Dados
+                    </button>
+                    <button id="export-report-btn" class="drome-btn drome-btn-primary">
+                        <i class="fas fa-download drome-mr-2"></i>
+                        Exportar Relatório
+                    </button>
+                </div>
+            </div>
+
+            <!-- Period Filter -->
+            <div class="drome-card drome-mb-6">
+                <div class="drome-flex drome-flex-col sm:drome-flex-row drome-items-center drome-justify-between drome-gap-4">
+                    <div class="drome-flex drome-items-center drome-space-x-4">
+                        <span class="drome-text-sm drome-font-medium drome-text-gray-700 dark:drome-text-gray-300">
+                            Período:
+                        </span>
+                        <select id="period-filter" class="drome-input drome-w-auto">
+                            <option value="7">Últimos 7 dias</option>
+                            <option value="30" selected>Últimos 30 dias</option>
+                            <option value="90">Últimos 90 dias</option>
+                            <option value="365">Último ano</option>
+                            <option value="custom">Período personalizado</option>
+                        </select>
+                    </div>
+                    
+                    <div class="drome-flex drome-items-center drome-space-x-3">
+                        <button id="refresh-data-btn" class="drome-btn drome-btn-outline drome-btn-sm">
+                            <i class="fas fa-sync-alt drome-mr-2"></i>
+                            Atualizar
+                        </button>
+                        <span class="drome-text-xs drome-text-gray-500" id="last-update">
+                            Última atualização: agora
+                        </span>
+                    </div>
+                </div>
+                
+                <!-- Custom Date Range (hidden by default) -->
+                <div id="custom-date-range" class="drome-hidden drome-mt-4 drome-pt-4 drome-border-t drome-border-gray-200 dark:drome-border-gray-700">
+                    <div class="drome-flex drome-flex-col sm:drome-flex-row drome-gap-4">
+                        <div class="drome-flex-1">
+                            <label for="start-date" class="drome-label">Data Inicial</label>
+                            <input type="date" id="start-date" class="drome-input">
+                        </div>
+                        <div class="drome-flex-1">
+                            <label for="end-date" class="drome-label">Data Final</label>
+                            <input type="date" id="end-date" class="drome-input">
+                        </div>
+                        <div class="drome-flex drome-items-end">
+                            <button id="apply-custom-period" class="drome-btn drome-btn-primary">
+                                Aplicar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Metrics -->
+            <div class="drome-grid drome-grid-cols-1 sm:drome-grid-cols-2 lg:drome-grid-cols-4 drome-gap-6 drome-mb-8">
+                <!-- Total Revenue -->
+                <div class="drome-card">
+                    <div class="drome-flex drome-items-center drome-justify-between">
+                        <div>
+                            <p class="drome-text-sm drome-font-medium drome-text-gray-600 dark:drome-text-gray-400">
+                                Receita Total
+                            </p>
+                            <p class="drome-text-2xl drome-font-bold drome-text-gray-900 dark:drome-text-white" id="total-revenue">
+                                R$ 0,00
+                            </p>
+                            <p class="drome-text-xs drome-text-green-600 drome-mt-1" id="revenue-growth">
+                                <i class="fas fa-arrow-up drome-mr-1"></i>+0% vs período anterior
+                            </p>
+                        </div>
+                        <div class="drome-p-3 drome-bg-green-100 dark:drome-bg-green-900/20 drome-rounded-lg">
+                            <i class="fas fa-dollar-sign drome-text-green-600 dark:drome-text-green-400 drome-text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Total Orders -->
+                <div class="drome-card">
+                    <div class="drome-flex drome-items-center drome-justify-between">
+                        <div>
+                            <p class="drome-text-sm drome-font-medium drome-text-gray-600 dark:drome-text-gray-400">
+                                Pedidos
+                            </p>
+                            <p class="drome-text-2xl drome-font-bold drome-text-gray-900 dark:drome-text-white" id="total-orders">
+                                0
+                            </p>
+                            <p class="drome-text-xs drome-text-blue-600 drome-mt-1" id="orders-growth">
+                                <i class="fas fa-arrow-up drome-mr-1"></i>+0% vs período anterior
+                            </p>
+                        </div>
+                        <div class="drome-p-3 drome-bg-blue-100 dark:drome-bg-blue-900/20 drome-rounded-lg">
+                            <i class="fas fa-shopping-cart drome-text-blue-600 dark:drome-text-blue-400 drome-text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Average Order Value -->
+                <div class="drome-card">
+                    <div class="drome-flex drome-items-center drome-justify-between">
+                        <div>
+                            <p class="drome-text-sm drome-font-medium drome-text-gray-600 dark:drome-text-gray-400">
+                                Ticket Médio
+                            </p>
+                            <p class="drome-text-2xl drome-font-bold drome-text-gray-900 dark:drome-text-white" id="avg-order-value">
+                                R$ 0,00
+                            </p>
+                            <p class="drome-text-xs drome-text-purple-600 drome-mt-1" id="aov-growth">
+                                <i class="fas fa-arrow-up drome-mr-1"></i>+0% vs período anterior
+                            </p>
+                        </div>
+                        <div class="drome-p-3 drome-bg-purple-100 dark:drome-bg-purple-900/20 drome-rounded-lg">
+                            <i class="fas fa-chart-line drome-text-purple-600 dark:drome-text-purple-400 drome-text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Conversion Rate -->
+                <div class="drome-card">
+                    <div class="drome-flex drome-items-center drome-justify-between">
+                        <div>
+                            <p class="drome-text-sm drome-font-medium drome-text-gray-600 dark:drome-text-gray-400">
+                                Taxa de Conversão
+                            </p>
+                            <p class="drome-text-2xl drome-font-bold drome-text-gray-900 dark:drome-text-white" id="conversion-rate">
+                                0%
+                            </p>
+                            <p class="drome-text-xs drome-text-orange-600 drome-mt-1" id="conversion-growth">
+                                <i class="fas fa-arrow-up drome-mr-1"></i>+0% vs período anterior
+                            </p>
+                        </div>
+                        <div class="drome-p-3 drome-bg-orange-100 dark:drome-bg-orange-900/20 drome-rounded-lg">
+                            <i class="fas fa-percentage drome-text-orange-600 dark:drome-text-orange-400 drome-text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="drome-grid drome-grid-cols-1 lg:drome-grid-cols-2 drome-gap-6 drome-mb-8">
+                <!-- Revenue Chart -->
+                <div class="drome-card">
+                    <div class="drome-border-b drome-border-gray-200 dark:drome-border-gray-700 drome-pb-4 drome-mb-4">
+                        <h3 class="drome-h3 drome-text-gray-900 dark:drome-text-white">
+                            Evolução da Receita
+                        </h3>
+                        <p class="drome-text-sm drome-text-gray-600 dark:drome-text-gray-400">
+                            Receita diária no período selecionado
+                        </p>
+                    </div>
+                    <div class="drome-h-80">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Orders Chart -->
+                <div class="drome-card">
+                    <div class="drome-border-b drome-border-gray-200 dark:drome-border-gray-700 drome-pb-4 drome-mb-4">
+                        <h3 class="drome-h3 drome-text-gray-900 dark:drome-text-white">
+                            Volume de Pedidos
+                        </h3>
+                        <p class="drome-text-sm drome-text-gray-600 dark:drome-text-gray-400">
+                            Quantidade de pedidos por dia
+                        </p>
+                    </div>
+                    <div class="drome-h-80">
+                        <canvas id="ordersChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Analytics -->
+            <div class="drome-grid drome-grid-cols-1 lg:drome-grid-cols-3 drome-gap-6">
+                <!-- Top Products -->
+                <div class="drome-card">
+                    <div class="drome-border-b drome-border-gray-200 dark:drome-border-gray-700 drome-pb-4 drome-mb-4">
+                        <h3 class="drome-h3 drome-text-gray-900 dark:drome-text-white">
+                            Top Produtos
+                        </h3>
+                        <p class="drome-text-sm drome-text-gray-600 dark:drome-text-gray-400">
+                            Produtos mais vendidos
+                        </p>
+                    </div>
+                    <div class="drome-space-y-4" id="top-products">
+                        <!-- Top products will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Revenue by Category -->
+                <div class="drome-card">
+                    <div class="drome-border-b drome-border-gray-200 dark:drome-border-gray-700 drome-pb-4 drome-mb-4">
+                        <h3 class="drome-h3 drome-text-gray-900 dark:drome-text-white">
+                            Receita por Categoria
+                        </h3>
+                        <p class="drome-text-sm drome-text-gray-600 dark:drome-text-gray-400">
+                            Distribuição por categoria
+                        </p>
+                    </div>
+                    <div class="drome-h-64">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Performance Metrics -->
+                <div class="drome-card">
+                    <div class="drome-border-b drome-border-gray-200 dark:drome-border-gray-700 drome-pb-4 drome-mb-4">
+                        <h3 class="drome-h3 drome-text-gray-900 dark:drome-text-white">
+                            Métricas de Performance
+                        </h3>
+                        <p class="drome-text-sm drome-text-gray-600 dark:drome-text-gray-400">
+                            Indicadores principais
+                        </p>
+                    </div>
+                    <div class="drome-space-y-4">
+                        <div class="drome-flex drome-justify-between drome-items-center">
+                            <span class="drome-text-sm drome-text-gray-600 dark:drome-text-gray-400">Taxa de Rejeição</span>
+                            <span class="drome-font-semibold drome-text-gray-900 dark:drome-text-white" id="bounce-rate">15%</span>
+                        </div>
+                        <div class="drome-w-full drome-bg-gray-200 dark:drome-bg-gray-700 drome-rounded-full drome-h-2">
+                            <div class="drome-bg-red-600 drome-h-2 drome-rounded-full" style="width: 15%"></div>
+                        </div>
+                        
+                        <div class="drome-flex drome-justify-between drome-items-center">
+                            <span class="drome-text-sm drome-text-gray-600 dark:drome-text-gray-400">Tempo Médio na Página</span>
+                            <span class="drome-font-semibold drome-text-gray-900 dark:drome-text-white" id="avg-session">3m 45s</span>
+                        </div>
+                        <div class="drome-w-full drome-bg-gray-200 dark:drome-bg-gray-700 drome-rounded-full drome-h-2">
+                            <div class="drome-bg-blue-600 drome-h-2 drome-rounded-full" style="width: 75%"></div>
+                        </div>
+                        
+                        <div class="drome-flex drome-justify-between drome-items-center">
+                            <span class="drome-text-sm drome-text-gray-600 dark:drome-text-gray-400">Satisfação do Cliente</span>
+                            <span class="drome-font-semibold drome-text-gray-900 dark:drome-text-white" id="satisfaction">4.8/5</span>
+                        </div>
+                        <div class="drome-w-full drome-bg-gray-200 dark:drome-bg-gray-700 drome-rounded-full drome-h-2">
+                            <div class="drome-bg-green-600 drome-h-2 drome-rounded-full" style="width: 96%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Import Data Modal -->
+    <div id="import-modal" class="drome-hidden drome-fixed drome-inset-0 drome-bg-black drome-bg-opacity-50 drome-flex drome-items-center drome-justify-center drome-z-50">
+        <div class="drome-bg-white dark:drome-bg-gray-800 drome-rounded-lg drome-shadow-xl drome-w-full drome-max-w-md drome-m-4">
+            <div class="drome-flex drome-items-center drome-justify-between drome-p-6 drome-border-b drome-border-gray-200 dark:drome-border-gray-700">
+                <h3 class="drome-text-lg drome-font-semibold drome-text-gray-900 dark:drome-text-white">
+                    Importar Dados
+                </h3>
+                <button id="close-import-modal" class="drome-text-gray-400 hover:drome-text-gray-600 dark:hover:drome-text-gray-300">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="drome-p-6">
+                <div class="drome-space-y-4">
+                    <div>
+                        <label for="file-input" class="drome-label">Selecionar Arquivo</label>
+                        <input type="file" id="file-input" accept=".xlsx,.xls,.csv" class="drome-input">
+                        <p class="drome-text-xs drome-text-gray-500 drome-mt-1">
+                            Suporte para arquivos Excel (.xlsx, .xls) e CSV
+                        </p>
+                    </div>
+                    
+                    <div class="drome-flex drome-justify-end drome-space-x-3 drome-pt-4">
+                        <button id="cancel-import" class="drome-btn drome-btn-outline">
+                            Cancelar
+                        </button>
+                        <button id="confirm-import" class="drome-btn drome-btn-primary">
+                            <i class="fas fa-upload drome-mr-2"></i>
+                            Importar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../../shared/drome-design-system.js"></script>
+    <script src="resultados.js"></script>
+</body>
+</html>

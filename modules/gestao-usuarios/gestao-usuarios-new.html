@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Usuários - DromeBoard</title>
+    
+    <!-- Template Base -->
+    <link rel="stylesheet" href="../../shared/drome-design-system.css">
+    <link rel="stylesheet" href="gestao-usuarios.css">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="drome-bg-gray-50 dark:drome-bg-gray-900">
+    <!-- Navigation -->
+    <nav class="drome-bg-white dark:drome-bg-gray-800 drome-border-b drome-border-gray-200 dark:drome-border-gray-700 drome-fixed drome-w-full drome-z-30 drome-top-0">
+        <div class="drome-max-w-7xl drome-mx-auto drome-px-4 sm:drome-px-6 lg:drome-px-8">
+            <div class="drome-flex drome-justify-between drome-h-16">
+                <!-- Left side - Logo and Navigation -->
+                <div class="drome-flex drome-items-center">
+                    <!-- Logo -->
+                    <div class="drome-flex-shrink-0 drome-flex drome-items-center">
+                        <img src="https://iili.io/3IVuaEb.png" alt="DromeBoard" class="drome-h-8 drome-w-auto">
+                        <h1 class="drome-ml-3 drome-text-xl drome-font-bold drome-text-gray-900 dark:drome-text-white">
+                            DromeBoard
+                        </h1>
+                    </div>
+
+                    <!-- Main Navigation -->
+                    <div class="drome-hidden md:drome-ml-10 md:drome-flex drome-space-x-8">
+                        <a href="../../core/dashboard.html" class="drome-text-gray-500 hover:drome-text-gray-700 dark:drome-text-gray-400 dark:hover:drome-text-gray-200 drome-px-3 drome-py-2 drome-rounded-md drome-text-sm drome-font-medium drome-transition-colors">
+                            <i class="fas fa-chart-line drome-mr-2"></i>Dashboard
+                        </a>
+                        <a href="#" class="drome-text-primary hover:drome-text-secondary drome-px-3 drome-py-2 drome-rounded-md drome-text-sm drome-font-medium drome-transition-colors">
+                            <i class="fas fa-users drome-mr-2"></i>Usuários
+                        </a>
+                        <a href="../gestao-unidades/gestao-unidades.html" class="drome-text-gray-500 hover:drome-text-gray-700 dark:drome-text-gray-400 dark:hover:drome-text-gray-200 drome-px-3 drome-py-2 drome-rounded-md drome-text-sm drome-font-medium drome-transition-colors">
+                            <i class="fas fa-building drome-mr-2"></i>Unidades
+                        </a>
+                        <a href="../resultados/resultados.html" class="drome-text-gray-500 hover:drome-text-gray-700 dark:drome-text-gray-400 dark:hover:drome-text-gray-200 drome-px-3 drome-py-2 drome-rounded-md drome-text-sm drome-font-medium drome-transition-colors">
+                            <i class="fas fa-chart-bar drome-mr-2"></i>Resultados
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right side - Actions -->
+                <div class="drome-flex drome-items-center drome-space-x-4">
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="drome-btn-icon" title="Alternar tema">
+                        <i class="fas fa-moon dark:fa-sun"></i>
+                    </button>
+
+                    <!-- User Menu -->
+                    <div class="drome-relative">
+                        <button class="drome-flex drome-items-center drome-space-x-2 drome-text-gray-700 dark:drome-text-gray-200 hover:drome-text-gray-900 dark:hover:drome-text-white drome-transition-colors" id="user-menu-btn">
+                            <div class="drome-w-8 drome-h-8 drome-bg-primary drome-rounded-full drome-flex drome-items-center drome-justify-center drome-text-white drome-text-sm drome-font-medium">
+                                A
+                            </div>
+                            <span class="drome-text-sm drome-font-medium" id="user-name">Admin</span>
+                            <i class="fas fa-chevron-down drome-text-xs"></i>
+                        </button>
+                        
+                        <!-- User Dropdown -->
+                        <div class="drome-hidden drome-absolute drome-right-0 drome-mt-2 drome-w-48 drome-bg-white dark:drome-bg-gray-800 drome-rounded-md drome-shadow-lg drome-border drome-border-gray-200 dark:drome-border-gray-700 drome-z-50" id="user-dropdown">
+                            <div class="drome-py-1">
+                                <button id="logout-btn" class="drome-block drome-w-full drome-text-left drome-px-4 drome-py-2 drome-text-sm drome-text-red-600 hover:drome-bg-red-50 dark:hover:drome-bg-red-900/10">
+                                    <i class="fas fa-sign-out-alt drome-mr-2"></i>Sair
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile menu button -->
+                    <button class="md:drome-hidden drome-btn-icon" id="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="drome-pt-16">
+        <div class="drome-max-w-7xl drome-mx-auto drome-px-4 sm:drome-px-6 lg:drome-px-8 drome-py-8">
+            <!-- Page Header -->
+            <div class="drome-flex drome-flex-col sm:drome-flex-row sm:drome-items-center sm:drome-justify-between drome-mb-8">
+                <div>
+                    <h1 class="drome-h1 drome-text-gray-900 dark:drome-text-white drome-mb-2">
+                        Gestão de Usuários
+                    </h1>
+                    <p class="drome-text-gray-600 dark:drome-text-gray-400">
+                        Gerencie usuários, permissões e acessos do sistema
+                    </p>
+                </div>
+                <div class="drome-mt-4 sm:drome-mt-0">
+                    <button id="new-user-btn" class="drome-btn drome-btn-primary">
+                        <i class="fas fa-plus drome-mr-2"></i>
+                        Novo Usuário
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filters and Search -->
+            <div class="drome-card drome-mb-6">
+                <div class="drome-flex drome-flex-col sm:drome-flex-row drome-gap-4">
+                    <!-- Search -->
+                    <div class="drome-flex-1">
+                        <div class="drome-relative">
+                            <div class="drome-absolute drome-inset-y-0 drome-left-0 drome-pl-3 drome-flex drome-items-center drome-pointer-events-none">
+                                <i class="fas fa-search drome-text-gray-400"></i>
+                            </div>
+                            <input 
+                                type="text" 
+                                id="search-input"
+                                class="drome-input drome-pl-10" 
+                                placeholder="Buscar por nome, email ou cargo..."
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Status Filter -->
+                    <div class="sm:drome-w-48">
+                        <select id="status-filter" class="drome-input">
+                            <option value="">Todos os status</option>
+                            <option value="ativo">Ativo</option>
+                            <option value="inativo">Inativo</option>
+                            <option value="pendente">Pendente</option>
+                        </select>
+                    </div>
+
+                    <!-- Role Filter -->
+                    <div class="sm:drome-w-48">
+                        <select id="role-filter" class="drome-input">
+                            <option value="">Todos os cargos</option>
+                            <option value="admin">Administrador</option>
+                            <option value="user">Usuário</option>
+                            <option value="manager">Gerente</option>
+                        </select>
+                    </div>
+
+                    <!-- Export Button -->
+                    <button id="export-btn" class="drome-btn drome-btn-outline">
+                        <i class="fas fa-download drome-mr-2"></i>
+                        Exportar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Users Table -->
+            <div class="drome-card">
+                <div class="drome-overflow-x-auto">
+                    <table class="drome-min-w-full drome-divide-y drome-divide-gray-200 dark:drome-divide-gray-700">
+                        <thead class="drome-bg-gray-50 dark:drome-bg-gray-800">
+                            <tr>
+                                <th class="drome-px-6 drome-py-3 drome-text-left drome-text-xs drome-font-medium drome-text-gray-500 dark:drome-text-gray-400 drome-uppercase drome-tracking-wider">
+                                    <input type="checkbox" id="select-all" class="drome-checkbox">
+                                </th>
+                                <th class="drome-px-6 drome-py-3 drome-text-left drome-text-xs drome-font-medium drome-text-gray-500 dark:drome-text-gray-400 drome-uppercase drome-tracking-wider">
+                                    Usuário
+                                </th>
+                                <th class="drome-px-6 drome-py-3 drome-text-left drome-text-xs drome-font-medium drome-text-gray-500 dark:drome-text-gray-400 drome-uppercase drome-tracking-wider">
+                                    Cargo
+                                </th>
+                                <th class="drome-px-6 drome-py-3 drome-text-left drome-text-xs drome-font-medium drome-text-gray-500 dark:drome-text-gray-400 drome-uppercase drome-tracking-wider">
+                                    Status
+                                </th>
+                                <th class="drome-px-6 drome-py-3 drome-text-left drome-text-xs drome-font-medium drome-text-gray-500 dark:drome-text-gray-400 drome-uppercase drome-tracking-wider">
+                                    Último Acesso
+                                </th>
+                                <th class="drome-px-6 drome-py-3 drome-text-left drome-text-xs drome-font-medium drome-text-gray-500 dark:drome-text-gray-400 drome-uppercase drome-tracking-wider">
+                                    Ações
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table-body" class="drome-bg-white dark:drome-bg-gray-900 drome-divide-y drome-divide-gray-200 dark:drome-divide-gray-700">
+                            <!-- Users will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Loading State -->
+                <div id="loading-state" class="drome-text-center drome-py-12">
+                    <div class="drome-animate-spin drome-w-8 drome-h-8 drome-border-4 drome-border-primary drome-border-t-transparent drome-rounded-full drome-mx-auto drome-mb-4"></div>
+                    <p class="drome-text-gray-600 dark:drome-text-gray-400">Carregando usuários...</p>
+                </div>
+
+                <!-- Empty State -->
+                <div id="empty-state" class="drome-hidden drome-text-center drome-py-12">
+                    <i class="fas fa-users drome-text-gray-400 drome-text-4xl drome-mb-4"></i>
+                    <h3 class="drome-text-lg drome-font-medium drome-text-gray-900 dark:drome-text-white drome-mb-2">
+                        Nenhum usuário encontrado
+                    </h3>
+                    <p class="drome-text-gray-600 dark:drome-text-gray-400 drome-mb-4">
+                        Comece criando seu primeiro usuário.
+                    </p>
+                    <button class="drome-btn drome-btn-primary">
+                        <i class="fas fa-plus drome-mr-2"></i>
+                        Criar Primeiro Usuário
+                    </button>
+                </div>
+
+                <!-- Pagination -->
+                <div id="pagination" class="drome-hidden drome-flex drome-items-center drome-justify-between drome-px-6 drome-py-3 drome-bg-gray-50 dark:drome-bg-gray-800 drome-border-t drome-border-gray-200 dark:drome-border-gray-700">
+                    <div class="drome-flex drome-items-center drome-text-sm drome-text-gray-700 dark:drome-text-gray-300">
+                        Mostrando <span id="showing-start">1</span> a <span id="showing-end">10</span> de <span id="total-items">0</span> usuários
+                    </div>
+                    <div class="drome-flex drome-space-x-2">
+                        <button id="prev-page" class="drome-btn drome-btn-outline drome-btn-sm" disabled>
+                            <i class="fas fa-chevron-left drome-mr-1"></i>
+                            Anterior
+                        </button>
+                        <button id="next-page" class="drome-btn drome-btn-outline drome-btn-sm">
+                            Próximo
+                            <i class="fas fa-chevron-right drome-ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- User Form Modal -->
+    <div id="user-modal" class="drome-hidden drome-fixed drome-inset-0 drome-bg-black drome-bg-opacity-50 drome-flex drome-items-center drome-justify-center drome-z-50">
+        <div class="drome-bg-white dark:drome-bg-gray-800 drome-rounded-lg drome-shadow-xl drome-w-full drome-max-w-md drome-max-h-full drome-overflow-y-auto drome-m-4">
+            <div class="drome-flex drome-items-center drome-justify-between drome-p-6 drome-border-b drome-border-gray-200 dark:drome-border-gray-700">
+                <h3 id="modal-title" class="drome-text-lg drome-font-semibold drome-text-gray-900 dark:drome-text-white">
+                    Novo Usuário
+                </h3>
+                <button id="close-modal" class="drome-text-gray-400 hover:drome-text-gray-600 dark:hover:drome-text-gray-300">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="user-form" class="drome-p-6 drome-space-y-6">
+                <input type="hidden" id="user-id">
+                
+                <!-- Basic Information -->
+                <div class="drome-space-y-4">
+                    <h4 class="drome-text-sm drome-font-medium drome-text-gray-900 dark:drome-text-white">
+                        Informações Básicas
+                    </h4>
+                    
+                    <div class="drome-form-group">
+                        <label for="user-name" class="drome-label">Nome Completo</label>
+                        <input type="text" id="user-name" name="name" class="drome-input" required>
+                    </div>
+                    
+                    <div class="drome-form-group">
+                        <label for="user-email" class="drome-label">E-mail</label>
+                        <input type="email" id="user-email" name="email" class="drome-input" required>
+                    </div>
+                    
+                    <div class="drome-form-group">
+                        <label for="user-phone" class="drome-label">Telefone</label>
+                        <input type="tel" id="user-phone" name="phone" class="drome-input">
+                    </div>
+                </div>
+
+                <!-- Access Information -->
+                <div class="drome-space-y-4">
+                    <h4 class="drome-text-sm drome-font-medium drome-text-gray-900 dark:drome-text-white">
+                        Informações de Acesso
+                    </h4>
+                    
+                    <div class="drome-form-group">
+                        <label for="user-role" class="drome-label">Cargo</label>
+                        <select id="user-role" name="role" class="drome-input" required>
+                            <option value="">Selecione um cargo</option>
+                            <option value="admin">Administrador</option>
+                            <option value="manager">Gerente</option>
+                            <option value="user">Usuário</option>
+                        </select>
+                    </div>
+                    
+                    <div class="drome-form-group">
+                        <label for="user-status" class="drome-label">Status</label>
+                        <select id="user-status" name="status" class="drome-input" required>
+                            <option value="ativo">Ativo</option>
+                            <option value="inativo">Inativo</option>
+                            <option value="pendente">Pendente</option>
+                        </select>
+                    </div>
+                    
+                    <div id="password-section" class="drome-space-y-4">
+                        <div class="drome-form-group">
+                            <label for="user-password" class="drome-label">Senha</label>
+                            <input type="password" id="user-password" name="password" class="drome-input">
+                            <p class="drome-text-xs drome-text-gray-500 drome-mt-1">
+                                Deixe em branco para manter a senha atual (ao editar)
+                            </p>
+                        </div>
+                        
+                        <div class="drome-form-group">
+                            <label for="user-password-confirm" class="drome-label">Confirmar Senha</label>
+                            <input type="password" id="user-password-confirm" name="password_confirm" class="drome-input">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="drome-flex drome-justify-end drome-space-x-3 drome-pt-6 drome-border-t drome-border-gray-200 dark:drome-border-gray-700">
+                    <button type="button" id="cancel-btn" class="drome-btn drome-btn-outline">
+                        Cancelar
+                    </button>
+                    <button type="submit" id="save-btn" class="drome-btn drome-btn-primary">
+                        <span class="drome-btn-text">
+                            <i class="fas fa-save drome-mr-2"></i>
+                            Salvar
+                        </span>
+                        <span class="drome-loading-icon drome-hidden">
+                            <div class="drome-animate-spin drome-w-4 drome-h-4 drome-border-2 drome-border-white drome-border-t-transparent drome-rounded-full"></div>
+                        </span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../../shared/drome-design-system.js"></script>
+    <script src="gestao-usuarios.js"></script>
+</body>
+</html>
