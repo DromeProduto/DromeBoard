@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DromeFlow - UI Kit Elements</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            light: '#6366f1',
+                            dark: '#818cf8'
+                        },
+                        secondary: {
+                            light: '#f43f5e',
+                            dark: '#fb7185'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        .task-card {
+            transition: all 0.3s ease;
+        }
+        .task-card:hover {
+            transform: translateY(-3px);
+        }
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+        .color-swatch {
+            width: 100px;
+            height: 80px;
+            border-radius: 8px;
+        }
+        .section-title {
+            position: relative;
+            padding-bottom: 10px;
+        }
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(to right, #6366f1, #f43f5e);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+    <header class="bg-white dark:bg-gray-800 shadow-sm transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="h-10 w-10 rounded-lg bg-gradient-to-br from-primary-light to-secondary-light dark:from-primary-dark dark:to-secondary-dark flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                </div>
+                <h1 class="text-xl font-bold">DromeFlow UI Kit</h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none">
+                    <!-- Sun icon for dark mode -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    <!-- Moon icon for light mode -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-8">
+        <div class="mb-12">
+            <h1 class="text-3xl font-bold mb-2">DromeFlow UI Kit Elements</h1>
+            <p class="text-gray-600 dark:text-gray-400">A comprehensive collection of UI components used in the DromeFlow dashboard.</p>
+        </div>
+
+        <!-- Color Palette -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-semibold mb-6 section-title">Color Palette</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                <div>
+                    <div class="color-swatch bg-primary-light dark:bg-primary-dark mb-2"></div>
+                    <p class="font-medium">Primary</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                        <span class="block">Light: #6366f1</span>
+                        <span class="block">Dark: #818cf8</span>
+                    </p>
+                </div>
+                <div>
+                    <div class="color-swatch bg-secondary-light dark:bg-secondary-dark mb-2"></div>
+                    <p class="font-medium">Secondary</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                        <span class="block">Light: #f43f5e</span>
+                        <span class="block">Dark: #fb7185</span>
+                    </p>
+                </div>
+                <div>
+                    <div class="color-swatch bg-blue-500 mb-2"></div>
+                    <p class="font-medium">Blue</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">#3b82f6</p>
+                </div>
+                <div>
+                    <div class="color-swatch bg-green-500 mb-2"></div>
+                    <p class="font-medium">Green</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">#22c55e</p>
+                </div>
+                <div>
+                    <div class="color-swatch bg-yellow-500 mb-2"></div>
+                    <p class="font-medium">Yellow</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">#eab308</p>
+                </div>
+                <div>
+                    <div class="color-swatch bg-red-500 mb-2"></div>
+                    <p class="font-medium">Red</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">#ef4444</p>
+                </div>
+                <div>
+                    <div class="color-swatch bg-purple-500 mb-2"></div>
+                    <p class="font-medium">Purple</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">#a855f7</p>
+                </div>
+                <div>
+                    <div class="color-swatch bg-gray-200 dark:bg-gray-700 mb-2"></div>
+                    <p class="font-medium">Gray</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                        <span class="block">Light: #e5e7eb</span>
+                        <span class="block">Dark: #374151</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Typography -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-semibold mb-6 section-title">Typography</h2>
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 transition-colors duration-300">
+                <div class="space-y-6">
+                    <div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Heading 1</p>
+                        <h1 class="text-3xl font-bold">Welcome back, Jean!</h1>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Heading 2</p>
+                        <h2 class="text-2xl font-semibold">Project Progress</h2>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Heading 3</p>
+                        <h3 class="text-lg font-semibold">Recent Tasks</h3>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Body Text</p>
+                        <p>Here's what's happening with your projects today.</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Small Text</p>
+                        <p class="text-sm">Due in 3 days</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Font Family</p>
+                        <p class="font-medium">Inter (300, 400, 500, 600, 700)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Buttons -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-semibold mb-6 section-title">Buttons</h2>
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 transition-colors duration-300">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">Primary Button</p>
+                        <button class="px-4 py-2 bg-primary-light dark:bg-primary-dark text-white rounded-lg hover:opacity-90 transition-opacity">
+                            Primary Button
+                        </button>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">Secondary Button</p>
+                        <button class="px-4 py-2 bg-secondary-light dark:bg-secondary-dark text-white rounded-lg hover:opacity-90 transition-opacity">
+                            Secondary Button
+                        </button>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">Outline Button</p>
+                        <button class="px-4 py-2 border border-primary-light dark:border-primary-dark text-primary-light dark:text-primary-dark rounded-lg hover:bg-primary-light/10 dark:hover:bg-primary-dark/10 transition-colors">
+                            Outline Button
+                        </button>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">Text Button</p>
+                        <button class="px-4 py-2 text-primary-light dark:text-primary-dark font-medium hover:underline">
+                            Text Button
+                        </button>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">Icon Button</p>
+                        <button class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">Toggle Button</p>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1 text-sm bg-primary-light dark:bg-primary-dark text-white rounded-md">Month</button>
+                            <button class="px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-300">Week</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cards -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-semibold mb-6 section-title">Cards</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Stat Card -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 transition-colors duration-300">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Tasks Completed</h3>
+                        <span class="p-2 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="flex items-end">
+                        <h2 class="text-3xl font-bold">24</h2>
+                        <span class="ml-2 text-sm text-green-500 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                            </svg>
+                            12%
+                        </span>
+                    </div>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">vs. last week</p>
+                </div>
+
+                <!-- Task Card -->
+                <div class="task-card bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm transition-colors duration-300">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h4 class="font-medium mb-1">Update homepage design</h4>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Website Redesign</p>
+                        </div>
+                        <span class="px-2 py-1 text-xs font-medium bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 rounded-md">In Progress</span>
+                    </div>
+                    <div class="mt-4 flex items-center justify-between">
+                        <div class="flex -space-x-2">
+                            <div class="h-6 w-6 rounded-full bg-blue-500 text-white flex items-center justify-center text-xs">JD</div>
+                            <div class="h-6 w-6 rounded-full bg-green-500 text-white flex items-center justify-center text-xs">AM</div>
+                        </div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Due in 3 days</p>
+                    </div>
+                </div>
+
+                <!-- Team Member Card -->
+                <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm transition-colors duration-300">
+                    <div class="flex items-center">
+                        <div class="h-10 w-10 rounded-full bg-blue-500 text-white flex items-center justify-center font-medium">JD</div>
+                        <div class="ml-3">
+                            <p class="font-medium">John Doe</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Product Designer</p>
+                        </div>
+                        <button class="ml-auto p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress Indicators -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-semibold mb-6 section-title">Progress Indicators</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Linear Progress -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 transition-colors duration-300">
+                    <h3 class="text-lg font-semibold mb-4">Linear Progress</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium">Website Redesign</span>
+                                <span class="text-sm font-medium">75%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                <div class="bg-blue-500 h-2 rounded-full" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium">Mobile App</span>
+                                <span class="text-sm font-medium">45%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                <div class="bg-green-500 h-2 rounded-full" style="width: 45%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium">Marketing Campaign</span>
+                                <span class="text-sm font-medium">60%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                <div class="bg-purple-500 h-2 rounded-full" style="width: 60%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Circular Progress -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 transition-colors duration-300">
+                    <h3 class="text-lg font-semibold mb-4">Circular Progress</h3>
+                    <div class="flex items-center justify-center h-48">
+                        <div class="relative w-40 h-40">
+                            <svg class="w-full h-full" viewBox="0 0 100 100">
+                                <circle class="text-gray-200 dark:text-gray-700 stroke-current" stroke-width="10" cx="50" cy="50" r="40" fill="transparent"></circle>
+                                <circle class="text-primary-light dark:text-primary-dark progress-ring stroke-current" stroke-width="10" stroke-linecap="round" cx="50" cy="50" r="40" fill="transparent" stroke-dasharray="251.2" stroke-dashoffset="62.8"></circle>
+                            </svg>
+                            <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                                <div class="text-center">
+                                    <p class="text-3xl font-bold">75%</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Completed</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Status Badges -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-semibold mb-6 section-title">Status Badges</h2>
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 transition-colors duration-300">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">In Progress</p>
+                        <span class="px-2 py-1 text-xs font-medium bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 rounded-md">In Progress</span>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">Completed</p>
+                        <span class="px-2 py-1 text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-md">Completed</span>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">Overdue</p>
+                        <span class="px-2 py-1 text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 rounded-md">Overdue</span>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">Pending</p>
+                        <span class="px-2 py-1 text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-md">Pending</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Icons -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-semibold mb-6 section-title">Icons</h2>
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 transition-colors duration-300">
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                    <div class="flex flex-col items-center">
+                        <div class="p-3 bg-gray-100 dark:bg-gray-700 rounded-lg mb-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                            </svg>
+                        </div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Home</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="p-3 bg-gray-100 dark:bg-gray-700 rounded-lg mb-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                            </svg>
+                        </div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Tasks</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="p-3 bg-gray-100 dark:bg-gray-700 rounded-lg mb-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Calendar</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="p-3 bg-gray-100 dark:bg-gray-700 rounded-lg mb-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                        </div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">User</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="p-3 bg-gray-100 dark:bg-gray-700 rounded-lg mb-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Check</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="p-3 bg-gray-100 dark:bg-gray-700 rounded-lg mb-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Clock</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="p-3 bg-gray-100 dark:bg-gray-700 rounded-lg mb-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                            </svg>
+                        </div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Notification</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="p-3 bg-gray-100 dark:bg-gray-700 rounded-lg mb-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                            </svg>
+                        </div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">More</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Form Elements -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-semibold mb-6 section-title">Form Elements</h2>
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 transition-colors duration-300">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Text Input</label>
+                        <input type="text" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark" placeholder="Enter text...">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Select</label>
+                        <select class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark">
+                            <option>Option 1</option>
+                            <option>Option 2</option>
+                            <option>Option 3</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Checkbox</label>
+                        <div class="flex items-center">
+                            <input type="checkbox" class="h-4 w-4 text-primary-light dark:text-primary-dark rounded focus:ring-primary-light dark:focus:ring-primary-dark">
+                            <label class="ml-2 text-sm">Remember me</label>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Radio</label>
+                        <div class="flex items-center space-x-4">
+                            <div class="flex items-center">
+                                <input type="radio" name="radio-option" class="h-4 w-4 text-primary-light dark:text-primary-dark focus:ring-primary-light dark:focus:ring-primary-dark">
+                                <label class="ml-2 text-sm">Option 1</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" name="radio-option" class="h-4 w-4 text-primary-light dark:text-primary-dark focus:ring-primary-light dark:focus:ring-primary-dark">
+                                <label class="ml-2 text-sm">Option 2</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Search Input</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </div>
+                            <input type="text" class="w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark" placeholder="Search...">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Toggle Switch</label>
+                        <div class="flex items-center">
+                            <div class="relative inline-block w-10 mr-2 align-middle select-none">
+                                <input type="checkbox" id="toggle" class="sr-only">
+                                <div class="block h-6 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+                                <div class="dot absolute left-1 top-1 h-4 w-4 bg-white rounded-full transition"></div>
+                            </div>
+                            <label for="toggle" class="text-sm">Notifications</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation Elements -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-semibold mb-6 section-title">Navigation Elements</h2>
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 transition-colors duration-300">
+                <div class="space-y-8">
+                    <!-- Sidebar Navigation -->
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Sidebar Navigation</h3>
+                        <div class="w-64 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                            <div class="px-4">
+                                <p class="text-xs uppercase text-gray-500 dark:text-gray-400 tracking-wider mb-3">Main</p>
+                                <ul class="space-y-1">
+                                    <li>
+                                        <a href="#" class="flex items-center px-4 py-2.5 text-sm font-medium rounded-lg bg-gray-100 dark:bg-gray-700 text-primary-light dark:text-primary-dark">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                            </svg>
+                                            Dashboard
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="flex items-center px-4 py-2.5 text-sm font-medium rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                                            </svg>
+                                            Tasks
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabs -->
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Tabs</h3>
+                        <div class="border-b border-gray-200 dark:border-gray-700">
+                            <nav class="flex space-x-8">
+                                <button class="py-4 px-1 border-b-2 border-primary-light dark:border-primary-dark font-medium text-primary-light dark:text-primary-dark">Overview</button>
+                                <button class="py-4 px-1 border-b-2 border-transparent font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">Projects</button>
+                                <button class="py-4 px-1 border-b-2 border-transparent font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">Tasks</button>
+                                <button class="py-4 px-1 border-b-2 border-transparent font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">Team</button>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <!-- Breadcrumbs -->
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Breadcrumbs</h3>
+                        <nav class="flex" aria-label="Breadcrumb">
+                            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                                <li class="inline-flex items-center">
+                                    <a href="#" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-light dark:hover:text-primary-dark">
+                                        Dashboard
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="flex items-center">
+                                        <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                                        </svg>
+                                        <a href="#" class="ml-1 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-light dark:hover:text-primary-dark md:ml-2">
+                                            Projects
+                                        </a>
+                                    </div>
+                                </li>
+                                <li aria-current="page">
+                                    <div class="flex items-center">
+                                        <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                                        </svg>
+                                        <span class="ml-1 text-sm font-medium text-gray-500 dark:text-gray-400 md:ml-2">
+                                            Website Redesign
+                                        </span>
+                                    </div>
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Pagination</h3>
+                        <div class="flex items-center justify-center">
+                            <nav class="inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                                <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm font-medium text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <span class="sr-only">Previous</span>
+                                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                    </svg>
+                                </a>
+                                <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    1
+                                </a>
+                                <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 bg-primary-light dark:bg-primary-dark text-sm font-medium text-white">
+                                    2
+                                </a>
+                                <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    3
+                                </a>
+                                <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm font-medium text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <span class="sr-only">Next</span>
+                                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                    </svg>
+                                </a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white dark:bg-gray-800 shadow-sm transition-colors duration-300 mt-12">
+        <div class="max-w-7xl mx-auto px-6 py-8">
+            <p class="text-center text-gray-500 dark:text-gray-400">DromeFlow UI Kit Elements © 2023</p>
+        </div>
+    </footer>
+
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const toggleSwitch = document.getElementById('toggle');
+        
+        // Check for saved theme preference or use system preference
+        if (localStorage.getItem('theme') === 'dark' || 
+            (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () => {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // Toggle switch functionality
+        toggleSwitch.addEventListener('change', function() {
+            if (this.checked) {
+                document.querySelector('.dot').classList.add('translate-x-4');
+                document.querySelector('.dot').classList.add('bg-primary-light');
+                document.querySelector('.dot').classList.remove('bg-white');
+            } else {
+                document.querySelector('.dot').classList.remove('translate-x-4');
+                document.querySelector('.dot').classList.remove('bg-primary-light');
+                document.querySelector('.dot').classList.add('bg-white');
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9390f34a35a8f18d',t:'MTc0NjEyMDAzNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

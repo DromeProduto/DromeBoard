@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DromeFlow - UI Kit Elements V2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            light: '#6366f1',
+                            dark: '#818cf8'
+                        },
+                        secondary: {
+                            light: '#f43f5e',
+                            dark: '#fb7185'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        .section-title {
+            position: relative;
+            padding-bottom: 10px;
+        }
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(to right, #6366f1, #f43f5e);
+            border-radius: 3px;
+        }
+        .calculator-key {
+            transition: all 0.1s;
+        }
+        .calculator-key:active {
+            transform: scale(0.95);
+        }
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #6366f1;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #6366f1;
+        }
+        .dark .toggle-checkbox:checked + .toggle-label {
+            background-color: #818cf8;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-bounce {
+            animation: bounce 1s infinite;
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+    <header class="bg-white dark:bg-gray-800 shadow-sm transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="h-10 w-10 rounded-lg bg-gradient-to-br from-primary-light to-secondary-light dark:from-primary-dark dark:to-secondary-dark flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                </div>
+                <h1 class="text-xl font-bold">DromeFlow UI Kit V2</h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none">
+                    <!-- Sun icon for dark mode -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    <!-- Moon icon for light mode -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-8">
+        <div class="mb-12">
+            <h1 class="text-3xl font-bold mb-2">DromeFlow UI Kit Elements V2</h1>
+            <p class="text-gray-600 dark:text-gray-400">Component collection focusing on Sign Up forms, Calculator interfaces, Settings panels, and 404 error pages.</p>
+        </div>
+
+        <!-- Sign Up Forms -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-semibold mb-6 section-title">Sign Up Forms</h2>
+            
+            <!-- Basic Sign Up Form -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-8 transition-colors duration-300">
+                <h3 class="text-lg font-medium mb-4">Basic Sign Up Form</h3>
+                <div class="max-w-md mx-auto">
+                    <form>
+                        <div class="mb-4">
+                            <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full Name</label>
+                            <input type="text" id="name" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:border-primary-light dark:focus:border-primary-dark bg-white dark:bg-gray-700" placeholder="John Doe">
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email Address</label>
+                            <input type="email" id="email" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:border-primary-light dark:focus:border-primary-dark bg-white dark:bg-gray-700" placeholder="john@example.com">
+                        </div>
+                        <div class="mb-4">
+                            <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password</label>
+                            <input type="password" id="password" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:border-primary-light dark:focus:border-primary-dark bg-white dark:bg-gray-700" placeholder="••••••••">
+                        </div>
+                        <div class="mb-6">
+                            <label for="confirm-password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Confirm Password</label>
+                            <input type="password" id="confirm-password" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:border-primary-light dark:focus:border-primary-dark bg-white dark:bg-gray-700" placeholder="••••••••">
+                        </div>
+                        <div class="flex items-center mb-4">
+                            <input type="checkbox" id="terms" class="h-4 w-4 text-primary-light dark:text-primary-dark focus:ring-primary-light dark:focus:ring-primary-dark border-gray-300 dark:border-gray-600 rounded">
+                            <label for="terms" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">
+                                I agree to the <a href="#" class="text-primary-light dark:text-primary-dark hover:underline">Terms and Conditions</a>
+                            </label>
+                        </div>
+                        <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-light dark:bg-primary-dark hover:bg-primary-light/90 dark:hover:bg-primary-dark/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-light dark:focus:ring-primary-dark">
+                            Create Account
+                        </button>
+                    </form>
+                    <div class="mt-4 text-center text-sm text-gray-600 dark:text-gray-400">
+                        Already have an account? <a href="#" class="text-primary-light dark:text-primary-dark hover:underline">Sign in</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Split Sign Up Form -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-8 transition-colors duration-300">
+                <h3 class="text-lg font-medium mb-4">Split Sign Up Form</h3>
+                <div class="flex flex-col md:flex-row overflow-hidden rounded-lg shadow-md">
+                    <div class="md:w-1/2 bg-gradient-to-br from-primary-light to-secondary-light dark:from-primary-dark dark:to-secondary-dark p-8 flex flex-col justify-center">
+                        <h2 class="text-2xl font-bold text-white mb-2">Welcome to DromeFlow</h2>
+                        <p class="text-white/80 mb-6">Create an account and start your journey with us.</p>
+                        <div class="flex space-x-4 mb-6">
+                            <div class="h-12 w-12 rounded-full bg-white/20 flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-medium text-white">Secure Platform</h3>
+                                <p class="text-white/70 text-sm">Your data is always safe with us</p>
+                            </div>
+                        </div>
+                        <div class="flex space-x-4">
+                            <div class="h-12 w-12 rounded-full bg-white/20 flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-medium text-white">Fast & Efficient</h3>
+                                <p class="text-white/70 text-sm">Get started in just a few minutes</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 bg-white dark:bg-gray-800 p-8">
+                        <form>
+                            <div class="mb-4">
+                                <label for="split-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full Name</label>
+                                <input type="text" id="split-name" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:border-primary-light dark:focus:border-primary-dark bg-white dark:bg-gray-700" placeholder="John Doe">
+                            </div>
+                            <div class="mb-4">
+                                <label for="split-email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email Address</label>
+                                <input type="email" id="split-email" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:border-primary-light dark:focus:border-primary-dark bg-white dark:bg-gray-700" placeholder="john@example.com">
+                            </div>
+                            <div class="mb-4">
+                                <label for="split-password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password</label>
+                                <input type="password" id="split-password" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:border-primary-light dark:focus:border-primary-dark bg-white dark:bg-gray-700" placeholder="••••••••">
+                            </div>
+                            <div class="flex items-center mb-4">
+                                <input type="checkbox" id="split-terms" class="h-4 w-4 text-primary-light dark:text-primary-dark focus:ring-primary-light dark:focus:ring-primary-dark border-gray-300 dark:border-gray-600 rounded">
+                                <label for="split-terms" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">
+                                    I agree to the <a href="#" class="text-primary-light dark:text-primary-dark hover:underline">Terms and Conditions</a>
+                                </label>
+                            </div>
+                            <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-light dark:bg-primary-dark hover:bg-primary-light/90 dark:hover:bg-primary-dark/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-light dark:focus:ring-primary-dark">
+                                Sign Up
+                            </button>
+                            <div class="mt-6">
+                                <div class="relative">
+                                    <div class="absolute inset-0 flex items-center">
+                                        <div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
+                                    </div>
+                                    <div class="relative flex justify-center text-sm">
+                                        <span class="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">Or continue with</span>
+                                    </div>
+                                </div>
+                                <div class="mt-6 grid grid-cols-2 gap-3">
+                                    <button type="button" class="w-full py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-light dark:focus:ring-primary-dark">
+                                        <div class="flex items-center justify-center">
+                                            <svg class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                                                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                                                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                                                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                                            </svg>
+                                            Google
+                                        </div>
+                                    </button>
+                                    <button type="button" class="w-full py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-light dark:focus:ring-primary-dark">
+                                        <div class="flex items-center justify-center">
+                                            <svg class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0014.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"/>
+                                            </svg>
+                                            Facebook
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Multi-step Sign Up Form -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-8 transition-colors duration-300">
+                <h3 class="text-lg font-medium mb-4">Multi-step Sign Up Form</h3>
+                <div class="max-w-2xl mx-auto">
+                    <div class="mb-8">
+                        <div class="flex items-center">
+                            <div class="flex items-center relative">
+                                <div class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 bg-primary-light dark:bg-primary-dark border-primary-light dark:border-primary-dark text-white text-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                    </svg>
+                                </div>
+                                <div class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium text-primary-light dark:text-primary-dark">
+                                    Personal Info
+                                </div>
+                            </div>
+                            <div class="flex-auto border-t-2 border-primary-light dark:border-primary-dark transition duration-500 ease-in-out"></div>
+                            <div class="flex items-center relative">
+                                <div class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-gray-300 dark:border-gray-600 text-center text-gray-400 dark:text-gray-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                                    </svg>
+                                </div>
+                                <div class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium text-gray-500 dark:text-gray-400">
+                                    Account Setup
+                                </div>
+                            </div>
+                            <div class="flex-auto border-t-2 border-gray-300 dark:border-gray-600 transition duration-500 ease-in-out"></div>
+                            <div class="flex items-center relative">
+                                <div class="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-gray-300 dark:border-gray-600 text-center text-gray-400 dark:text-gray-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                                <div class="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium text-gray-500 dark:text-gray-400">
+                                    Confirmation
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-8">
+                        <form>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="first-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">First Name</label>
+                                    <input type="text" id="first-name" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:border-primary-light dark:focus:border-primary-dark bg-white dark:bg-gray-700" placeholder="John">
+                                </div>
+                                <div>
+                                    <label for="last-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Last Name</label>
+                                    <input type="text" id="last-name" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:border-primary-light dark:focus:border-primary-dark bg-white dark:bg-gray-700" placeholder="Doe">
+                                </div>
+                                <div>
+                                    <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone Number</label>
+                                    <input type="tel" id="phone" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:border-primary-light dark:focus:border-primary-dark bg-white dark:bg-gray-700" placeholder="+1 (555) 123-4567">
+                                </div>
+                                <div>
+                                    <label for="date-of-birth" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Date of Birth</label>
+                                    <input type="date" id="date-of-birth" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:border-primary-light dark:focus:border-primary-dark bg-white dark:bg-gray-700">
+                                </div>
+                            </div>
+                            <div class="mt-8 flex justify-end">
+                                <button type="button" class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-light dark:bg-primary-dark hover:bg-primary-light/90 dark:hover:bg-primary-dark/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-light dark:focus:ring-primary-dark">
+                                    Next Step
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calculator Interfaces -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-semibold mb-6 section-title">Calculator Interfaces</h2>
+            
+            <!-- Basic Calculator -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-8 transition-colors duration-300">
+                <h3 class="text-lg font-medium mb-4">Basic Calculator</h3>
+                <div class="max-w-xs mx-auto bg-gray-100 dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg">
+                    <div class="p-4 bg-gray-200 dark:bg-gray-800">
+                        <div class="text-right">
+                            <div class="text-gray-600 dark:text-gray-400 text-sm mb-1">123 + 456</div>
+                            <div class="text-3xl font-semibold">579</div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-4 gap-1 p-2">
+                        <button class="calculator-key bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-medium py-3 rounded-lg">C</button>
+                        <button class="calculator-key bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-medium py-3 rounded-lg">+/-</button>
+                        <button class="calculator-key bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-medium py-3 rounded-lg">%</button>
+                        <button class="calculator-key bg-primary-light dark:bg-primary-dark hover:bg-primary-light/90 dark:hover:bg-primary-dark/90 text-white font-medium py-3 rounded-lg">÷</button>
+                        
+                        <button class="calculator-key bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 font-medium py-3 rounded-lg">7</button>
+                        <button class="calculator-key bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 font-medium py-3 rounded-lg">8</button>
+                        <button class="calculator-key bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 font-medium py-3 rounded-lg">9</button>
+                        <button class="calculator-key bg-primary-light dark:bg-primary-dark hover:bg-primary-light/90 dark:hover:bg-primary-dark/90 text-white font-medium py-3 rounded-lg">×</button>
+                        
+                        <button class="calculator-key bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 font-medium py-3 rounded-lg">4</button>
+                        <button class="calculator-key bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 font-medium py-3 rounded-lg">5</button>
+                        <button class="calculator-key bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 font-medium py-3 rounded-lg">6</button>
+                        <button class="calculator-key bg-primary-light dark:bg-primary-dark hover:bg-primary-light/90 dark:hover:bg-primary-dark/90 text-white font-medium py-3 rounded-lg">-</button>
+                        
+                        <button class="calculator-key bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 font-medium py-3 rounded-lg">1</button>
+                        <button class="calculator-key bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 font-medium py-3 rounded-lg">2</button>
+                        <button class="calculator-key bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 font-medium py-3 rounded-lg">3</button>
+                        <button class="calculator-key bg-primary-light dark:bg-primary-dark hover:bg-primary-light/90 dark:hover:bg-primary-dark/90 text-white font-medium py-3 rounded-lg">+</button>
+                        
+                        <button class="calculator-key bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 font-medium py-3 rounded-lg col-span-2">0</button>
+                        <button class="calculator-key bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 font-medium py-3 rounded-lg">.</button>
+                        <button class="calculator-key bg-secondary-light dark:bg-secondary-dark hover:bg-secondary-light/90 dark:hover:bg-secondary-dark/90 text-white font-medium py-3 rounded-lg">=</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mortgage Calculator -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-8 transition-colors duration-300">
+                <h3 class="text-lg font-medium mb-4">Mortgage Calculator</h3>
+                <div class="max-w-2xl mx-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <div class="mb-4">
+                                <label for="loan-amount" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Loan Amount</label>
+                                <div class="mt-1 relative rounded-md shadow-sm">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <span class="text-gray-500 dark:text-gray-400 sm:text-sm">$</span>
+                                    </div>
+                                    <input type="text" id="loan-amount" class="w-full pl-7 pr-12 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:border-primary-light dark:focus:border-primary-dark bg-white dark:bg-gray-700" placeholder="0.00" value="250,000">
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label for="interest-rate" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Interest Rate</label>
+                                <div class="mt-1 relative rounded-md shadow-sm">
+                                    <input type="text" id="interest-rate" class="w-full pr-12 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:border-primary-light dark:focus:border-primary-dark bg-white dark:bg-gray-700" placeholder="0.00" value="3.5">
+                                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                        <span class="text-gray-500 dark:text-gray-400 sm:text-sm">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label for="loan-term" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Loan Term</label>
+                                <div class="mt-1 relative rounded-md shadow-sm">
+                                    <input type="text" id="loan-term" class="w-full pr-12 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:border-primary-light dark:focus:border-primary-dark bg-white dark:bg-gray-700" placeholder="0" value="30">
+                                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                        <span class="text-gray-500 dark:text-gray-400 sm:text-sm">years</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label for="down-payment" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Down Payment</label>
+                                <div class="mt-1 relative rounded-md shadow-sm">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <span class="text-gray-500 dark:text-gray-400 sm:text-sm">$</span>
+                                    </div>
+                                    <input type="text" id="down-payment" class="w-full pl-7 pr-12 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:border-primary-light dark:focus:border-primary-dark bg-white dark:bg-gray-700" placeholder="0.00" value="50,000">
+                                </div>
+                            </div>
+                            <div class="mt-6">
+                                <button type="button" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-light dark:bg-primary-dark hover:bg-primary-light/90 dark:hover:bg-primary-dark/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-light dark:focus:ring-primary-dark">
+                                    Calculate
+                                </button>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-6">
+                            <h4 class="text-lg font-medium mb-4">Monthly Payment</h4>
+                            <div class="text-3xl font-bold text-primary-light dark:text-primary-dark mb-6">$1,122.61</div>
+                            <div class="space-y-4">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-400">Principal & Interest</span>
+                                    <span class="font-medium">$898.09</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-400">Property Taxes</span>
+                                    <span class="font-medium">$150.00</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-400">Home Insurance</span>
+                                    <span class="font-medium">$74.52</span>
+                                </div>
+                                <div class="pt-4 border-t border-gray-200 dark:border-gray-700 flex justify-between">
+                                    <span class="font-medium">Total Payment</span>
+                                    <span class="font-bold">$1,122.61</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tip Calculator -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-8 transition-colors duration-300">
+                <h3 class="text-lg font-medium mb-4">Tip Calculator</h3>
+                <div class="max-w-md mx-auto bg-gray-50 dark:bg-gray-900 rounded-lg p-6">
+                    <div class="mb-6">
+                        <label for="bill-amount" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Bill Amount</label>
+                        <div class="mt-1 relative rounded-md shadow-sm">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <span class="text-gray-500 dark:text-gray-400 sm:text-sm">$</span>
+                            </div>
+                            <input type="text" id="bill-amount" class="w-full pl-7 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:border-primary-light dark:focus:border-primary-dark bg-white dark:bg-gray-700" placeholder="0.00" value="42.50">
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tip Percentage</label>
+                        <div class="flex space-x-2">
+                            <button class="flex-1 py-2 px-4 bg-primary-light dark:bg-primary-dark text-white rounded-md">15%</button>
+                            <button class="flex-1 py-2 px-4 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md">18%</button>
+                            <button class="flex-1 py-2 px-4 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md">20%</button>
+                            <button class="flex-1 py-2 px-4 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md">Custom</button>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label for="num-people" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Number of People</label>
+                        <div class="flex">
+                            <button class="px-3 py-2 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-l-md border border-gray-300 dark:border-gray-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+                                </svg>
+                            </button>
+                            <input type="text" id="num-people" class="flex-1 text-center py-2 border-t border-b border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:border-primary-light dark:focus:border-primary-dark bg-white dark:bg-gray-700" value="2">
+                            <button class="px-3 py-2 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-r-md border border-gray-300 dark:border-gray-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-gray-600 dark:text-gray-400">Tip Amount</span>
+                            <span class="font-medium">$6.38</span>
+                        </div>
+                        <div class="flex justify-between mb-4">
+                            <span class="text-gray-600 dark:text-gray-400">Per Person</span>
+                            <span class="font-medium">$3.19</span>
+                        </div>
+                        <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
+                            <div class="flex justify-between">
+                                <span class="font-medium">Total</span>
+                                <span class="text-xl font-bold text-primary-light dark:text-primary-dark">$48.88</span>
+                            </div>
+                            <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400">
+                                <span>Per Person</span>
+                                <span>$24.44</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Panels -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-semibold mb-6 section-title">Settings Panels</h2>
+            
+            <!-- Basic Settings Panel -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-8 transition-colors duration-300">
+                <h3 class="text-lg font-medium mb-4">Basic Settings Panel</h3>
+                <div class="max-w-3xl mx-auto">
+                    <div class="flex flex-col md:flex-row">
+                        <div class="md:w-64 md:border-r md:border-gray-200 dark:md:border-gray-700 md:pr-6">
+                            <nav class="flex flex-col space-y-1">
+                                <a href="#" class="px-3 py-2 text-sm font-medium rounded-md bg-primary-light/10 dark:bg-primary-dark/20 text-primary-light dark:text-primary-dark">Account</a>
+                                <a href="#" class="px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Password</a>
+                                <a href="#" class="px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Notifications</a>
+                                <a href="#" class="px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Billing</a>
+                                <a href="#" class="px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Integrations</a>
+                            </nav>
+                        </div>
+                        <div class="md:flex-1 md:pl-6 mt-6 md:mt-0">
+                            <h4 class="text-lg font-medium mb-4">Account Settings</h4>
+                            <form>
+                                <div class="mb-4">
+                                    <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Name</label>
+                                    <input type="text" id="name" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:border-primary-light dark:focus:border-primary-dark bg-white dark:bg-gray-700" value="John Doe">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email Address</label>
+                                    <input type="email" id="email" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:border-primary-light dark:focus:border-primary-dark bg-white dark:bg-gray-700" value="john@example.com">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="username" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Username</label>
+                                    <div class="mt-1 flex rounded-md shadow-sm">
+                                        <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-sm">
+                                            dromeflow.com/
+                                        </span>
+                                        <input type="text" id="username" class="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:border-primary-light dark:focus:border-primary-dark bg-white dark:bg-gray-700" value="johndoe">
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="bio" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Bio</label>
+                                    <textarea id="bio" rows="3" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:border-primary-light dark:focus:border-primary-dark bg-white dark:bg-gray-700">Product designer at DromeFlow. I love creating beautiful and functional user interfaces.</textarea>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Profile Photo</label>
+                                    <div class="flex items-center">
+                                        <div class="h-12 w-12 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center overflow-hidden">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                            </svg>
+                                        </div>
+                                        <button type="button" class="ml-4 py-2 px-3 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-light dark:focus:ring-primary-dark">
+                                            Change
+                                        </button>
+                                        <button type="button" class="ml-2 py-2 px-3 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-light dark:focus:ring-primary-dark">
+                                            Remove
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="mt-6 flex justify-end">
+                                    <button type="button" class="mr-3 py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-light dark:focus:ring-primary-dark">
+                                        Cancel
+                                    </button>
+                                    <button type="submit" class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-light dark:bg-primary-dark hover:bg-primary-light/90 dark:hover:bg-primary-dark/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-light dark:focus:ring-primary-dark">
+                                        Save Changes
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notification Settings -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-8 transition-colors duration-300">
+                <h3 class="text-lg font-medium mb-4">Notification Settings</h3>
+                <div class="max-w-3xl mx-auto">
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="text-base font-medium mb-3">Email Notifications</h4>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h5 class="text-sm font-medium text-gray-800 dark:text-gray-200">Comments</h5>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">Get notified when someone comments on your posts.</p>
+                                    </div>
+                                    <div class="relative inline-block w-10 mr-2 align-middle select-none">
+                                        <input type="checkbox" id="toggle-comments" checked class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white dark:bg-gray-200 border-4 border-gray-300 dark:border-gray-700 appearance-none cursor-pointer right-0 top-0 transition-all duration-300"/>
+                                        <label for="toggle-comments" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 dark:bg-gray-700 cursor-pointer"></label>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h5 class="text-sm font-medium text-gray-800 dark:text-gray-200">Mentions</h5>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">Get notified when someone mentions you in a comment.</p>
+                                    </div>
+                                    <div class="relative inline-block w-10 mr-2 align-middle select-none">
+                                        <input type="checkbox" id="toggle-mentions" checked class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white dark:bg-gray-200 border-4 border-gray-300 dark:border-gray-700 appearance-none cursor-pointer right-0 top-0 transition-all duration-300"/>
+                                        <label for="toggle-mentions" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 dark:bg-gray-700 cursor-pointer"></label>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h5 class="text-sm font-medium text-gray-800 dark:text-gray-200">Follows</h5>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">Get notified when someone follows you.</p>
+                                    </div>
+                                    <div class="relative inline-block w-10 mr-2 align-middle select-none">
+                                        <input type="checkbox" id="toggle-follows" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white dark:bg-gray-200 border-4 border-gray-300 dark:border-gray-700 appearance-none cursor-pointer right-0 top-0 transition-all duration-300"/>
+                                        <label for="toggle-follows" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 dark:bg-gray-700 cursor-pointer"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-6 border-t border-gray-200 dark:border-gray-700">
+                            <h4 class="text-base font-medium mb-3">Push Notifications</h4>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h5 class="text-sm font-medium text-gray-800 dark:text-gray-200">Direct Messages</h5>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">Get notified when you receive a direct message.</p>
+                                    </div>
+                                    <div class="relative inline-block w-10 mr-2 align-middle select-none">
+                                        <input type="checkbox" id="toggle-messages" checked class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white dark:bg-gray-200 border-4 border-gray-300 dark:border-gray-700 appearance-none cursor-pointer right-0 top-0 transition-all duration-300"/>
+                                        <label for="toggle-messages" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 dark:bg-gray-700 cursor-pointer"></label>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h5 class="text-sm font-medium text-gray-800 dark:text-gray-200">Reminders</h5>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">Get notified about upcoming events and deadlines.</p>
+                                    </div>
+                                    <div class="relative inline-block w-10 mr-2 align-middle select-none">
+                                        <input type="checkbox" id="toggle-reminders" checked class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white dark:bg-gray-200 border-4 border-gray-300 dark:border-gray-700 appearance-none cursor-pointer right-0 top-0 transition-all duration-300"/>
+                                        <label for="toggle-reminders" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 dark:bg-gray-700 cursor-pointer"></label>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h5 class="text-sm font-medium text-gray-800 dark:text-gray-200">Marketing</h5>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">Receive updates about new features and promotions.</p>
+                                    </div>
+                                    <div class="relative inline-block w-10 mr-2 align-middle select-none">
+                                        <input type="checkbox" id="toggle-marketing" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white dark:bg-gray-200 border-4 border-gray-300 dark:border-gray-700 appearance-none cursor-pointer right-0 top-0 transition-all duration-300"/>
+                                        <label for="toggle-marketing" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 dark:bg-gray-700 cursor-pointer"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-6 border-t border-gray-200 dark:border-gray-700">
+                            <h4 class="text-base font-medium mb-3">Email Frequency</h4>
+                            <div class="space-y-2">
+                                <div class="flex items-center">
+                                    <input id="frequency-realtime" name="frequency" type="radio" checked class="h-4 w-4 text-primary-light dark:text-primary-dark focus:ring-primary-light dark:focus:ring-primary-dark border-gray-300 dark:border-gray-600">
+                                    <label for="frequency-realtime" class="ml-3 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        Real-time
+                                    </label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input id="frequency-daily" name="frequency" type="radio" class="h-4 w-4 text-primary-light dark:text-primary-dark focus:ring-primary-light dark:focus:ring-primary-dark border-gray-300 dark:border-gray-600">
+                                    <label for="frequency-daily" class="ml-3 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        Daily digest
+                                    </label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input id="frequency-weekly" name="frequency" type="radio" class="h-4 w-4 text-primary-light dark:text-primary-dark focus:ring-primary-light dark:focus:ring-primary-dark border-gray-300 dark:border-gray-600">
+                                    <label for="frequency-weekly" class="ml-3 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        Weekly digest
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-6 flex justify-end">
+                            <button type="button" class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-light dark:bg-primary-dark hover:bg-primary-light/90 dark:hover:bg-primary-dark/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-light dark:focus:ring-primary-dark">
+                                Save Preferences
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Privacy Settings -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-8 transition-colors duration-300">
+                <h3 class="text-lg font-medium mb-4">Privacy Settings</h3>
+                <div class="max-w-3xl mx-auto">
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="text-base font-medium mb-3">Profile Visibility</h4>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h5 class="text-sm font-medium text-gray-800 dark:text-gray-200">Public Profile</h5>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">Make your profile visible to everyone.</p>
+                                    </div>
+                                    <div class="relative inline-block w-10 mr-2 align-middle select-none">
+                                        <input type="checkbox" id="toggle-public" checked class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white dark:bg-gray-200 border-4 border-gray-300 dark:border-gray-700 appearance-none cursor-pointer right-0 top-0 transition-all duration-300"/>
+                                        <label for="toggle-public" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 dark:bg-gray-700 cursor-pointer"></label>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h5 class="text-sm font-medium text-gray-800 dark:text-gray-200">Show Email Address</h5>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">Allow others to see your email address.</p>
+                                    </div>
+                                    <div class="relative inline-block w-10 mr-2 align-middle select-none">
+                                        <input type="checkbox" id="toggle-email" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white dark:bg-gray-200 border-4 border-gray-300 dark:border-gray-700 appearance-none cursor-pointer right-0 top-0 transition-all duration-300"/>
+                                        <label for="toggle-email" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 dark:bg-gray-700 cursor-pointer"></label>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h5 class="text-sm font-medium text-gray-800 dark:text-gray-200">Show Online Status</h5>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">Let others know when you're online.</p>
+                                    </div>
+                                    <div class="relative inline-block w-10 mr-2 align-middle select-none">
+                                        <input type="checkbox" id="toggle-online" checked class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white dark:bg-gray-200 border-4 border-gray-300 dark:border-gray-700 appearance-none cursor-pointer right-0 top-0 transition-all duration-300"/>
+                                        <label for="toggle-online" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 dark:bg-gray-700 cursor-pointer"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-6 border-t border-gray-200 dark:border-gray-700">
+                            <h4 class="text-base font-medium mb-3">Data Usage</h4>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h5 class="text-sm font-medium text-gray-800 dark:text-gray-200">Analytics</h5>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">Allow us to collect anonymous usage data to improve our services.</p>
+                                    </div>
+                                    <div class="relative inline-block w-10 mr-2 align-middle select-none">
+                                        <input type="checkbox" id="toggle-analytics" checked class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white dark:bg-gray-200 border-4 border-gray-300 dark:border-gray-700 appearance-none cursor-pointer right-0 top-0 transition-all duration-300"/>
+                                        <label for="toggle-analytics" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 dark:bg-gray-700 cursor-pointer"></label>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h5 class="text-sm font-medium text-gray-800 dark:text-gray-200">Personalized Ads</h5>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">Allow us to show you personalized advertisements.</p>
+                                    </div>
+                                    <div class="relative inline-block w-10 mr-2 align-middle select-none">
+                                        <input type="checkbox" id="toggle-ads" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white dark:bg-gray-200 border-4 border-gray-300 dark:border-gray-700 appearance-none cursor-pointer right-0 top-0 transition-all duration-300"/>
+                                        <label for="toggle-ads" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 dark:bg-gray-700 cursor-pointer"></label>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h5 class="text-sm font-medium text-gray-800 dark:text-gray-200">Cookies</h5>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">Allow us to use cookies to enhance your browsing experience.</p>
+                                    </div>
+                                    <div class="relative inline-block w-10 mr-2 align-middle select-none">
+                                        <input type="checkbox" id="toggle-cookies" checked class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white dark:bg-gray-200 border-4 border-gray-300 dark:border-gray-700 appearance-none cursor-pointer right-0 top-0 transition-all duration-300"/>
+                                        <label for="toggle-cookies" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 dark:bg-gray-700 cursor-pointer"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-6 border-t border-gray-200 dark:border-gray-700">
+                            <h4 class="text-base font-medium mb-3">Account Actions</h4>
+                            <div class="space-y-4">
+                                <button type="button" class="py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-light dark:focus:ring-primary-dark">
+                                    Download My Data
+                                </button>
+                                <button type="button" class="py-2 px-4 border border-red-300 dark:border-red-700 rounded-md shadow-sm text-sm font-medium text-red-700 dark:text-red-400 bg-white dark:bg-gray-700 hover:bg-red-50 dark:hover:bg-red-900/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 dark:focus:ring-red-400">
+                                    Delete My Account
+                                </button>
+                            </div>
+                        </div>
+                        <div class="pt-6 flex justify-end">
+                            <button type="button" class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-light dark:bg-primary-dark hover:bg-primary-light/90 dark:hover:bg-primary-dark/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-light dark:focus:ring-primary-dark">
+                                Save Settings
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 404 Error Pages -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-semibold mb-6 section-title">404 Error Pages</h2>
+            
+            <!-- Simple 404 Page -->
+            <div class="bg-white dark:<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9392873403fc1ab4',t:'MTc0NjEzNjU3OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>

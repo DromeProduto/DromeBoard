@@ -1,0 +1,1792 @@
+/* 
+  DromeBoard Design System
+  Sistema de Design baseado nos elementos oficiais da pasta "Elementos Oficial"
+  Extraído de: Kit Elements Components.html, Kit Elements Buttons.html, Kit Elements Calendar.html
+*/
+
+/* === IMPORTAÇÕES E FONTES === */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* === VARIÁVEIS CSS (ROOT) === */
+:root {
+  /* === PALETA DE CORES PRIMÁRIAS === */
+  --primary-light: #6366f1;
+  --primary-dark: #818cf8;
+  --secondary-light: #f43f5e;
+  --secondary-dark: #fb7185;
+  
+  /* === CORES FUNCIONAIS === */
+  --blue: #3b82f6;
+  --blue-50: #eff6ff;
+  --blue-100: #dbeafe;
+  --blue-200: #bfdbfe;
+  --blue-300: #93c5fd;
+  --blue-400: #60a5fa;
+  --blue-500: #3b82f6;
+  --blue-600: #2563eb;
+  --blue-700: #1d4ed8;
+  --blue-800: #1e40af;
+  --blue-900: #1e3a8a;
+  
+  --green: #22c55e;
+  --green-50: #f0fdf4;
+  --green-100: #dcfce7;
+  --green-200: #bbf7d0;
+  --green-300: #86efac;
+  --green-400: #4ade80;
+  --green-500: #22c55e;
+  --green-600: #16a34a;
+  --green-700: #15803d;
+  --green-800: #166534;
+  --green-900: #14532d;
+  
+  --yellow: #eab308;
+  --yellow-50: #fefce8;
+  --yellow-100: #fef3c7;
+  --yellow-200: #fde68a;
+  --yellow-300: #fcd34d;
+  --yellow-400: #fbbf24;
+  --yellow-500: #eab308;
+  --yellow-600: #d97706;
+  --yellow-700: #b45309;
+  --yellow-800: #92400e;
+  --yellow-900: #78350f;
+  
+  --red: #ef4444;
+  --red-50: #fef2f2;
+  --red-100: #fee2e2;
+  --red-200: #fecaca;
+  --red-300: #fca5a5;
+  --red-400: #f87171;
+  --red-500: #ef4444;
+  --red-600: #dc2626;
+  --red-700: #b91c1c;
+  --red-800: #991b1b;
+  --red-900: #7f1d1d;
+  
+  --purple: #a855f7;
+  --purple-50: #faf5ff;
+  --purple-100: #f3e8ff;
+  --purple-200: #e9d5ff;
+  --purple-300: #d8b4fe;
+  --purple-400: #c084fc;
+  --purple-500: #a855f7;
+  --purple-600: #9333ea;
+  --purple-700: #7c3aed;
+  --purple-800: #6b21a8;
+  --purple-900: #581c87;
+  
+  /* === CORES NEUTRAS === */
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  
+  /* === TIPOGRAFIA === */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-size-xs: 0.75rem;     /* 12px */
+  --font-size-sm: 0.875rem;    /* 14px */
+  --font-size-base: 1rem;      /* 16px */
+  --font-size-lg: 1.125rem;    /* 18px */
+  --font-size-xl: 1.25rem;     /* 20px */
+  --font-size-2xl: 1.5rem;     /* 24px */
+  --font-size-3xl: 1.875rem;   /* 30px */
+  --font-size-4xl: 2.25rem;    /* 36px */
+  
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* === ESPAÇAMENTOS === */
+  --spacing-0: 0;         /* 0px */
+  --spacing-px: 1px;      /* 1px */
+  --spacing-0-5: 0.125rem; /* 2px */
+  --spacing-1: 0.25rem;   /* 4px */
+  --spacing-1-5: 0.375rem; /* 6px */
+  --spacing-2: 0.5rem;    /* 8px */
+  --spacing-2-5: 0.625rem; /* 10px */
+  --spacing-3: 0.75rem;   /* 12px */
+  --spacing-3-5: 0.875rem; /* 14px */
+  --spacing-4: 1rem;      /* 16px */
+  --spacing-5: 1.25rem;   /* 20px */
+  --spacing-6: 1.5rem;    /* 24px */
+  --spacing-7: 1.75rem;   /* 28px */
+  --spacing-8: 2rem;      /* 32px */
+  --spacing-9: 2.25rem;   /* 36px */
+  --spacing-10: 2.5rem;   /* 40px */
+  --spacing-11: 2.75rem;  /* 44px */
+  --spacing-12: 3rem;     /* 48px */
+  --spacing-14: 3.5rem;   /* 56px */
+  --spacing-16: 4rem;     /* 64px */
+  --spacing-20: 5rem;     /* 80px */
+  --spacing-24: 6rem;     /* 96px */
+  --spacing-28: 7rem;     /* 112px */
+  --spacing-32: 8rem;     /* 128px */
+  
+  /* === BORDAS E RAIOS === */
+  --border-radius-sm: 0.375rem;   /* 6px */
+  --border-radius-md: 0.5rem;     /* 8px */
+  --border-radius-lg: 0.75rem;    /* 12px */
+  --border-radius-xl: 1rem;       /* 16px */
+  --border-radius-full: 9999px;
+  
+  /* === SOMBRAS === */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  /* === TRANSIÇÕES === */
+  --transition-all: all 0.3s ease;
+  --transition-colors: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+  --transition-opacity: opacity 0.3s ease;
+  --transition-transform: transform 0.3s ease;
+}
+
+/* === TEMA ESCURO === */
+[data-theme="dark"], .dark {
+  --primary: var(--primary-dark);
+  --secondary: var(--secondary-dark);
+  --bg-primary: var(--gray-900);
+  --bg-secondary: var(--gray-800);
+  --bg-tertiary: var(--gray-700);
+  --text-primary: var(--gray-200);
+  --text-secondary: var(--gray-400);
+  --border-color: var(--gray-600);
+}
+
+/* === TEMA CLARO === */
+:root:not([data-theme="dark"]):not(.dark) {
+  --primary: var(--primary-light);
+  --secondary: var(--secondary-light);
+  --bg-primary: #ffffff;
+  --bg-secondary: var(--gray-50);
+  --bg-tertiary: var(--gray-100);
+  --text-primary: var(--gray-800);
+  --text-secondary: var(--gray-600);
+  --border-color: var(--gray-300);
+}
+
+/* === RESET E BASE === */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+  transition: var(--transition-colors);
+}
+
+/* === TIPOGRAFIA === */
+.drome-h1 {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  margin-bottom: var(--spacing-2);
+}
+
+.drome-h2 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.3;
+  margin-bottom: var(--spacing-2);
+}
+
+.drome-h3 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.4;
+  margin-bottom: var(--spacing-2);
+}
+
+.drome-text-sm {
+  font-size: var(--font-size-sm);
+}
+
+.drome-text-xs {
+  font-size: var(--font-size-xs);
+}
+
+.drome-font-medium {
+  font-weight: var(--font-weight-medium);
+}
+
+.drome-font-semibold {
+  font-weight: var(--font-weight-semibold);
+}
+
+.drome-font-bold {
+  font-weight: var(--font-weight-bold);
+}
+
+/* === TÍTULOS DE SEÇÃO COM GRADIENTE === */
+.drome-section-title {
+  position: relative;
+  padding-bottom: var(--spacing-2);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+}
+
+.drome-section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background: linear-gradient(to right, var(--primary-light), var(--secondary-light));
+  border-radius: var(--border-radius-sm);
+}
+
+/* === BOTÕES === */
+.drome-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-2) var(--spacing-4);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--border-radius-lg);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: var(--transition-all);
+  text-decoration: none;
+  outline: none;
+}
+
+.drome-btn:focus {
+  box-shadow: 0 0 0 2px var(--primary);
+}
+
+/* Variações de Botões */
+.drome-btn-primary {
+  background-color: var(--primary);
+  color: white;
+}
+
+.drome-btn-primary:hover {
+  opacity: 0.9;
+}
+
+.drome-btn-secondary {
+  background-color: var(--secondary);
+  color: white;
+}
+
+.drome-btn-secondary:hover {
+  opacity: 0.9;
+}
+
+.drome-btn-outline {
+  background-color: transparent;
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.drome-btn-outline:hover {
+  background-color: rgba(99, 102, 241, 0.1);
+}
+
+.drome-btn-text {
+  background-color: transparent;
+  color: var(--primary);
+  padding: var(--spacing-2);
+}
+
+.drome-btn-text:hover {
+  text-decoration: underline;
+}
+
+.drome-btn-icon {
+  padding: var(--spacing-2);
+  border-radius: var(--border-radius-full);
+  background-color: transparent;
+}
+
+.drome-btn-icon:hover {
+  background-color: var(--bg-tertiary);
+}
+
+.drome-btn-disabled {
+  background-color: var(--gray-300);
+  color: var(--gray-500);
+  cursor: not-allowed;
+}
+
+.drome-btn-disabled:hover {
+  opacity: 1;
+}
+
+/* Tamanhos de Botões */
+.drome-btn-sm {
+  padding: var(--spacing-1) var(--spacing-3);
+  font-size: var(--font-size-sm);
+  border-radius: var(--border-radius-md);
+}
+
+.drome-btn-lg {
+  padding: var(--spacing-3) var(--spacing-6);
+  font-size: var(--font-size-lg);
+}
+
+/* === GRUPOS DE BOTÕES === */
+.drome-btn-group {
+  display: inline-flex;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.drome-btn-group .drome-btn {
+  border-radius: 0;
+  border-right-width: 0;
+}
+
+.drome-btn-group .drome-btn:first-child {
+  border-radius: var(--border-radius-lg) 0 0 var(--border-radius-lg);
+}
+
+.drome-btn-group .drome-btn:last-child {
+  border-radius: 0 var(--border-radius-lg) var(--border-radius-lg) 0;
+  border-right-width: 1px;
+}
+
+/* === CARDS === */
+.drome-card {
+  background-color: var(--bg-primary);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-6);
+  transition: var(--transition-all);
+  border: 1px solid var(--border-color);
+}
+
+.drome-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+/* Variações de Cards */
+.drome-card-stat {
+  text-align: center;
+}
+
+.drome-card-task {
+  transition: var(--transition-transform);
+}
+
+.drome-card-task:hover {
+  transform: translateY(-3px);
+}
+
+.drome-card-profile {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+/* === FORMULÁRIOS === */
+.drome-form-group {
+  margin-bottom: var(--spacing-4);
+}
+
+.drome-label {
+  display: block;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--spacing-2);
+  color: var(--text-primary);
+}
+
+.drome-input {
+  width: 100%;
+  padding: var(--spacing-2) var(--spacing-3);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  transition: var(--transition-colors);
+}
+
+.drome-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary);
+}
+
+.drome-input::placeholder {
+  color: var(--text-secondary);
+}
+
+.drome-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+}
+
+/* === CHECKBOX E RADIO === */
+.drome-checkbox,
+.drome-radio {
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-primary);
+  transition: var(--transition-colors);
+}
+
+.drome-checkbox {
+  border-radius: var(--border-radius-sm);
+}
+
+.drome-radio {
+  border-radius: var(--border-radius-full);
+}
+
+.drome-checkbox:checked,
+.drome-radio:checked {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+/* === TOGGLE SWITCH === */
+.drome-toggle {
+  position: relative;
+  display: inline-block;
+  width: 2.5rem;
+  height: 1.5rem;
+}
+
+.drome-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.drome-toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--gray-300);
+  transition: var(--transition-all);
+  border-radius: var(--border-radius-full);
+}
+
+.drome-toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 1rem;
+  width: 1rem;
+  left: 0.25rem;
+  bottom: 0.25rem;
+  background-color: white;
+  transition: var(--transition-all);
+  border-radius: var(--border-radius-full);
+}
+
+.drome-toggle input:checked + .drome-toggle-slider {
+  background-color: var(--primary);
+}
+
+.drome-toggle input:checked + .drome-toggle-slider:before {
+  transform: translateX(1rem);
+}
+
+/* === BADGES DE STATUS === */
+.drome-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-1) var(--spacing-2);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--border-radius-md);
+}
+
+.drome-badge-success {
+  background-color: rgba(34, 197, 94, 0.1);
+  color: var(--green);
+}
+
+.drome-badge-warning {
+  background-color: rgba(234, 179, 8, 0.1);
+  color: #b45309;
+}
+
+.drome-badge-danger {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--red);
+}
+
+.drome-badge-info {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: var(--blue);
+}
+
+.drome-badge-primary {
+  background-color: rgba(99, 102, 241, 0.1);
+  color: var(--primary);
+}
+
+/* === INDICADORES DE PROGRESSO === */
+.drome-progress {
+  width: 100%;
+  background-color: var(--gray-200);
+  border-radius: var(--border-radius-full);
+  height: 0.5rem;
+  overflow: hidden;
+}
+
+.drome-progress-bar {
+  height: 100%;
+  background: linear-gradient(to right, var(--primary-light), var(--secondary-light));
+  border-radius: var(--border-radius-full);
+  transition: width 0.3s ease;
+}
+
+/* === NAVEGAÇÃO === */
+.drome-nav {
+  background-color: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
+  padding: var(--spacing-4) 0;
+}
+
+.drome-nav-link {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-2) var(--spacing-4);
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: var(--border-radius-lg);
+  transition: var(--transition-colors);
+  font-weight: var(--font-weight-medium);
+}
+
+.drome-nav-link:hover,
+.drome-nav-link-active {
+  background-color: var(--bg-tertiary);
+  color: var(--primary);
+}
+
+.drome-nav-link svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: var(--spacing-3);
+}
+
+/* === TABS === */
+.drome-tabs {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.drome-tab {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-4) var(--spacing-1);
+  margin-right: var(--spacing-8);
+  border-bottom: 2px solid transparent;
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  transition: var(--transition-colors);
+}
+
+.drome-tab:hover {
+  color: var(--text-primary);
+}
+
+.drome-tab-active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+/* === BREADCRUMBS === */
+.drome-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  font-size: var(--font-size-sm);
+}
+
+.drome-breadcrumb-item {
+  color: var(--text-secondary);
+}
+
+.drome-breadcrumb-item:hover {
+  color: var(--primary);
+}
+
+.drome-breadcrumb-separator {
+  color: var(--text-secondary);
+}
+
+/* === PAGINAÇÃO === */
+.drome-pagination {
+  display: inline-flex;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.drome-pagination-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-2) var(--spacing-4);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: var(--transition-colors);
+  border-right-width: 0;
+}
+
+.drome-pagination-item:first-child {
+  border-radius: var(--border-radius-lg) 0 0 var(--border-radius-lg);
+}
+
+.drome-pagination-item:last-child {
+  border-radius: 0 var(--border-radius-lg) var(--border-radius-lg) 0;
+  border-right-width: 1px;
+}
+
+.drome-pagination-item:hover {
+  background-color: var(--bg-tertiary);
+}
+
+.drome-pagination-item-active {
+  background-color: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+/* === CALENDARIO === */
+.drome-calendar {
+  background-color: var(--bg-primary);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+}
+
+.drome-calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-4);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.drome-calendar-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.drome-calendar-nav-btn {
+  padding: var(--spacing-1);
+  border-radius: var(--border-radius-full);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-colors);
+}
+
+.drome-calendar-nav-btn:hover {
+  background-color: var(--bg-tertiary);
+}
+
+.drome-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  padding: var(--spacing-4);
+}
+
+.drome-calendar-day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  font-size: var(--font-size-sm);
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: var(--transition-colors);
+}
+
+.drome-calendar-day:hover:not(.calendar-day-disabled):not(.calendar-day-selected) {
+  background-color: rgba(99, 102, 241, 0.1);
+}
+
+.drome-calendar-day-selected {
+  background-color: var(--primary);
+  color: white;
+}
+
+.drome-calendar-day-today {
+  border: 2px solid var(--primary);
+}
+
+.drome-calendar-day-disabled {
+  color: var(--text-secondary);
+  cursor: default;
+}
+
+/* === UTILITÁRIOS DE LAYOUT === */
+.drome-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-6);
+}
+
+.drome-container-sm {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-4);
+}
+
+.drome-container-lg {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-8);
+}
+
+.drome-flex {
+  display: flex;
+}
+
+.drome-inline-flex {
+  display: inline-flex;
+}
+
+.drome-grid {
+  display: grid;
+}
+
+.drome-block {
+  display: block;
+}
+
+.drome-inline-block {
+  display: inline-block;
+}
+
+.drome-hidden {
+  display: none;
+}
+
+/* === DIREÇÕES FLEX === */
+.drome-flex-row {
+  flex-direction: row;
+}
+
+.drome-flex-col {
+  flex-direction: column;
+}
+
+.drome-flex-row-reverse {
+  flex-direction: row-reverse;
+}
+
+.drome-flex-col-reverse {
+  flex-direction: column-reverse;
+}
+
+/* === ALINHAMENTO FLEX === */
+.drome-items-start {
+  align-items: flex-start;
+}
+
+.drome-items-center {
+  align-items: center;
+}
+
+.drome-items-end {
+  align-items: flex-end;
+}
+
+.drome-items-stretch {
+  align-items: stretch;
+}
+
+.drome-justify-start {
+  justify-content: flex-start;
+}
+
+.drome-justify-center {
+  justify-content: center;
+}
+
+.drome-justify-end {
+  justify-content: flex-end;
+}
+
+.drome-justify-between {
+  justify-content: space-between;
+}
+
+.drome-justify-around {
+  justify-content: space-around;
+}
+
+.drome-justify-evenly {
+  justify-content: space-evenly;
+}
+
+/* === FLEX WRAP === */
+.drome-flex-wrap {
+  flex-wrap: wrap;
+}
+
+.drome-flex-nowrap {
+  flex-wrap: nowrap;
+}
+
+.drome-flex-wrap-reverse {
+  flex-wrap: wrap-reverse;
+}
+
+/* === FLEX GROW/SHRINK === */
+.drome-flex-1 {
+  flex: 1 1 0%;
+}
+
+.drome-flex-auto {
+  flex: 1 1 auto;
+}
+
+.drome-flex-initial {
+  flex: 0 1 auto;
+}
+
+.drome-flex-none {
+  flex: none;
+}
+
+/* === GRID SISTEMA COMPLETO === */
+.drome-grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+.drome-grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.drome-grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.drome-grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.drome-grid-cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.drome-grid-cols-6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.drome-grid-cols-12 { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+
+/* === GRID ROWS === */
+.drome-grid-rows-1 { grid-template-rows: repeat(1, minmax(0, 1fr)); }
+.drome-grid-rows-2 { grid-template-rows: repeat(2, minmax(0, 1fr)); }
+.drome-grid-rows-3 { grid-template-rows: repeat(3, minmax(0, 1fr)); }
+.drome-grid-rows-4 { grid-template-rows: repeat(4, minmax(0, 1fr)); }
+
+/* === COL SPAN === */
+.drome-col-span-1 { grid-column: span 1 / span 1; }
+.drome-col-span-2 { grid-column: span 2 / span 2; }
+.drome-col-span-3 { grid-column: span 3 / span 3; }
+.drome-col-span-4 { grid-column: span 4 / span 4; }
+.drome-col-span-5 { grid-column: span 5 / span 5; }
+.drome-col-span-6 { grid-column: span 6 / span 6; }
+.drome-col-span-full { grid-column: 1 / -1; }
+
+/* === GAPS COMPLETOS === */
+.drome-gap-0 { gap: var(--spacing-0); }
+.drome-gap-px { gap: var(--spacing-px); }
+.drome-gap-0-5 { gap: var(--spacing-0-5); }
+.drome-gap-1 { gap: var(--spacing-1); }
+.drome-gap-1-5 { gap: var(--spacing-1-5); }
+.drome-gap-2 { gap: var(--spacing-2); }
+.drome-gap-2-5 { gap: var(--spacing-2-5); }
+.drome-gap-3 { gap: var(--spacing-3); }
+.drome-gap-3-5 { gap: var(--spacing-3-5); }
+.drome-gap-4 { gap: var(--spacing-4); }
+.drome-gap-5 { gap: var(--spacing-5); }
+.drome-gap-6 { gap: var(--spacing-6); }
+.drome-gap-7 { gap: var(--spacing-7); }
+.drome-gap-8 { gap: var(--spacing-8); }
+.drome-gap-9 { gap: var(--spacing-9); }
+.drome-gap-10 { gap: var(--spacing-10); }
+.drome-gap-12 { gap: var(--spacing-12); }
+.drome-gap-16 { gap: var(--spacing-16); }
+
+/* === PADDING COMPLETO === */
+.drome-p-0 { padding: var(--spacing-0); }
+.drome-p-px { padding: var(--spacing-px); }
+.drome-p-0-5 { padding: var(--spacing-0-5); }
+.drome-p-1 { padding: var(--spacing-1); }
+.drome-p-1-5 { padding: var(--spacing-1-5); }
+.drome-p-2 { padding: var(--spacing-2); }
+.drome-p-2-5 { padding: var(--spacing-2-5); }
+.drome-p-3 { padding: var(--spacing-3); }
+.drome-p-3-5 { padding: var(--spacing-3-5); }
+.drome-p-4 { padding: var(--spacing-4); }
+.drome-p-5 { padding: var(--spacing-5); }
+.drome-p-6 { padding: var(--spacing-6); }
+.drome-p-7 { padding: var(--spacing-7); }
+.drome-p-8 { padding: var(--spacing-8); }
+.drome-p-10 { padding: var(--spacing-10); }
+.drome-p-12 { padding: var(--spacing-12); }
+.drome-p-16 { padding: var(--spacing-16); }
+.drome-p-20 { padding: var(--spacing-20); }
+
+/* === PADDING HORIZONTAL === */
+.drome-px-0 { padding-left: var(--spacing-0); padding-right: var(--spacing-0); }
+.drome-px-1 { padding-left: var(--spacing-1); padding-right: var(--spacing-1); }
+.drome-px-2 { padding-left: var(--spacing-2); padding-right: var(--spacing-2); }
+.drome-px-3 { padding-left: var(--spacing-3); padding-right: var(--spacing-3); }
+.drome-px-4 { padding-left: var(--spacing-4); padding-right: var(--spacing-4); }
+.drome-px-5 { padding-left: var(--spacing-5); padding-right: var(--spacing-5); }
+.drome-px-6 { padding-left: var(--spacing-6); padding-right: var(--spacing-6); }
+.drome-px-8 { padding-left: var(--spacing-8); padding-right: var(--spacing-8); }
+
+/* === PADDING VERTICAL === */
+.drome-py-0 { padding-top: var(--spacing-0); padding-bottom: var(--spacing-0); }
+.drome-py-1 { padding-top: var(--spacing-1); padding-bottom: var(--spacing-1); }
+.drome-py-2 { padding-top: var(--spacing-2); padding-bottom: var(--spacing-2); }
+.drome-py-3 { padding-top: var(--spacing-3); padding-bottom: var(--spacing-3); }
+.drome-py-4 { padding-top: var(--spacing-4); padding-bottom: var(--spacing-4); }
+.drome-py-5 { padding-top: var(--spacing-5); padding-bottom: var(--spacing-5); }
+.drome-py-6 { padding-top: var(--spacing-6); padding-bottom: var(--spacing-6); }
+.drome-py-8 { padding-top: var(--spacing-8); padding-bottom: var(--spacing-8); }
+
+/* === PADDING INDIVIDUAL === */
+.drome-pt-0 { padding-top: var(--spacing-0); }
+.drome-pt-1 { padding-top: var(--spacing-1); }
+.drome-pt-2 { padding-top: var(--spacing-2); }
+.drome-pt-3 { padding-top: var(--spacing-3); }
+.drome-pt-4 { padding-top: var(--spacing-4); }
+.drome-pt-6 { padding-top: var(--spacing-6); }
+.drome-pt-8 { padding-top: var(--spacing-8); }
+
+.drome-pr-0 { padding-right: var(--spacing-0); }
+.drome-pr-1 { padding-right: var(--spacing-1); }
+.drome-pr-2 { padding-right: var(--spacing-2); }
+.drome-pr-3 { padding-right: var(--spacing-3); }
+.drome-pr-4 { padding-right: var(--spacing-4); }
+.drome-pr-6 { padding-right: var(--spacing-6); }
+.drome-pr-8 { padding-right: var(--spacing-8); }
+
+.drome-pb-0 { padding-bottom: var(--spacing-0); }
+.drome-pb-1 { padding-bottom: var(--spacing-1); }
+.drome-pb-2 { padding-bottom: var(--spacing-2); }
+.drome-pb-3 { padding-bottom: var(--spacing-3); }
+.drome-pb-4 { padding-bottom: var(--spacing-4); }
+.drome-pb-6 { padding-bottom: var(--spacing-6); }
+.drome-pb-8 { padding-bottom: var(--spacing-8); }
+
+.drome-pl-0 { padding-left: var(--spacing-0); }
+.drome-pl-1 { padding-left: var(--spacing-1); }
+.drome-pl-2 { padding-left: var(--spacing-2); }
+.drome-pl-3 { padding-left: var(--spacing-3); }
+.drome-pl-4 { padding-left: var(--spacing-4); }
+.drome-pl-6 { padding-left: var(--spacing-6); }
+.drome-pl-8 { padding-left: var(--spacing-8); }
+
+/* === MARGIN COMPLETO === */
+.drome-m-0 { margin: var(--spacing-0); }
+.drome-m-px { margin: var(--spacing-px); }
+.drome-m-0-5 { margin: var(--spacing-0-5); }
+.drome-m-1 { margin: var(--spacing-1); }
+.drome-m-1-5 { margin: var(--spacing-1-5); }
+.drome-m-2 { margin: var(--spacing-2); }
+.drome-m-2-5 { margin: var(--spacing-2-5); }
+.drome-m-3 { margin: var(--spacing-3); }
+.drome-m-3-5 { margin: var(--spacing-3-5); }
+.drome-m-4 { margin: var(--spacing-4); }
+.drome-m-5 { margin: var(--spacing-5); }
+.drome-m-6 { margin: var(--spacing-6); }
+.drome-m-7 { margin: var(--spacing-7); }
+.drome-m-8 { margin: var(--spacing-8); }
+.drome-m-10 { margin: var(--spacing-10); }
+.drome-m-12 { margin: var(--spacing-12); }
+.drome-m-16 { margin: var(--spacing-16); }
+.drome-m-auto { margin: auto; }
+
+/* === MARGIN HORIZONTAL === */
+.drome-mx-0 { margin-left: var(--spacing-0); margin-right: var(--spacing-0); }
+.drome-mx-1 { margin-left: var(--spacing-1); margin-right: var(--spacing-1); }
+.drome-mx-2 { margin-left: var(--spacing-2); margin-right: var(--spacing-2); }
+.drome-mx-3 { margin-left: var(--spacing-3); margin-right: var(--spacing-3); }
+.drome-mx-4 { margin-left: var(--spacing-4); margin-right: var(--spacing-4); }
+.drome-mx-5 { margin-left: var(--spacing-5); margin-right: var(--spacing-5); }
+.drome-mx-6 { margin-left: var(--spacing-6); margin-right: var(--spacing-6); }
+.drome-mx-8 { margin-left: var(--spacing-8); margin-right: var(--spacing-8); }
+.drome-mx-auto { margin-left: auto; margin-right: auto; }
+
+/* === MARGIN VERTICAL === */
+.drome-my-0 { margin-top: var(--spacing-0); margin-bottom: var(--spacing-0); }
+.drome-my-1 { margin-top: var(--spacing-1); margin-bottom: var(--spacing-1); }
+.drome-my-2 { margin-top: var(--spacing-2); margin-bottom: var(--spacing-2); }
+.drome-my-3 { margin-top: var(--spacing-3); margin-bottom: var(--spacing-3); }
+.drome-my-4 { margin-top: var(--spacing-4); margin-bottom: var(--spacing-4); }
+.drome-my-5 { margin-top: var(--spacing-5); margin-bottom: var(--spacing-5); }
+.drome-my-6 { margin-top: var(--spacing-6); margin-bottom: var(--spacing-6); }
+.drome-my-8 { margin-top: var(--spacing-8); margin-bottom: var(--spacing-8); }
+
+/* === MARGIN INDIVIDUAL === */
+.drome-mt-0 { margin-top: var(--spacing-0); }
+.drome-mt-1 { margin-top: var(--spacing-1); }
+.drome-mt-2 { margin-top: var(--spacing-2); }
+.drome-mt-3 { margin-top: var(--spacing-3); }
+.drome-mt-4 { margin-top: var(--spacing-4); }
+.drome-mt-5 { margin-top: var(--spacing-5); }
+.drome-mt-6 { margin-top: var(--spacing-6); }
+.drome-mt-8 { margin-top: var(--spacing-8); }
+.drome-mt-auto { margin-top: auto; }
+
+.drome-mr-0 { margin-right: var(--spacing-0); }
+.drome-mr-1 { margin-right: var(--spacing-1); }
+.drome-mr-2 { margin-right: var(--spacing-2); }
+.drome-mr-3 { margin-right: var(--spacing-3); }
+.drome-mr-4 { margin-right: var(--spacing-4); }
+.drome-mr-5 { margin-right: var(--spacing-5); }
+.drome-mr-6 { margin-right: var(--spacing-6); }
+.drome-mr-8 { margin-right: var(--spacing-8); }
+.drome-mr-auto { margin-right: auto; }
+
+.drome-mb-0 { margin-bottom: var(--spacing-0); }
+.drome-mb-1 { margin-bottom: var(--spacing-1); }
+.drome-mb-2 { margin-bottom: var(--spacing-2); }
+.drome-mb-3 { margin-bottom: var(--spacing-3); }
+.drome-mb-4 { margin-bottom: var(--spacing-4); }
+.drome-mb-5 { margin-bottom: var(--spacing-5); }
+.drome-mb-6 { margin-bottom: var(--spacing-6); }
+.drome-mb-8 { margin-bottom: var(--spacing-8); }
+.drome-mb-auto { margin-bottom: auto; }
+
+.drome-ml-0 { margin-left: var(--spacing-0); }
+.drome-ml-1 { margin-left: var(--spacing-1); }
+.drome-ml-2 { margin-left: var(--spacing-2); }
+.drome-ml-3 { margin-left: var(--spacing-3); }
+.drome-ml-4 { margin-left: var(--spacing-4); }
+.drome-ml-5 { margin-left: var(--spacing-5); }
+.drome-ml-6 { margin-left: var(--spacing-6); }
+.drome-ml-8 { margin-left: var(--spacing-8); }
+.drome-ml-auto { margin-left: auto; }
+
+/* === UTILITÁRIOS DE CORES === */
+.drome-text-primary { color: var(--text-primary); }
+.drome-text-secondary { color: var(--text-secondary); }
+.drome-text-success { color: var(--green); }
+.drome-text-warning { color: var(--yellow-600); }
+.drome-text-danger { color: var(--red); }
+.drome-text-info { color: var(--blue); }
+
+/* === CORES DE TEXTO COMPLETAS === */
+.drome-text-white { color: #ffffff; }
+.drome-text-black { color: #000000; }
+
+.drome-text-gray-50 { color: var(--gray-50); }
+.drome-text-gray-100 { color: var(--gray-100); }
+.drome-text-gray-200 { color: var(--gray-200); }
+.drome-text-gray-300 { color: var(--gray-300); }
+.drome-text-gray-400 { color: var(--gray-400); }
+.drome-text-gray-500 { color: var(--gray-500); }
+.drome-text-gray-600 { color: var(--gray-600); }
+.drome-text-gray-700 { color: var(--gray-700); }
+.drome-text-gray-800 { color: var(--gray-800); }
+.drome-text-gray-900 { color: var(--gray-900); }
+
+.drome-text-blue-500 { color: var(--blue-500); }
+.drome-text-blue-600 { color: var(--blue-600); }
+.drome-text-blue-700 { color: var(--blue-700); }
+
+.drome-text-green-500 { color: var(--green-500); }
+.drome-text-green-600 { color: var(--green-600); }
+.drome-text-green-700 { color: var(--green-700); }
+
+.drome-text-red-500 { color: var(--red-500); }
+.drome-text-red-600 { color: var(--red-600); }
+.drome-text-red-700 { color: var(--red-700); }
+
+.drome-text-yellow-500 { color: var(--yellow-500); }
+.drome-text-yellow-600 { color: var(--yellow-600); }
+.drome-text-yellow-700 { color: var(--yellow-700); }
+
+/* === CORES DE BACKGROUND === */
+.drome-bg-primary { background-color: var(--bg-primary); }
+.drome-bg-secondary { background-color: var(--bg-secondary); }
+.drome-bg-tertiary { background-color: var(--bg-tertiary); }
+
+.drome-bg-white { background-color: #ffffff; }
+.drome-bg-black { background-color: #000000; }
+.drome-bg-transparent { background-color: transparent; }
+
+.drome-bg-gray-50 { background-color: var(--gray-50); }
+.drome-bg-gray-100 { background-color: var(--gray-100); }
+.drome-bg-gray-200 { background-color: var(--gray-200); }
+.drome-bg-gray-300 { background-color: var(--gray-300); }
+.drome-bg-gray-400 { background-color: var(--gray-400); }
+.drome-bg-gray-500 { background-color: var(--gray-500); }
+.drome-bg-gray-600 { background-color: var(--gray-600); }
+.drome-bg-gray-700 { background-color: var(--gray-700); }
+.drome-bg-gray-800 { background-color: var(--gray-800); }
+.drome-bg-gray-900 { background-color: var(--gray-900); }
+
+.drome-bg-blue-50 { background-color: var(--blue-50); }
+.drome-bg-blue-100 { background-color: var(--blue-100); }
+.drome-bg-blue-500 { background-color: var(--blue-500); }
+.drome-bg-blue-600 { background-color: var(--blue-600); }
+
+.drome-bg-green-50 { background-color: var(--green-50); }
+.drome-bg-green-100 { background-color: var(--green-100); }
+.drome-bg-green-500 { background-color: var(--green-500); }
+.drome-bg-green-600 { background-color: var(--green-600); }
+
+.drome-bg-red-50 { background-color: var(--red-50); }
+.drome-bg-red-100 { background-color: var(--red-100); }
+.drome-bg-red-500 { background-color: var(--red-500); }
+.drome-bg-red-600 { background-color: var(--red-600); }
+
+.drome-bg-yellow-50 { background-color: var(--yellow-50); }
+.drome-bg-yellow-100 { background-color: var(--yellow-100); }
+.drome-bg-yellow-500 { background-color: var(--yellow-500); }
+.drome-bg-yellow-600 { background-color: var(--yellow-600); }
+
+/* === UTILITÁRIOS DE TIPOGRAFIA === */
+.drome-text-xs { font-size: var(--font-size-xs); }
+.drome-text-sm { font-size: var(--font-size-sm); }
+.drome-text-base { font-size: var(--font-size-base); }
+.drome-text-lg { font-size: var(--font-size-lg); }
+.drome-text-xl { font-size: var(--font-size-xl); }
+.drome-text-2xl { font-size: var(--font-size-2xl); }
+.drome-text-3xl { font-size: var(--font-size-3xl); }
+.drome-text-4xl { font-size: var(--font-size-4xl); }
+
+.drome-font-light { font-weight: var(--font-weight-light); }
+.drome-font-normal { font-weight: var(--font-weight-normal); }
+.drome-font-medium { font-weight: var(--font-weight-medium); }
+.drome-font-semibold { font-weight: var(--font-weight-semibold); }
+.drome-font-bold { font-weight: var(--font-weight-bold); }
+
+.drome-text-left { text-align: left; }
+.drome-text-center { text-align: center; }
+.drome-text-right { text-align: right; }
+.drome-text-justify { text-align: justify; }
+
+.drome-leading-none { line-height: 1; }
+.drome-leading-tight { line-height: 1.25; }
+.drome-leading-snug { line-height: 1.375; }
+.drome-leading-normal { line-height: 1.5; }
+.drome-leading-relaxed { line-height: 1.625; }
+.drome-leading-loose { line-height: 2; }
+
+.drome-tracking-tighter { letter-spacing: -0.05em; }
+.drome-tracking-tight { letter-spacing: -0.025em; }
+.drome-tracking-normal { letter-spacing: 0em; }
+.drome-tracking-wide { letter-spacing: 0.025em; }
+.drome-tracking-wider { letter-spacing: 0.05em; }
+.drome-tracking-widest { letter-spacing: 0.1em; }
+
+.drome-uppercase { text-transform: uppercase; }
+.drome-lowercase { text-transform: lowercase; }
+.drome-capitalize { text-transform: capitalize; }
+.drome-normal-case { text-transform: none; }
+
+.drome-underline { text-decoration: underline; }
+.drome-no-underline { text-decoration: none; }
+
+.drome-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.drome-break-words {
+  overflow-wrap: break-word;
+}
+
+.drome-break-all {
+  word-break: break-all;
+}
+
+/* === RESPONSIVIDADE === */
+@media (max-width: 640px) {
+  .drome-sm-hidden { display: none; }
+  .drome-sm-block { display: block; }
+  .drome-sm-flex { display: flex; }
+  .drome-sm-grid { display: grid; }
+  
+  .drome-sm-text-xs { font-size: var(--font-size-xs); }
+  .drome-sm-text-sm { font-size: var(--font-size-sm); }
+  .drome-sm-text-base { font-size: var(--font-size-base); }
+  
+  .drome-sm-p-2 { padding: var(--spacing-2); }
+  .drome-sm-p-4 { padding: var(--spacing-4); }
+  .drome-sm-m-2 { margin: var(--spacing-2); }
+  .drome-sm-m-4 { margin: var(--spacing-4); }
+  
+  .drome-sm-grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+  .drome-sm-grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 768px) {
+  .drome-container {
+    padding: 0 var(--spacing-4);
+  }
+  
+  .drome-md-hidden { display: none; }
+  .drome-md-block { display: block; }
+  .drome-md-flex { display: flex; }
+  .drome-md-grid { display: grid; }
+  
+  .drome-md-grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+  .drome-md-grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  
+  .drome-h1, .drome-text-3xl {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .drome-h2, .drome-text-2xl {
+    font-size: var(--font-size-xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .drome-lg-block { display: block; }
+  .drome-lg-flex { display: flex; }
+  .drome-lg-grid { display: grid; }
+  .drome-lg-hidden { display: none; }
+  
+  .drome-lg-grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .drome-lg-grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .drome-lg-grid-cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .drome-lg-grid-cols-6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+
+/* === UTILITÁRIOS DE DIMENSÕES === */
+.drome-w-0 { width: 0; }
+.drome-w-auto { width: auto; }
+.drome-w-full { width: 100%; }
+.drome-w-screen { width: 100vw; }
+.drome-w-min { width: min-content; }
+.drome-w-max { width: max-content; }
+.drome-w-fit { width: fit-content; }
+
+.drome-w-1 { width: var(--spacing-1); }
+.drome-w-2 { width: var(--spacing-2); }
+.drome-w-3 { width: var(--spacing-3); }
+.drome-w-4 { width: var(--spacing-4); }
+.drome-w-5 { width: var(--spacing-5); }
+.drome-w-6 { width: var(--spacing-6); }
+.drome-w-8 { width: var(--spacing-8); }
+.drome-w-10 { width: var(--spacing-10); }
+.drome-w-12 { width: var(--spacing-12); }
+.drome-w-16 { width: var(--spacing-16); }
+.drome-w-20 { width: var(--spacing-20); }
+.drome-w-24 { width: var(--spacing-24); }
+
+.drome-w-1-2 { width: 50%; }
+.drome-w-1-3 { width: 33.333333%; }
+.drome-w-2-3 { width: 66.666667%; }
+.drome-w-1-4 { width: 25%; }
+.drome-w-3-4 { width: 75%; }
+
+.drome-h-0 { height: 0; }
+.drome-h-auto { height: auto; }
+.drome-h-full { height: 100%; }
+.drome-h-screen { height: 100vh; }
+.drome-h-min { height: min-content; }
+.drome-h-max { height: max-content; }
+.drome-h-fit { height: fit-content; }
+
+.drome-h-1 { height: var(--spacing-1); }
+.drome-h-2 { height: var(--spacing-2); }
+.drome-h-3 { height: var(--spacing-3); }
+.drome-h-4 { height: var(--spacing-4); }
+.drome-h-5 { height: var(--spacing-5); }
+.drome-h-6 { height: var(--spacing-6); }
+.drome-h-8 { height: var(--spacing-8); }
+.drome-h-10 { height: var(--spacing-10); }
+.drome-h-12 { height: var(--spacing-12); }
+.drome-h-16 { height: var(--spacing-16); }
+.drome-h-20 { height: var(--spacing-20); }
+.drome-h-24 { height: var(--spacing-24); }
+
+/* === POSICIONAMENTO === */
+.drome-static { position: static; }
+.drome-fixed { position: fixed; }
+.drome-absolute { position: absolute; }
+.drome-relative { position: relative; }
+.drome-sticky { position: sticky; }
+
+.drome-top-0 { top: 0; }
+.drome-top-1 { top: var(--spacing-1); }
+.drome-top-2 { top: var(--spacing-2); }
+.drome-top-4 { top: var(--spacing-4); }
+.drome-top-auto { top: auto; }
+
+.drome-right-0 { right: 0; }
+.drome-right-1 { right: var(--spacing-1); }
+.drome-right-2 { right: var(--spacing-2); }
+.drome-right-4 { right: var(--spacing-4); }
+.drome-right-auto { right: auto; }
+
+.drome-bottom-0 { bottom: 0; }
+.drome-bottom-1 { bottom: var(--spacing-1); }
+.drome-bottom-2 { bottom: var(--spacing-2); }
+.drome-bottom-4 { bottom: var(--spacing-4); }
+.drome-bottom-auto { bottom: auto; }
+
+.drome-left-0 { left: 0; }
+.drome-left-1 { left: var(--spacing-1); }
+.drome-left-2 { left: var(--spacing-2); }
+.drome-left-4 { left: var(--spacing-4); }
+.drome-left-auto { left: auto; }
+
+/* === Z-INDEX === */
+.drome-z-0 { z-index: 0; }
+.drome-z-10 { z-index: 10; }
+.drome-z-20 { z-index: 20; }
+.drome-z-30 { z-index: 30; }
+.drome-z-40 { z-index: 40; }
+.drome-z-50 { z-index: 50; }
+
+/* === OVERFLOW === */
+.drome-overflow-auto { overflow: auto; }
+.drome-overflow-hidden { overflow: hidden; }
+.drome-overflow-visible { overflow: visible; }
+.drome-overflow-scroll { overflow: scroll; }
+
+.drome-overflow-x-auto { overflow-x: auto; }
+.drome-overflow-x-hidden { overflow-x: hidden; }
+.drome-overflow-x-scroll { overflow-x: scroll; }
+
+.drome-overflow-y-auto { overflow-y: auto; }
+.drome-overflow-y-hidden { overflow-y: hidden; }
+.drome-overflow-y-scroll { overflow-y: scroll; }
+
+/* === BORDAS === */
+.drome-border { border-width: 1px; }
+.drome-border-0 { border-width: 0; }
+.drome-border-2 { border-width: 2px; }
+.drome-border-4 { border-width: 4px; }
+.drome-border-8 { border-width: 8px; }
+
+.drome-border-t { border-top-width: 1px; }
+.drome-border-r { border-right-width: 1px; }
+.drome-border-b { border-bottom-width: 1px; }
+.drome-border-l { border-left-width: 1px; }
+
+.drome-border-solid { border-style: solid; }
+.drome-border-dashed { border-style: dashed; }
+.drome-border-dotted { border-style: dotted; }
+.drome-border-none { border-style: none; }
+
+.drome-border-gray-100 { border-color: var(--gray-100); }
+.drome-border-gray-200 { border-color: var(--gray-200); }
+.drome-border-gray-300 { border-color: var(--gray-300); }
+.drome-border-gray-400 { border-color: var(--gray-400); }
+.drome-border-primary { border-color: var(--primary); }
+.drome-border-secondary { border-color: var(--secondary); }
+
+.drome-rounded-none { border-radius: 0; }
+.drome-rounded-sm { border-radius: var(--border-radius-sm); }
+.drome-rounded { border-radius: var(--border-radius-md); }
+.drome-rounded-md { border-radius: var(--border-radius-md); }
+.drome-rounded-lg { border-radius: var(--border-radius-lg); }
+.drome-rounded-xl { border-radius: var(--border-radius-xl); }
+.drome-rounded-full { border-radius: var(--border-radius-full); }
+
+/* === SOMBRAS === */
+.drome-shadow-none { box-shadow: none; }
+.drome-shadow-sm { box-shadow: var(--shadow-sm); }
+.drome-shadow { box-shadow: var(--shadow-md); }
+.drome-shadow-md { box-shadow: var(--shadow-md); }
+.drome-shadow-lg { box-shadow: var(--shadow-lg); }
+.drome-shadow-xl { box-shadow: var(--shadow-xl); }
+
+/* === OPACIDADE === */
+.drome-opacity-0 { opacity: 0; }
+.drome-opacity-25 { opacity: 0.25; }
+.drome-opacity-50 { opacity: 0.5; }
+.drome-opacity-75 { opacity: 0.75; }
+.drome-opacity-100 { opacity: 1; }
+
+/* === CURSOR === */
+.drome-cursor-auto { cursor: auto; }
+.drome-cursor-default { cursor: default; }
+.drome-cursor-pointer { cursor: pointer; }
+.drome-cursor-wait { cursor: wait; }
+.drome-cursor-text { cursor: text; }
+.drome-cursor-move { cursor: move; }
+.drome-cursor-not-allowed { cursor: not-allowed; }
+
+/* === INTERAÇÕES === */
+.drome-select-none { user-select: none; }
+.drome-select-text { user-select: text; }
+.drome-select-all { user-select: all; }
+
+/* === TRANSIÇÕES E ANIMAÇÕES === */
+.drome-transition-none { transition: none; }
+.drome-transition-all { transition: all 150ms ease-in-out; }
+.drome-transition-colors { transition: color 150ms ease-in-out, background-color 150ms ease-in-out, border-color 150ms ease-in-out; }
+.drome-transition-opacity { transition: opacity 150ms ease-in-out; }
+.drome-transition-shadow { transition: box-shadow 150ms ease-in-out; }
+.drome-transition-transform { transition: transform 150ms ease-in-out; }
+
+.drome-duration-75 { transition-duration: 75ms; }
+.drome-duration-100 { transition-duration: 100ms; }
+.drome-duration-150 { transition-duration: 150ms; }
+.drome-duration-200 { transition-duration: 200ms; }
+.drome-duration-300 { transition-duration: 300ms; }
+.drome-duration-500 { transition-duration: 500ms; }
+
+.drome-ease-linear { transition-timing-function: linear; }
+.drome-ease-in { transition-timing-function: cubic-bezier(0.4, 0, 1, 1); }
+.drome-ease-out { transition-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+.drome-ease-in-out { transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+
+/* === TRANSFORMAÇÕES === */
+.drome-transform { transform: var(--transform); }
+.drome-transform-none { transform: none; }
+
+.drome-scale-0 { transform: scale(0); }
+.drome-scale-50 { transform: scale(0.5); }
+.drome-scale-75 { transform: scale(0.75); }
+.drome-scale-90 { transform: scale(0.9); }
+.drome-scale-95 { transform: scale(0.95); }
+.drome-scale-100 { transform: scale(1); }
+.drome-scale-105 { transform: scale(1.05); }
+.drome-scale-110 { transform: scale(1.1); }
+.drome-scale-125 { transform: scale(1.25); }
+.drome-scale-150 { transform: scale(1.5); }
+
+.drome-rotate-0 { transform: rotate(0deg); }
+.drome-rotate-1 { transform: rotate(1deg); }
+.drome-rotate-2 { transform: rotate(2deg); }
+.drome-rotate-3 { transform: rotate(3deg); }
+.drome-rotate-6 { transform: rotate(6deg); }
+.drome-rotate-12 { transform: rotate(12deg); }
+.drome-rotate-45 { transform: rotate(45deg); }
+.drome-rotate-90 { transform: rotate(90deg); }
+.drome-rotate-180 { transform: rotate(180deg); }
+.drome--rotate-1 { transform: rotate(-1deg); }
+.drome--rotate-2 { transform: rotate(-2deg); }
+.drome--rotate-3 { transform: rotate(-3deg); }
+.drome--rotate-6 { transform: rotate(-6deg); }
+.drome--rotate-12 { transform: rotate(-12deg); }
+.drome--rotate-45 { transform: rotate(-45deg); }
+.drome--rotate-90 { transform: rotate(-90deg); }
+.drome--rotate-180 { transform: rotate(-180deg); }
+
+.drome-translate-x-0 { transform: translateX(0); }
+.drome-translate-x-1 { transform: translateX(var(--spacing-1)); }
+.drome-translate-x-2 { transform: translateX(var(--spacing-2)); }
+.drome-translate-x-4 { transform: translateX(var(--spacing-4)); }
+.drome--translate-x-1 { transform: translateX(calc(-1 * var(--spacing-1))); }
+.drome--translate-x-2 { transform: translateX(calc(-1 * var(--spacing-2))); }
+.drome--translate-x-4 { transform: translateX(calc(-1 * var(--spacing-4))); }
+
+.drome-translate-y-0 { transform: translateY(0); }
+.drome-translate-y-1 { transform: translateY(var(--spacing-1)); }
+.drome-translate-y-2 { transform: translateY(var(--spacing-2)); }
+.drome-translate-y-4 { transform: translateY(var(--spacing-4)); }
+.drome--translate-y-1 { transform: translateY(calc(-1 * var(--spacing-1))); }
+.drome--translate-y-2 { transform: translateY(calc(-1 * var(--spacing-2))); }
+.drome--translate-y-4 { transform: translateY(calc(-1 * var(--spacing-4))); }
+
+/* === ESTADOS DE HOVER === */
+.drome-hover\:bg-primary:hover { background-color: var(--primary); }
+.drome-hover\:bg-secondary:hover { background-color: var(--secondary); }
+.drome-hover\:bg-gray-100:hover { background-color: var(--gray-100); }
+.drome-hover\:bg-gray-200:hover { background-color: var(--gray-200); }
+.drome-hover\:bg-gray-300:hover { background-color: var(--gray-300); }
+
+.drome-hover\:text-primary:hover { color: var(--primary); }
+.drome-hover\:text-secondary:hover { color: var(--secondary); }
+.drome-hover\:text-white:hover { color: var(--white); }
+
+.drome-hover\:opacity-75:hover { opacity: 0.75; }
+.drome-hover\:opacity-50:hover { opacity: 0.5; }
+
+.drome-hover\:scale-105:hover { transform: scale(1.05); }
+.drome-hover\:scale-110:hover { transform: scale(1.1); }
+
+.drome-hover\:shadow-lg:hover { box-shadow: var(--shadow-lg); }
+.drome-hover\:shadow-xl:hover { box-shadow: var(--shadow-xl); }
+
+/* === ESTADOS DE FOCUS === */
+.drome-focus\:outline-none:focus { outline: none; }
+.drome-focus\:ring-2:focus { box-shadow: 0 0 0 2px var(--primary); }
+.drome-focus\:ring-primary:focus { box-shadow: 0 0 0 2px var(--primary); }
+.drome-focus\:ring-secondary:focus { box-shadow: 0 0 0 2px var(--secondary); }
+
+/* === ESTADOS DE ACTIVE === */
+.drome-active\:scale-95:active { transform: scale(0.95); }
+.drome-active\:opacity-75:active { opacity: 0.75; }
+
+/* === ESTADOS DE DISABLED === */
+.drome-disabled\:opacity-50:disabled { opacity: 0.5; }
+.drome-disabled\:cursor-not-allowed:disabled { cursor: not-allowed; }
+
+/* === ANIMAÇÕES PERSONALIZADAS === */
+@keyframes drome-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes drome-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes drome-slide-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(var(--spacing-4));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes drome-slide-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(calc(-1 * var(--spacing-4)));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes drome-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes drome-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.drome-animate-fade-in { animation: drome-fade-in 150ms ease-in-out; }
+.drome-animate-fade-out { animation: drome-fade-out 150ms ease-in-out; }
+.drome-animate-slide-in-up { animation: drome-slide-in-up 200ms ease-out; }
+.drome-animate-slide-in-down { animation: drome-slide-in-down 200ms ease-out; }
+.drome-animate-pulse { animation: drome-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+.drome-animate-spin { animation: drome-spin 1s linear infinite; }
+
+/* === FILTROS === */
+.drome-blur-none { filter: blur(0); }
+.drome-blur-sm { filter: blur(4px); }
+.drome-blur { filter: blur(8px); }
+.drome-blur-md { filter: blur(12px); }
+.drome-blur-lg { filter: blur(16px); }
+.drome-blur-xl { filter: blur(24px); }
+
+.drome-brightness-0 { filter: brightness(0); }
+.drome-brightness-50 { filter: brightness(0.5); }
+.drome-brightness-75 { filter: brightness(0.75); }
+.drome-brightness-90 { filter: brightness(0.9); }
+.drome-brightness-95 { filter: brightness(0.95); }
+.drome-brightness-100 { filter: brightness(1); }
+.drome-brightness-105 { filter: brightness(1.05); }
+.drome-brightness-110 { filter: brightness(1.1); }
+.drome-brightness-125 { filter: brightness(1.25); }
+.drome-brightness-150 { filter: brightness(1.5); }
+
+.drome-contrast-0 { filter: contrast(0); }
+.drome-contrast-50 { filter: contrast(0.5); }
+.drome-contrast-75 { filter: contrast(0.75); }
+.drome-contrast-100 { filter: contrast(1); }
+.drome-contrast-125 { filter: contrast(1.25); }
+.drome-contrast-150 { filter: contrast(1.5); }
+
+.drome-grayscale-0 { filter: grayscale(0); }
+.drome-grayscale { filter: grayscale(100%); }
+
+.drome-sepia-0 { filter: sepia(0); }
+.drome-sepia { filter: sepia(100%); }
+
+/* === TEMA TOGGLE === */
+.drome-theme-toggle {
+  padding: var(--spacing-2);
+  border-radius: var(--border-radius-full);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-colors);
+}
+
+.drome-theme-toggle:hover {
+  background-color: var(--bg-tertiary);
+}
+
+/* === AVATAR === */
+.drome-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--border-radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-weight-medium);
+  color: white;
+}
+
+.drome-avatar-sm {
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: var(--font-size-xs);
+}
+
+.drome-avatar-lg {
+  width: 4rem;
+  height: 4rem;
+  font-size: var(--font-size-lg);
+}
+
+/* === ANIMAÇÕES E TRANSIÇÕES === */
+@keyframes drome-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes drome-slide-up {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.drome-animate-fade-in {
+  animation: drome-fade-in 0.3s ease-out;
+}
+
+.drome-animate-slide-up {
+  animation: drome-slide-up 0.3s ease-out;
+}
+
+/* === ESTADOS DE HOVER E FOCUS === */
+.drome-hover-lift {
+  transition: var(--transition-transform);
+}
+
+.drome-hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+.drome-focus-ring:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--primary);
+}
+
+/* === GRADIENTES === */
+.drome-gradient-primary {
+  background: linear-gradient(135deg, var(--primary-light) 0%, var(--secondary-light) 100%);
+}
+
+.drome-gradient-text {
+  background: linear-gradient(135deg, var(--primary-light) 0%, var(--secondary-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* === ÚLTIMOS UTILITÁRIOS ESSENCIAIS === */
+
+/* === OBJETO FIT === */
+.drome-object-contain { object-fit: contain; }
+.drome-object-cover { object-fit: cover; }
+.drome-object-fill { object-fit: fill; }
+.drome-object-none { object-fit: none; }
+.drome-object-scale-down { object-fit: scale-down; }
+
+/* === OBJETO POSITION === */
+.drome-object-bottom { object-position: bottom; }
+.drome-object-center { object-position: center; }
+.drome-object-left { object-position: left; }
+.drome-object-left-bottom { object-position: left bottom; }
+.drome-object-left-top { object-position: left top; }
+.drome-object-right { object-position: right; }
+.drome-object-right-bottom { object-position: right bottom; }
+.drome-object-right-top { object-position: right top; }
+.drome-object-top { object-position: top; }
+
+/* === LISTA STYLE === */
+.drome-list-none { list-style-type: none; }
+.drome-list-disc { list-style-type: disc; }
+.drome-list-decimal { list-style-type: decimal; }
+
+/* === TABLE LAYOUT === */
+.drome-table-auto { table-layout: auto; }
+.drome-table-fixed { table-layout: fixed; }
+
+/* === MISCELÂNEA === */
+.drome-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.drome-not-sr-only {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* === CLASSES DE COMPATIBILIDADE COM SISTEMA LEGADO === */
+.legacy-blue { color: var(--primary); }
+.legacy-pink { color: var(--secondary); }
+.legacy-bg-blue { background-color: var(--primary); }
+.legacy-bg-pink { background-color: var(--secondary); }
+.legacy-border-blue { border-color: var(--primary); }
+.legacy-border-pink { border-color: var(--secondary); }
+
+/* === MODO ESCURO ESPECÍFICO === */
+.dark {
+  color-scheme: dark;
+}
+
+.dark .drome-calendar-day:hover:not(.calendar-day-disabled):not(.calendar-day-selected) {
+  background-color: rgba(129, 140, 248, 0.1);
+}
+
+.dark .drome-badge-success {
+  background-color: rgba(34, 197, 94, 0.2);
+}
+
+.dark .drome-badge-warning {
+  background-color: rgba(234, 179, 8, 0.2);
+}
+
+.dark .drome-badge-danger {
+  background-color: rgba(239, 68, 68, 0.2);
+}
+
+.dark .drome-badge-info {
+  background-color: rgba(59, 130, 246, 0.2);
+}
+
+.dark .drome-badge-primary {
+  background-color: rgba(129, 140, 248, 0.2);
+}
