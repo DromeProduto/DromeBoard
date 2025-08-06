@@ -22,7 +22,7 @@ try {
     }
 
     // Incluir dependências
-    require_once '../config/database.php';
+    require_once 'database.php';
 
     // Determinar método da requisição e obter parâmetros
     $method = $_SERVER['REQUEST_METHOD'];

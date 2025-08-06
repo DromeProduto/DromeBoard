@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit(0);
 }
 
-require_once '../config/database.php';
+require_once 'database.php';
 
 class UsersAPI {
     private $pdo;
@@ -74,7 +74,7 @@ class UsersAPI {
                 FROM users u
                 LEFT JOIN roles r ON u.role_id = r.id
                 INNER JOIN user_units uu ON u.id = uu.user_id
-                WHERE u.email != 'admin@dashflow.com' 
+                WHERE u.email != 'admin@dromeflow.com' 
                     AND uu.unit_id = ? 
                     AND uu.is_active = true
                 ORDER BY uu.created_at DESC
@@ -119,7 +119,7 @@ class UsersAPI {
                     ) as unit_names
                 FROM users u
                 LEFT JOIN roles r ON u.role_id = r.id
-                WHERE u.email != 'admin@dashflow.com'
+                WHERE u.email != 'admin@dromeflow.com'
                 ORDER BY u.created_at DESC
             ";
             
